@@ -1,0 +1,2 @@
+D:\Archivos\UPM\_Programacion\AJEDREZ\AjedrezV1\x64\Debug\AjedrezV1.exe
+D:\OneDrive\OneDrive - Universidad Politécnica de Madrid\AjedrezV1\x64\Debug\AjedrezV1.exe

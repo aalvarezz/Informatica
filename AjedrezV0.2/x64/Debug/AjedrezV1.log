@@ -1,0 +1,13 @@
+﻿  Casilla.cpp
+  Main.cpp
+  Pieza.cpp
+  Tablero.cpp
+D:\OneDrive\OneDrive - Universidad Politécnica de Madrid\AjedrezV1\Tablero.cpp(45,34): warning C4244: 'argumento': conversión de 'int' a 'float'; posible pérdida de datos
+D:\OneDrive\OneDrive - Universidad Politécnica de Madrid\AjedrezV1\Tablero.cpp(45,31): warning C4244: 'argumento': conversión de 'int' a 'float'; posible pérdida de datos
+D:\OneDrive\OneDrive - Universidad Politécnica de Madrid\AjedrezV1\Tablero.cpp(50,34): warning C4244: 'argumento': conversión de 'int' a 'float'; posible pérdida de datos
+D:\OneDrive\OneDrive - Universidad Politécnica de Madrid\AjedrezV1\Tablero.cpp(50,31): warning C4244: 'argumento': conversión de 'int' a 'float'; posible pérdida de datos
+D:\OneDrive\OneDrive - Universidad Politécnica de Madrid\AjedrezV1\Tablero.cpp(62,10): warning C4244: '=': conversión de 'int' a 'float'; posible pérdida de datos
+D:\OneDrive\OneDrive - Universidad Politécnica de Madrid\AjedrezV1\Tablero.cpp(63,10): warning C4244: '=': conversión de 'int' a 'float'; posible pérdida de datos
+  V2D.cpp
+  Generando código...
+  AjedrezV1.vcxproj -> D:\OneDrive\OneDrive - Universidad Politécnica de Madrid\AjedrezV1\x64\Debug\AjedrezV1.exe
