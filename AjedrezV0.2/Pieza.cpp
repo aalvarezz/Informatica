@@ -1,11 +1,11 @@
 #include "Pieza.h"
 #include "freeglut.h"
-
+//comentario
 Pieza::Pieza() {
 	tam = 1;
 	rojo = 131;
 	verde = 160;
-	azul = 255;
+	azul = 255; 
 	lado = 2.5f; //PROVISIONAL
 }
 
