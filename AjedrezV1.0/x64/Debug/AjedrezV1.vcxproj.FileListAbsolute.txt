@@ -1,4 +1,0 @@
-D:\Archivos\UPM\_Programacion\AJEDREZ\AjedrezV1\x64\Debug\AjedrezV1.exe
-D:\Archivos\UPM\_Programacion\AJEDREZ\AjedrezV2\x64\Debug\AjedrezV1.exe
-D:\Archivos\UPM\_Programacion\AJEDREZ\AjedrezV1.0\x64\Debug\AjedrezV1.exe
-D:\Archivos\UPM\_Programacion\AJEDREZ\AjedrezV1.0 - copia (2)\x64\Debug\AjedrezV1.exe
