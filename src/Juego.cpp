@@ -7,14 +7,18 @@ Juego::Juego() {
 	LIM_TABLERO = 728;
 	LIM_CASILLA = 91;
 
+	turno_blancas = true;
+	turno_negras = false;
+
 }
 
 void Juego::arrastrar() {
 
 }
 
-void Juego::actualizacion(int x, int y) {
+void Juego::clicRaton(bool mouse_pressed, bool mouse_released, int x, int y) { //Provisionalmente pressed y released no son atributos de Juego, solo variables locales
 	int fila_clic, columna_clic;
+	bool micolor; //provisionalmente local
 	//ENCONTRAR EN QUÉ CASILLA ESTÁ EL CURSOR AL CLICAR/ SOLTAR EL CLIC
 	int x0 = x - AJUSTE_X;
 	int y0 = y - AJUSTE_Y; //traslado de coordenadas del ratón
@@ -41,7 +45,7 @@ void Juego::actualizacion(int x, int y) {
 	if (mouse_released) { //pos_inicial.fila y pos_inicial.columna deben ser las de aquella casilla donde se ha clicado pero NO soltado el clic.
 		pos_inicial.fila = fila_clic;
 		pos_inicial.columna = columna_clic;
-		micolor = tablero[pos_inicial.fila][pos_inicial.columna].getPieza().getColor();
+		micolor = tablero.getPieza(pos_inicial)->getColor();
 	}
 	if (mouse_pressed) {
 		pos_final.fila = fila_clic;
@@ -53,21 +57,33 @@ void Juego::actualizacion(int x, int y) {
 
 		if (!micolor && turno_blancas) { //Turno de las blancas
 
-			if (mouse_released && tablero[pos_inicial.fila][pos_inicial.columna].getEstado() && puntero_aux == NULL) {
-				pieza_aux = tablero[pos_inicial.fila][pos_inicial.columna].getPieza(); //Para evitar C2102
-				puntero_aux = &pieza_aux;
-				borrarPosiblesCasillas();
-				dibujarPosiblesCasillas();
+			if (mouse_released && tablero.getPieza(pos_inicial) != nullptr && pieza_elegida == nullptr) { //(mouse_released && tablero[pos_inicial.fila][pos_inicial.columna].getEstado() && puntero_aux == NULL)
+
+					//AÑADIR CÓDIGO COGER PIEZA
+
+				pieza_elegida = tablero.getPieza(pos_inicial);
+
+				//pieza_aux = tablero[pos_inicial.fila][pos_inicial.columna].getPieza(); //Para evitar C2102
+				//puntero_aux = &pieza_aux;
+				//borrarPosiblesCasillas();
+				//dibujarPosiblesCasillas();
 			}
 			//suelto en una casilla válida de la pieza que mueves (tienes q estar moviendo una pieza)
-			if (mouse_pressed && (puntero_aux != NULL) && comprueba(pieza_aux, pos_inicial, pos_final)) {
-				cambiarPieza();
-				puntero_aux = NULL;
-				borrarPosiblesCasillas();
-				if (pieza_aux.GetTipo() == 2) {
+			if (mouse_pressed && (pieza_elegida != nullptr) && movimientoValido()) { //(mouse_pressed && (pieza_elegida != nullptr) && comprueba(pieza_aux, pos_inicial, pos_final))
+
+					//AÑADIR CÓDIGO SUSTITUIR PIEZA
+
+				//cambiarPieza();
+				tablero.moverPieza(pos_inicial, pos_final);
+				//puntero_aux = NULL;
+				pieza_elegida = nullptr;
+
+
+				//borrarPosiblesCasillas();
+				/*if (pieza_aux.GetTipo() == 2) {
 					posReyB.fila = pos_final.fila;
 					posReyB.columna = pos_final.columna;
-				}
+				}*/
 				turno_blancas = false;
 				turno_negras = true;
 				/*if (blancas_en_jaque) {
@@ -78,25 +94,40 @@ void Juego::actualizacion(int x, int y) {
 				}*/
 			}
 			//si estás moviendo una pieza y el movimiento no es correcto, se devuelve a su casilla original
-			if (mouse_pressed && (puntero_aux != NULL) && !comprueba(pieza_aux, pos_inicial, pos_final)) {
-				tablero[pos_inicial.fila][pos_inicial.columna].setPieza(pieza_aux);
-				puntero_aux = NULL;
+			if (mouse_pressed && (pieza_elegida != nullptr) && !movimientoValido()) { //(mouse_pressed && (puntero_aux != NULL) && !comprueba(pieza_aux, pos_inicial, pos_final))
+				//tablero[pos_inicial.fila][pos_inicial.columna].setPieza(pieza_aux);
+				tablero.setPieza(pieza_elegida, pos_inicial);
+				//puntero_aux = NULL;
+				pieza_elegida = nullptr;
 			}
 		}
 
 		if (micolor && turno_negras) { //Turno de las negras
-			if (mouse_released && tablero[pos_inicial.fila][pos_inicial.columna].getEstado() && puntero_aux == NULL) {
-				pieza_aux = tablero[pos_inicial.fila][pos_inicial.columna].getPieza(); //Para evitar C2102
-				puntero_aux = &pieza_aux;
+
+			if (mouse_released && tablero.getPieza(pos_inicial) != nullptr && pieza_elegida == nullptr) { //(mouse_released && tablero[pos_inicial.fila][pos_inicial.columna].getEstado() && puntero_aux == NULL)
+
+					//AÑADIR CÓDIGO COGER PIEZA
+
+				pieza_elegida = tablero.getPieza(pos_inicial);
+
+				//pieza_aux = tablero[pos_inicial.fila][pos_inicial.columna].getPieza(); //Para evitar C2102
+				//puntero_aux = &pieza_aux;
 				//borrarPosiblesCasillas();
 				//dibujarPosiblesCasillas();
 			}
 			//suelto en una casilla válida de la pieza que mueves (tienes q estar moviendo una pieza)
-			if (mouse_pressed && (puntero_aux != NULL) && comprueba(pieza_aux, pos_inicial, pos_final)) {
-				cambiarPieza();
-				puntero_aux = NULL;/*
-				borrarPosiblesCasillas();
-				if (pieza_aux.GetTipo() == 8) {
+			if (mouse_pressed && (pieza_elegida != nullptr) && movimientoValido()) { //(mouse_pressed && (pieza_elegida != nullptr) && comprueba(pieza_aux, pos_inicial, pos_final))
+
+					//AÑADIR CÓDIGO SUSTITUIR PIEZA
+
+				//cambiarPieza();
+				tablero.moverPieza(pos_inicial, pos_final);
+				//puntero_aux = NULL;
+				pieza_elegida = nullptr;
+
+
+				//borrarPosiblesCasillas();
+				/*if (pieza_aux.GetTipo() == 8) {
 					posReyN.fila = pos_final.fila;
 					posReyN.columna = pos_final.columna;
 				}*/
@@ -110,16 +141,23 @@ void Juego::actualizacion(int x, int y) {
 				}*/
 			}
 			//si estás moviendo una pieza y el movimiento no es correcto, se devuelve a su casilla original
-			if (mouse_pressed && (puntero_aux != NULL) && !comprueba(pieza_aux, pos_inicial, pos_final)) {
-				tablero[pos_inicial.fila][pos_inicial.columna].setPieza(pieza_aux);
-				puntero_aux = NULL;
+			if (mouse_pressed && (pieza_elegida != nullptr) && !movimientoValido()) { //(mouse_pressed && (puntero_aux != NULL) && !comprueba(pieza_aux, pos_inicial, pos_final))
+				//tablero[pos_inicial.fila][pos_inicial.columna].setPieza(pieza_aux);
+				tablero.setPieza(pieza_elegida, pos_inicial);
+				//puntero_aux = NULL;
+				pieza_elegida = nullptr;
 			}
 		}
 	}
 
 	//Si se suelta el clic fuera del tablero llevando una pieza no se confirma el movimiento y devuelve la pieza a la casilla inicial previa al movimiento.
-	if (!within_board && mouse_pressed && (puntero_aux != NULL)) {
-		tablero[pos_inicial.fila][pos_inicial.columna].setPieza(pieza_aux);
-		puntero_aux = NULL;
+	if (!within_board && mouse_pressed && (pieza_elegida != nullptr)) {
+		tablero.setPieza(pieza_elegida, pos_inicial);
+		pieza_elegida = nullptr;
 	}
+}
+
+bool Juego::movimientoValido() {
+	//CÓDIGO EXCEPCIONES
+	if (pieza_elegida->comprueba(&tablero)) return true; //Provisional, esto solo debe ser así en el caso de que no se esté dando ninguna excepción o algo de mayor prioridad.
 }
