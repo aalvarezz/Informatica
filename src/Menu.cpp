@@ -314,7 +314,7 @@ void Menu::evento()
 				}
 
 
-				//menu tamaño
+				//menu tamaÃ±o
 
 				else if (t == true)
 				{
