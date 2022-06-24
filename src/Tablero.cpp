@@ -5,7 +5,7 @@
 Tablero::Tablero() { //Relleno el damero. Muy provisional sin piezas
 	for (int fila = 0; fila < 8; fila++) {
 		for (int columna = 0; columna < 8; columna++) {
-			if (fila > 1 && fila < 6) // Vacías las casillas centrales
+			if (fila > 1 && fila < 6) // VacÃ­as las casillas centrales
 				piezas[fila][columna] = NULL;
 			if (fila == 1 || fila == 6) { //Peones, hay que diferenciar entre color
 				piezas[i][j] = new Pieza();
@@ -105,14 +105,14 @@ void Tablero::dibujoDamero()
 	glDisable(GL_TEXTURE_2D);
 }
 
-void Tablero::imprimir() { //solo imprime piezas, la impresion del tablero en sí se hace a parte
+void Tablero::imprimir() { //solo imprime piezas, la impresion del tablero en sÃ­ se hace a parte
 	for (int i = 0; i < 8; i++) {
 		for (int j = 0; j < 8; j++)
 			piezas[i][j]->dibujar();
 	}
 }
 
-void Tablero::moverPieza(Pos pos_inicial, Pos pos_final) { //actualizar posición de cierta pieza, en principio se usa la posicion del tablero
+void Tablero::moverPieza(Pos pos_inicial, Pos pos_final) { //actualizar posiciÃ³n de cierta pieza, en principio se usa la posicion del tablero
 	if (piezas[pos_final.fila][pos_final.columna] == NULL) {
 		*piezas[pos_final.fila][pos_final.columna] = *piezas[pos_inicial.fila][pos_inicial.columna];
 		piezas[pos_inicial.fila][pos_inicial.columna] = NULL;
@@ -134,7 +134,7 @@ void Tablero::comerPieza(Pieza* p)
 	delete p;
 }
 
-void Tablero::quitarPieza(Pos posicion) { //hacer null el puntero a la pieza deseada, hacer "0" la posición de esa pieza (suponiendo que la pieza tuviera un atributo pos). Parece prescindible
+void Tablero::quitarPieza(Pos posicion) { //hacer null el puntero a la pieza deseada, hacer "0" la posiciÃ³n de esa pieza (suponiendo que la pieza tuviera un atributo pos). Parece prescindible
 	piezas[posicion.fila][posicion.columna] = NULL;
 }
 

@@ -4,13 +4,17 @@
 
 class Pieza {
 private:
+
 	Pos pos; //provisional
+
+	//Pos pos; //provisional
+
 	bool color;
 public:
 	Pieza();
-	void dibujar(); //dibuja la pieza en su posici髇 actual (si la pieza sabe su posici髇, la funci髇 no necesita argumentos)
-	bool comprueba(Tablero*); //calcula si cierto movimiento es v醠ido para la pieza. considera las reglas normales de la pieza consultando el estado actual del tablero, sin tener en cuenta excepciones (mayor prioridad)
-	void setPos(Pos); //solo necesario en el caso de hacer definitivo que las piezas almacenen su posici髇
+	void dibujar(); //dibuja la pieza en su posici贸n actual (si la pieza sabe su posici贸n, la funci贸n no necesita argumentos)
+	bool comprueba(Tablero*); //calcula si cierto movimiento es v谩lido para la pieza. considera las reglas normales de la pieza consultando el estado actual del tablero, sin tener en cuenta excepciones (mayor prioridad)
+	void setPos(Pos); //solo necesario en el caso de hacer definitivo que las piezas almacenen su posici贸n
 	Pos getPos();
 	bool getColor();
 };
