@@ -5,14 +5,14 @@ void OnDraw(void); //esta funcion sera llamada para dibujar
 void OnMouseClick(int, int, int, int);
 void OnMotion(int, int);
 
-//Declaración de los objetos globales donde se desarrolla toda la gestión del juego
+//DeclaraciÃ³n de los objetos globales donde se desarrolla toda la gestiÃ³n del juego
 //Coordinador coordinador;
 //Menu menu;
 
 int main(int argc, char* argv[]) {
 
 	/*
-	//Inicialización
+	//InicializaciÃ³n
 	menu.inicializa();
 
 	SDL_Init(SDL_INIT_VIDEO);
@@ -71,10 +71,10 @@ void OnDraw(void) {
 	glLoadIdentity();
 
 	gluLookAt(8.75, 8.75, 34,  // posicion del ojo
-		8.75, 8.75, 0,      // hacia qué punto mira  (8.75, 8.75, 0) 
+		8.75, 8.75, 0,      // hacia quÃ© punto mira  (8.75, 8.75, 0) 
 		0.0, 1.0, 0.0);      // definimos hacia arriba (eje Z)                          SEGURO??  
 
-	//Código de dibujo
+	//CÃ³digo de dibujo
 	//coordinador.Dibuja();
 
 	//Promueve el contenido del back buffer para poder realizar todos los cambios necesarios en la pantalla
@@ -84,7 +84,7 @@ void OnDraw(void) {
 void OnMouseClick(int button, int state, int x, int y) {
 	//coordinador.Tecla(button, state, x, y);
 
-		//Llamada a función clicar/dejar de clicar de Juego/Coordinador
+		//Llamada a funciÃ³n clicar/dejar de clicar de Juego/Coordinador
 
 	glutPostRedisplay();
 }
@@ -92,7 +92,7 @@ void OnMouseClick(int button, int state, int x, int y) {
 void OnMotion(int x, int y) {
 	//coordinador.Movimiento(x, y);
 
-		//Llamada a función arrastrar de Juego/Coordinador
+		//Llamada a funciÃ³n arrastrar de Juego/Coordinador
 
 	glutPostRedisplay();
 }
