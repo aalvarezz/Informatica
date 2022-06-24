@@ -21,7 +21,6 @@ public:
 
 	bool getColor() { return color; }
 	
-
 	/*provisional*/
 	//void setPos(Pos); //solo necesario en el caso de hacer definitivo que las piezas almacenen su posici�n
 	//Pos getPos();

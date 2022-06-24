@@ -1,4 +1,5 @@
 #include "Juego.h"
+
 #include "Peon.h"
 #include "Rey.h"
 #include "Dama.h"
@@ -26,6 +27,7 @@ Juego::Juego() {
 	enroqueblancoizq = 0;
 	enroquenegroder = 0;
 	enroquenegroizq = 0;
+  
 }
 
 void Juego::inicializar() {
