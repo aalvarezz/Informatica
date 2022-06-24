@@ -1,4 +1,5 @@
 #pragma once
+
 #include <SDL.h>
 #include <iostream>
 #include "ETSIDI.h"
@@ -57,7 +58,5 @@ public:
 	void evento();
 
 	//bool getMenuTamano();
-
-
 
 };
