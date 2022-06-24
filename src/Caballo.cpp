@@ -8,7 +8,7 @@ bool Caballo::comprueba(Tablero* tablero, Pos inicio, Pos fin) {
 			if ((abs(j) != abs(k)) && (j != 0) && (k != 0)) {
 				Pos posaux(j, k);
 				if (((inicio + posaux) == fin) &&
-					((this->getColor() != tablero->getPieza(fin)->getColor()) || (tablero->getPieza(fin) == 0)))	//que sea de otro color o que no haya, mejorable?
+					((this->getColor() != tablero->getPieza(fin)->getColor()) || (tablero->getPieza(fin) == nullptr)))
 					return true;
 			}
 		}

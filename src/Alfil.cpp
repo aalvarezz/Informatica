@@ -20,9 +20,9 @@ bool Alfil::comprueba(Tablero* tablero, Pos inicio, Pos fin) {
 	case 1:	//1. Arriba derecha
 		for (int j = 1; j <= 7; j++) {
 			Pos posaux1(j, j);
-			if (((inicio + posaux1) == fin) && (tablero->getPieza(fin) == 0) || (tablero->getPieza(fin)->getColor() != color))
+			if (((inicio + posaux1) == fin) && (tablero->getPieza(fin) == nullptr) || (tablero->getPieza(fin)->getColor() != color))
 				return true;
-			else if (tablero->getPieza(inicio + posaux1) != 0)
+			else if (tablero->getPieza(inicio + posaux1) != nullptr)
 				return false;
 		}
 		break;
@@ -30,9 +30,9 @@ bool Alfil::comprueba(Tablero* tablero, Pos inicio, Pos fin) {
 	case 2:	//2. Abajo derecha
 		for (int j = 1; j <= 7; j++) {
 			Pos posaux2(-j, j);
-				if (((inicio + posaux2) == fin) && (tablero->getPieza(fin) == 0) || (tablero->getPieza(fin)->getColor() != color))
+				if (((inicio + posaux2) == fin) && (tablero->getPieza(fin) == nullptr) || (tablero->getPieza(fin)->getColor() != color))
 					return true;
-				else if (tablero->getPieza(inicio + posaux2) != 0)
+				else if (tablero->getPieza(inicio + posaux2) != nullptr)
 					return false;
 		}
 		break;
@@ -40,9 +40,9 @@ bool Alfil::comprueba(Tablero* tablero, Pos inicio, Pos fin) {
 	case 3:	//3. Abajo izquierda
 		for (int j = 1; j <= 7; j++) {
 			Pos posaux3(-j, -j);
-			if (((inicio + posaux3) == fin) && (tablero->getPieza(fin) == 0) || (tablero->getPieza(fin)->getColor() != color))
+			if (((inicio + posaux3) == fin) && (tablero->getPieza(fin) == nullptr) || (tablero->getPieza(fin)->getColor() != color))
 				return true;
-			else if (tablero->getPieza(inicio + posaux3) != 0)
+			else if (tablero->getPieza(inicio + posaux3) != nullptr)
 				return false;
 		}
 		break;
@@ -50,9 +50,9 @@ bool Alfil::comprueba(Tablero* tablero, Pos inicio, Pos fin) {
 	case 4: //4. Arriba izquierda
 		for (int j = 1; j <= 7; j++) {
 			Pos posaux4(-j, j);
-			if (((inicio + posaux4) == fin) && (tablero->getPieza(fin) == 0) || (tablero->getPieza(fin)->getColor() != color))
+			if (((inicio + posaux4) == fin) && (tablero->getPieza(fin) == nullptr) || (tablero->getPieza(fin)->getColor() != color))
 				return true;
-			else if (tablero->getPieza(inicio + posaux4) != 0)
+			else if (tablero->getPieza(inicio + posaux4) != nullptr)
 				return false;
 		}
 	}

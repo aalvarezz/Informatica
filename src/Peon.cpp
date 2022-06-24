@@ -1,16 +1,16 @@
 #pragma once
 #include "Peon.h"
 
-bool Peon::comprueba(Tablero* tablero, Pos inicio, Pos fin) {
+bool Peon::comprueba(Tablero* tablero, Pos inicio, Pos fin) const{
 
 	bool color = this->getColor();
 	Pos posaux1(0, 1), posaux2(-1, 1),  posaux3(1, 1), posaux4(0, -1), posaux5(-1, -1), posaux6(1, -1);
 
 	switch (color) {
 	case 0:		//BLANCO
-		//1.Avanza una posición en la columna (Movimiento normal)
+		//1.Avanza una posiciÃ³n en la columna (Movimiento normal)
 	
-		if (((inicio + posaux1) == fin) && (tablero->getPieza(fin) == 0))
+		if (((inicio + posaux1) == fin) && (tablero->getPieza(fin) == nullptr))
 			return true;
 
 		//2.Diagonal izq (Al comer otra ficha)
@@ -26,9 +26,9 @@ bool Peon::comprueba(Tablero* tablero, Pos inicio, Pos fin) {
 
 
 	case 1:		//NEGRO
-		//1.Avanza una posición en la columna (Movimiento normal)
+		//1.Avanza una posiciÃ³n en la columna (Movimiento normal)
 
-		if (((inicio + posaux4) == fin) && (tablero->getPieza(fin) == 0))
+		if (((inicio + posaux4) == fin) && (tablero->getPieza(fin) == nullptr))
 			return true;
 
 		//2.Diagonal izq (Al comer otra ficha)
