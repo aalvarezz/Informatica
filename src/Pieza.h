@@ -10,17 +10,16 @@ private:
 public:
 	Pieza(bool _color) : color(_color) {};
 	void dibujar(Pos);
-	//dibuja la pieza en su posición actual (si la pieza sabe su posición, la función no necesita argumentos)
+	//dibuja la pieza en su posiciï¿½n actual (si la pieza sabe su posiciï¿½n, la funciï¿½n no necesita argumentos)
 
 	virtual bool comprueba(Tablero*, Pos, Pos) = 0;
-	//calcula si cierto movimiento es válido para la pieza. considera las reglas normales de la pieza consultando el
+	//calcula si cierto movimiento es vï¿½lido para la pieza. considera las reglas normales de la pieza consultando el
 	//estado actual del tablero, sin tener en cuenta excepciones (mayor prioridad)
 
 	bool getColor() { return color; }
 	
 
 	/*provisional*/
-	//void setPos(Pos); //solo necesario en el caso de hacer definitivo que las piezas almacenen su posición
+	//void setPos(Pos); //solo necesario en el caso de hacer definitivo que las piezas almacenen su posiciï¿½n
 	//Pos getPos();
-
 };
