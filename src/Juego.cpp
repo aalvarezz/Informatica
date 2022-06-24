@@ -1,6 +1,6 @@
-﻿#include "Juego.h"
-#include <iostream>
+#include "Juego.h"
 
+#include <iostream>
 using namespace std;
 
 Juego::Juego() {
@@ -29,9 +29,9 @@ void Juego::arrastrar() {
 void Juego::clicRaton(bool mouse_pressed, bool mouse_released, int x, int y) { //Provisionalmente pressed y released no son atributos de Juego, solo variables locales
 	int fila_clic, columna_clic;
 	bool micolor; //provisionalmente local
-	//ENCONTRAR EN QU� CASILLA EST� EL CURSOR AL CLICAR/ SOLTAR EL CLIC
+	//ENCONTRAR EN QUÉ CASILLA ESTÁ EL CURSOR AL CLICAR/ SOLTAR EL CLIC
 	int x0 = x - AJUSTE_X;
-	int y0 = y - AJUSTE_Y; //traslado de coordenadas del rat�n
+	int y0 = y - AJUSTE_Y; //traslado de coordenadas del ratón
 	int f = 0;
 	int c = 0;
 
@@ -62,14 +62,14 @@ void Juego::clicRaton(bool mouse_pressed, bool mouse_released, int x, int y) { /
 		pos_final.columna = columna_clic;
 	}
 
-	//ACTUALIZACI�N DE PIEZAS
+	//ACTUALIZACIÓN DE PIEZAS
 	if (within_board) { //Acciones a ejecutar si se ha clicado/dejado de clicar dentro del tablero
 
 		if (!micolor && turno_blancas) { //Turno de las blancas
 
 			if (mouse_released && tablero.getPieza(pos_inicial) != nullptr && pieza_elegida == nullptr) { //(mouse_released && tablero[pos_inicial.fila][pos_inicial.columna].getEstado() && puntero_aux == NULL)
 
-					//A�ADIR C�DIGO COGER PIEZA
+					//AÑADIR CÓDIGO COGER PIEZA
 
 				pieza_elegida = tablero.getPieza(pos_inicial);
 
@@ -78,10 +78,10 @@ void Juego::clicRaton(bool mouse_pressed, bool mouse_released, int x, int y) { /
 				//borrarPosiblesCasillas();
 				//dibujarPosiblesCasillas();
 			}
-			//suelto en una casilla v�lida de la pieza que mueves (tienes q estar moviendo una pieza)
+			//suelto en una casilla válida de la pieza que mueves (tienes q estar moviendo una pieza)
 			if (mouse_pressed && (pieza_elegida != nullptr) && movimientoValido()) { //(mouse_pressed && (pieza_elegida != nullptr) && comprueba(pieza_aux, pos_inicial, pos_final))
 
-					//A�ADIR C�DIGO SUSTITUIR PIEZA
+					//AÑADIR CÓDIGO SUSTITUIR PIEZA
 
 				//cambiarPieza();
 				tablero.moverPieza(pos_inicial, pos_final);
@@ -103,7 +103,7 @@ void Juego::clicRaton(bool mouse_pressed, bool mouse_released, int x, int y) { /
 					negras_en_jaque = true;
 				}*/
 			}
-			//si est�s moviendo una pieza y el movimiento no es correcto, se devuelve a su casilla original
+			//si estás moviendo una pieza y el movimiento no es correcto, se devuelve a su casilla original
 			if (mouse_pressed && (pieza_elegida != nullptr) && !movimientoValido()) { //(mouse_pressed && (puntero_aux != NULL) && !comprueba(pieza_aux, pos_inicial, pos_final))
 				//tablero[pos_inicial.fila][pos_inicial.columna].setPieza(pieza_aux);
 				tablero.setPieza(pieza_elegida, pos_inicial);
@@ -116,7 +116,7 @@ void Juego::clicRaton(bool mouse_pressed, bool mouse_released, int x, int y) { /
 
 			if (mouse_released && tablero.getPieza(pos_inicial) != nullptr && pieza_elegida == nullptr) { //(mouse_released && tablero[pos_inicial.fila][pos_inicial.columna].getEstado() && puntero_aux == NULL)
 
-					//A�ADIR C�DIGO COGER PIEZA
+					//AÑADIR CÓDIGO COGER PIEZA
 
 				pieza_elegida = tablero.getPieza(pos_inicial);
 
@@ -125,67 +125,13 @@ void Juego::clicRaton(bool mouse_pressed, bool mouse_released, int x, int y) { /
 				//borrarPosiblesCasillas();
 				//dibujarPosiblesCasillas();
 			}
-			//suelto en una casilla v�lida de la pieza que mueves (tienes q estar moviendo una pieza)
+			//suelto en una casilla válida de la pieza que mueves (tienes q estar moviendo una pieza)
 			if (mouse_pressed && (pieza_elegida != nullptr) && movimientoValido()) { //(mouse_pressed && (pieza_elegida != nullptr) && comprueba(pieza_aux, pos_inicial, pos_final))
 
-					//A�ADIR C�DIGO SUSTITUIR PIEZA
+					//AÑADIR CÓDIGO SUSTITUIR PIEZA
 
 				//cambiarPieza();
 				tablero.moverPieza(pos_inicial, pos_final);
-
-				//CAMBIO DE PIEZA AL CORONARSE UN PEON
-				if (coronegra == 1) 
-				{
-					coronacionNegra();
-					coronegra = 0;
-				}
-				if (coroblanca == 1)
-				{
-					coronacionBlanca();
-					coroblanca = 0;
-				}
-
-				//MOVIMIENTOS DE ENROQUE
-				if (enroqueblancoder == 1)
-				{
-					Pos posaux;
-					posaux.columna = 7;
-					posaux.fila = 0;
-					tablero.quitarPieza(posaux);
-					posaux.columna = 5;
-					tablero.setPieza("TORRE BLANCA", posaux);
-					enroqueblancoder = 0;
-				}
-				if (enroquenegroder == 1)
-				{
-					Pos posaux;
-					posaux.columna = 7;
-					posaux.fila = 7;
-					tablero.quitarPieza(posaux);
-					posaux.columna = 5;
-					tablero.setPieza("TORRE NEGRA", posaux);
-					enroquenegroder = 0;
-				}
-				if (enroqueblancoizq == 1)
-				{
-					Pos posaux;
-					posaux.columna = 0;
-					posaux.fila = 0;
-					tablero.quitarPieza(posaux);
-					posaux.columna = 3;
-					tablero.setPieza("TORRE BLANCA", posaux);
-					enroqueblancoizq = 0;
-				}
-				if (enroquenegroizq == 1)
-				{
-					Pos posaux;
-					posaux.columna = 0;
-					posaux.fila = 7;
-					tablero.quitarPieza(posaux);
-					posaux.columna = 3;
-					tablero.setPieza("TORRE NEGRA", posaux);
-					enroquenegroizq = 0;
-				}
 				//puntero_aux = NULL;
 				pieza_elegida = nullptr;
 
@@ -204,7 +150,7 @@ void Juego::clicRaton(bool mouse_pressed, bool mouse_released, int x, int y) { /
 					blancas_en_jaque = true;
 				}*/
 			}
-			//si est�s moviendo una pieza y el movimiento no es correcto, se devuelve a su casilla original
+			//si estás moviendo una pieza y el movimiento no es correcto, se devuelve a su casilla original
 			if (mouse_pressed && (pieza_elegida != nullptr) && !movimientoValido()) { //(mouse_pressed && (puntero_aux != NULL) && !comprueba(pieza_aux, pos_inicial, pos_final))
 				//tablero[pos_inicial.fila][pos_inicial.columna].setPieza(pieza_aux);
 				tablero.setPieza(pieza_elegida, pos_inicial);
@@ -221,7 +167,78 @@ void Juego::clicRaton(bool mouse_pressed, bool mouse_released, int x, int y) { /
 	}
 }
 
-//LAS CORONACIONES BLANCAS Y NEGRAS SE TRATAN INDEPENDIENTEMENTES, A LA ESPERA DE VER CÓMO SON TRATADAS LAS PIEZAS
+bool Juego::movimientoValido() {
+	//Cï¿½DIGO EXCEPCIONES
+
+	//MOVER DE 2 EL PEON. IMPORTANTE: SE HA AÃADIDO UN FLAG EN PIEZA QUE INDICA QUE LA PIEZA NUNCA SE HA MOVIDO ANTES. 
+	if (pieza_elegida == "PEON" && pieza_elegida->posoriginal == 0)  //si la pieza es un peon y nunca se ha movido
+	{
+		if (pos_final.fila == pos_inicial.fila - 2 && pos_final.fila == NULL) //si se mueve 2 y la casilla final esta vacia
+			return true;
+		if (pos_final.fila == pos_inicial.fila + 2 && pos_final.fila == NULL) //si se mueve 2 y la casilla final esta vacia
+			return true;
+	}
+
+	//ENROQUE BLANCO
+	if (pieza_elegida == "REY BLANCO" && pieza_elegida->posoriginal == 0) //MOVER EL REY BLANCO SIEMPRE Y CUANDO NO HAYA SIDO MOVIDO ANTES
+	{
+		if (pos_final.columna == pos_inicial.columna + 2 && "TORRE BLANCA DERECHA".posoriginal == 0)
+			//QUE LA TORRE DEL LADO AL QUE HAYAMOS MOVIDO EL REY NO SE HAYA MOVIDO NUNCA. PERDÃN SI ESA NO ES LA POSICIÃN CORRECTA DEL REY EN EL ENROQUE
+		{
+			if (pos_final.columna + 1 == NULL && pos_final.columna + 2 == NULL)
+			{
+				enroqueblancoder == 1;
+				return true;
+			}
+		}
+		if (pos_final.columna == pos_inicial.columna - 2 && "TORRE BLANCA DERECHA".posoriginal == 0)
+			//QUE LA TORRE DEL LADO AL QUE HAYAMOS MOVIDO EL REY NO SE HAYA MOVIDO NUNCA. PERDÃN SI ESA NO ES LA POSICIÃN CORRECTA DEL REY EN EL ENROQUE
+		{
+			if (pos_final.columna - 1 == NULL && pos_final.columna - 2 == NULL && pos_final.columna - 3 == NULL)
+			{
+				enroqueblancoizq == 1;
+				return true;
+			}
+		}
+	}
+
+	//ENROQUE NEGRO
+	if (pieza_elegida == "REY NEGRO" && pieza_elegida->posoriginal == 0) //MOVER EL REY NEGRO SIEMPRE Y CUANDO NO HAYA SIDO MOVIDO ANTES
+	{
+		if (pos_final.columna == pos_inicial.columna + 2 && "TORRE NEGRA DERECHA".posoriginal == 0)
+			//QUE LA TORRE DEL LADO AL QUE HAYAMOS MOVIDO EL REY NO SE HAYA MOVIDO NUNCA. PERDÃN SI ESA NO ES LA POSICIÃN CORRECTA DEL REY EN EL ENROQUE
+		{
+			if (pos_final.columna + 1 == NULL && pos_final.columna + 2 == NULL)
+			{
+				enroquenegroder == 1;
+				return true;
+			}
+		}
+		if (pos_final.columna == pos_inicial.columna - 2 && "TORRE NEGRA DERECHA".posoriginal == 0)
+			//QUE LA TORRE DEL LADO AL QUE HAYAMOS MOVIDO EL REY NO SE HAYA MOVIDO NUNCA. PERDÃN SI ESA NO ES LA POSICIÃN CORRECTA DEL REY EN EL ENROQUE
+		{
+			if (pos_final.columna - 1 == NULL && pos_final.columna - 2 == NULL && pos_final.columna - 3 == NULL)
+			{
+				enroquenegroizq == 1;
+				return true;
+			}
+		}
+	}
+
+	//CÃDIGO DE MOVIMIENTOS NORMALES
+	if (pieza_elegida->comprueba(&tablero))  //Provisional, esto solo debe ser así en el caso de que no se esté dando ninguna excepción o algo de mayor prioridad.
+	{
+		//CONDICION DE CORONACION
+		if (pieza_elegida == "PEON NEGRO" && pos_inicial.fila == 1 && pos_final.fila == 0)
+			coronegra = 1;
+		if (pieza_elegida == "PEON BLANCO" && pos_inicial.fila == 1 && pos_final.fila == 0)
+			coroblanca = 1;
+		return true
+	}
+
+}
+
+//LAS CORONACIONES BLANCAS Y NEGRAS SE TRATAN INDEPENDIENTEMENTES, A LA ESPERA DE VER CÃMO SON TRATADAS LAS PIEZAS
 
 void Juego::coronacionBlanca()
 {
@@ -288,133 +305,3 @@ void Juego::coronacionNegra()
 
 	} while (elegido > 12 || elegido < 9);
 }
-
-bool Juego::movimientoValido() {
-	//C�DIGO EXCEPCIONES
-
-	//MOVER DE 2 EL PEON. IMPORTANTE: SE HA AÑADIDO UN FLAG EN PIEZA QUE INDICA QUE LA PIEZA NUNCA SE HA MOVIDO ANTES. 
-	if (pieza_elegida == "PEON" && pieza_elegida->posoriginal == 0)  //si la pieza es un peon y nunca se ha movido
-	{
-		if (pos_final.fila == pos_inicial.fila - 2 && pos_final.fila == NULL) //si se mueve 2 y la casilla final esta vacia
-			return true;
-		if (pos_final.fila == pos_inicial.fila + 2 && pos_final.fila == NULL) //si se mueve 2 y la casilla final esta vacia
-			return true;
-	}
-
-	//ENROQUE BLANCO
-	if (pieza_elegida == "REY BLANCO" && pieza_elegida->posoriginal == 0) //MOVER EL REY BLANCO SIEMPRE Y CUANDO NO HAYA SIDO MOVIDO ANTES
-	{
-		if (pos_final.columna == pos_inicial.columna + 2 && "TORRE BLANCA DERECHA".posoriginal == 0)
-			//QUE LA TORRE DEL LADO AL QUE HAYAMOS MOVIDO EL REY NO SE HAYA MOVIDO NUNCA. PERDÓN SI ESA NO ES LA POSICIÓN CORRECTA DEL REY EN EL ENROQUE
-		{
-			if (pos_final.columna + 1 == NULL && pos_final.columna + 2 == NULL)
-			{
-				enroqueblancoder == 1;
-				return true;
-			}
-		}
-		if (pos_final.columna == pos_inicial.columna - 2 && "TORRE BLANCA DERECHA".posoriginal == 0)
-			//QUE LA TORRE DEL LADO AL QUE HAYAMOS MOVIDO EL REY NO SE HAYA MOVIDO NUNCA. PERDÓN SI ESA NO ES LA POSICIÓN CORRECTA DEL REY EN EL ENROQUE
-		{
-			if (pos_final.columna - 1 == NULL && pos_final.columna - 2 == NULL && pos_final.columna - 3 == NULL)
-			{
-				enroqueblancoizq == 1;
-				return true;
-			}
-		}
-	}
-
-	//ENROQUE NEGRO
-	if (pieza_elegida == "REY NEGRO" && pieza_elegida->posoriginal == 0) //MOVER EL REY NEGRO SIEMPRE Y CUANDO NO HAYA SIDO MOVIDO ANTES
-	{
-		if (pos_final.columna == pos_inicial.columna + 2 && "TORRE NEGRA DERECHA".posoriginal == 0)
-			//QUE LA TORRE DEL LADO AL QUE HAYAMOS MOVIDO EL REY NO SE HAYA MOVIDO NUNCA. PERDÓN SI ESA NO ES LA POSICIÓN CORRECTA DEL REY EN EL ENROQUE
-		{
-			if (pos_final.columna + 1 == NULL && pos_final.columna + 2 == NULL)
-			{
-				enroquenegroder == 1;
-				return true;
-			}
-		}
-		if (pos_final.columna == pos_inicial.columna - 2 && "TORRE NEGRA DERECHA".posoriginal == 0)
-			//QUE LA TORRE DEL LADO AL QUE HAYAMOS MOVIDO EL REY NO SE HAYA MOVIDO NUNCA. PERDÓN SI ESA NO ES LA POSICIÓN CORRECTA DEL REY EN EL ENROQUE
-		{
-			if (pos_final.columna - 1 == NULL && pos_final.columna - 2 == NULL && pos_final.columna - 3 == NULL)
-			{
-				enroquenegroizq == 1;
-				return true;
-			}
-		}
-	}
-
-	//CÓDIGO DE MOVIMIENTOS NORMALES
-	if (pieza_elegida->comprueba(&tablero))
-	{
-		//CONDICION DE CORONACION
-		if (pieza_elegida == "PEON NEGRO" && pos_inicial.fila == 1 && pos_final.fila == 0)
-			coronegra = 1;
-		if (pieza_elegida == "PEON BLANCO" && pos_inicial.fila == 1 && pos_final.fila == 0)
-			coroblanca = 1;
-		return true; //Provisional, esto solo debe ser as� en el caso de que no se est� dando ninguna excepci�n o algo de mayor prioridad.
-	}
-
-}
-
-
-
-
-
-//OLD EL PASO
-/*
-	//////////												DENTRO DEL MOVIMIENTO DE LA PIEZA
-	//el peón quiere moverse a una diagonal
-	if (tablero[pos_inicial.fila + 1][pos_inicial.columna - 1] == casilla_final || tablero[pos_inicial.fila + 1][pos_inicial.columna + 1] == casilla_final) {
-		//comprobación de si hay peón que pueda comer al paso
-		if (pos_inicial.fila == doblemov_negra.fila && (pos_inicial.columna + 1 == doblemov_negra.columna || pos_inicial.columna - 1 == doblemov_negra.columna))
-		{
-			if (pos_final.fila == doblemov_negra.fila + 1 && pos_final.columna == doblemov_negra.columna)
-			{
-				if (alpaso == TRUE)
-					tablero[doblemov_negra.fila][doblemov_negra.columna].QuitarPieza();
-				return true;
-			}
-		}
-	}
-
-	//el peón está en su posición de origen, puede avanzar dos casillas
-	if ((pieza.getFilaOrigen() == pos_inicial.fila) && (pos_final.fila == pos_inicial.fila + 2) && (!casilla_final.GetEstado())) { //hay que comparar tambien la columna?
-		doblemov_blanca = pos_final;/////////////////////////////////
-		resultado = true;
-		return resultado;
-	}
-
-	////////////////////////LO MISMO PARA EL PEON NEGRO
-
-
-	////////												DENTRO DEL CICLO DE MOVIMIENTOS DEL JUEGO
-	//suelto en una casilla válida de la pieza que mueves (tienes q estar moviendo una pieza)
-	if (mouse_pressed && (puntero_aux != NULL))
-	{
-		alpaso = TRUE;/////////////////////////////
-		if (comprueba(pieza_aux, pos_inicial, pos_final))
-		{
-			CambiarPieza();
-			if (turno_b) {
-				turno_b = false;
-				cout << "TURNO N" << endl;
-				//se deja de guardar la posición del peón al que se le podía comer al paso
-				doblemov_negra.columna = 8;////////////////////////////
-				doblemov_negra.fila = 8;/////////////////////////////////
-			}
-
-			else if (!turno_b) {
-				turno_b = true;
-				cout << "TURNO B" << endl;
-				//se deja de guardar la posición del peón al que se le podía comer al paso
-				doblemov_blanca.columna = 8;//////////////////////////////
-				doblemov_blanca.fila = 8;////////////////////////////
-			}
-			puntero_aux = NULL;
-		}
-		alpaso = FALSE;//////////////////////////////////
-	}*/
