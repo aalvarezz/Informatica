@@ -1,13 +1,17 @@
-#pragma once
+﻿#pragma once
 #include "Pos.h"
 #include "Tablero.h"
 
 class Pieza {
-private:
+	//private:
+protected:
+
 	//Pos pos; //provisional
 	bool color;
+	float lado;
 
 public:
+	Pieza() {};
 	Pieza(bool _color) : color(_color) {};
 	void dibujar(Pos);
 	//dibuja la pieza en su posici�n actual (si la pieza sabe su posici�n, la funci�n no necesita argumentos)
@@ -17,7 +21,6 @@ public:
 	//estado actual del tablero, sin tener en cuenta excepciones (mayor prioridad)
 
 	bool getColor() { return color; }
-	
 
 	/*provisional*/
 	//void setPos(Pos); //solo necesario en el caso de hacer definitivo que las piezas almacenen su posici�n

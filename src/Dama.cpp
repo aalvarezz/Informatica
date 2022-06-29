@@ -28,9 +28,11 @@ bool Dama::comprueba(Tablero* tablero, Pos inicio, Pos fin) {
 	case 1:	// 1. Hacia arriba
 		for (int j = 1; j <= 7; j++) {
 			Pos posaux1(0, j);
-			if (((inicio + posaux1) == fin) && (tablero->getPieza(fin) == 0) || (tablero->getPieza(fin)->getColor() != color))
+			posaux1.columna = posaux1.columna + inicio.columna;
+			posaux1.fila = posaux1.fila + inicio.fila;
+			if (((posaux1) == fin) && (tablero->getPieza(fin) == nullptr) || (tablero->getPieza(fin)->getColor() != color))
 				return true;
-			else if (tablero->getPieza(inicio + posaux1) != 0)
+			else if (tablero->getPieza(posaux1) != nullptr)
 				return false;
 		}
 		break;
@@ -38,9 +40,11 @@ bool Dama::comprueba(Tablero* tablero, Pos inicio, Pos fin) {
 	case 2:	// 2. Hacia abajo
 		for (int j = 1; j <= 7; j++) {
 			Pos posaux2(0, -j);
-			if (((inicio + posaux2) == fin) && (tablero->getPieza(fin) == 0) || (tablero->getPieza(fin)->getColor() != color))
+			posaux2.columna = posaux2.columna + inicio.columna;
+			posaux2.fila = posaux2.fila + inicio.fila;
+			if (((posaux2) == fin) && (tablero->getPieza(fin) == nullptr) || (tablero->getPieza(fin)->getColor() != color))
 				return true;
-			else if (tablero->getPieza(inicio + posaux2) != 0)
+			else if (tablero->getPieza(posaux2) != nullptr)
 				return false;
 		}
 		break;
@@ -48,9 +52,11 @@ bool Dama::comprueba(Tablero* tablero, Pos inicio, Pos fin) {
 	case 3:	// 3. Derecha
 		for (int j = 1; j <= 7; j++) {
 			Pos posaux3(j, 0);
-			if (((inicio + posaux3) == fin) && (tablero->getPieza(fin) == 0) || (tablero->getPieza(fin)->getColor() != color))
+			posaux3.columna = posaux3.columna + inicio.columna;
+			posaux3.fila = posaux3.fila + inicio.fila;
+			if (((posaux3) == fin) && (tablero->getPieza(fin) == nullptr) || (tablero->getPieza(fin)->getColor() != color))
 				return true;
-			else if (tablero->getPieza(inicio + posaux3) != 0)
+			else if (tablero->getPieza(posaux3) != nullptr)
 				return false;
 		}
 		break;
@@ -58,9 +64,11 @@ bool Dama::comprueba(Tablero* tablero, Pos inicio, Pos fin) {
 	case 4:	//4. Izquierda
 		for (int j = 1; j <= 7; j++) {
 			Pos posaux4(-j, 0);
-			if (((inicio + posaux4) == fin) && (tablero->getPieza(fin) == 0) || (tablero->getPieza(fin)->getColor() != color))
+			posaux4.columna = posaux4.columna + inicio.columna;
+			posaux4.fila = posaux4.fila + inicio.fila;
+			if (((posaux4) == fin) && (tablero->getPieza(fin) == nullptr) || (tablero->getPieza(fin)->getColor() != color))
 				return true;
-			else if (tablero->getPieza(inicio + posaux4) != 0)
+			else if (tablero->getPieza(posaux4) != nullptr)
 				return false;
 		}
 		break;
@@ -68,9 +76,11 @@ bool Dama::comprueba(Tablero* tablero, Pos inicio, Pos fin) {
 	case 5:	//5. Arriba derecha
 		for (int j = 1; j <= 7; j++) {
 			Pos posaux5(j, j);
-			if (((inicio + posaux5) == fin) && (tablero->getPieza(fin) == 0) || (tablero->getPieza(fin)->getColor() != color))
+			posaux5.columna = posaux5.columna + inicio.columna;
+			posaux5.fila = posaux5.fila + inicio.fila;
+			if (((posaux5) == fin) && (tablero->getPieza(fin) == nullptr) || (tablero->getPieza(fin)->getColor() != color))
 				return true;
-			else if (tablero->getPieza(inicio + posaux5) != 0)
+			else if (tablero->getPieza(posaux5) != nullptr)
 				return false;
 		}
 		break;
@@ -78,9 +88,11 @@ bool Dama::comprueba(Tablero* tablero, Pos inicio, Pos fin) {
 	case 6:	//6. Abajo derecha
 		for (int j = 1; j <= 7; j++) {
 			Pos posaux6(-j, j);
-			if (((inicio + posaux6) == fin) && (tablero->getPieza(fin) == 0) || (tablero->getPieza(fin)->getColor() != color))
+			posaux6.columna = posaux6.columna + inicio.columna;
+			posaux6.fila = posaux6.fila + inicio.fila;
+			if (((posaux6) == fin) && (tablero->getPieza(fin) == nullptr) || (tablero->getPieza(fin)->getColor() != color))
 				return true;
-			else if (tablero->getPieza(inicio + posaux6) != 0)
+			else if (tablero->getPieza(posaux6) != nullptr)
 				return false;
 		}
 		break;
@@ -88,9 +100,11 @@ bool Dama::comprueba(Tablero* tablero, Pos inicio, Pos fin) {
 	case 7:	//7. Abajo izquierda
 		for (int j = 1; j <= 7; j++) {
 			Pos posaux7(-j, -j);
-			if (((inicio + posaux7) == fin) && (tablero->getPieza(fin) == 0) || (tablero->getPieza(fin)->getColor() != color))
+			posaux7.columna = posaux7.columna + inicio.columna;
+			posaux7.fila = posaux7.fila + inicio.fila;
+			if (((posaux7) == fin) && (tablero->getPieza(fin) == nullptr) || (tablero->getPieza(fin)->getColor() != color))
 				return true;
-			else if (tablero->getPieza(inicio + posaux7) != 0)
+			else if (tablero->getPieza(posaux7) != nullptr)
 				return false;
 		}
 		break;
@@ -98,12 +112,39 @@ bool Dama::comprueba(Tablero* tablero, Pos inicio, Pos fin) {
 	case 8://5. Arriba izquierda
 		for (int j = 1; j <= 7; j++) {
 			Pos posaux8(-j, j);
-			if (((inicio + posaux8) == fin) && (tablero->getPieza(fin) == 0) || (tablero->getPieza(fin)->getColor() != color))
+			posaux8.columna = posaux8.columna + inicio.columna;
+			posaux8.fila = posaux8.fila + inicio.fila;
+			if (((posaux8) == fin) && (tablero->getPieza(fin) == nullptr) || (tablero->getPieza(fin)->getColor() != color))
 				return true;
-			else if (tablero->getPieza(inicio + posaux8) != 0)
+			else if (tablero->getPieza(posaux8) != nullptr)
 				return false;
 		}
 		break;
 	}
 	return false;
+}
+
+void Dama::dibujar(Pos posicion)
+{
+	bool color = this->getColor();
+	//en funcion del color de la pieza la dibuja en su posicion correspondiente
+
+	switch (color) {
+	case 0:
+		DamaB.setCenter(lado / 2, lado / 2);
+		DamaB.setSize(lado, lado);
+		glTranslatef(posicion.fila, posicion.columna, 0.1f);
+		glColor3f(1.0f, 0.0f, 0.0f);
+		DamaB.draw();
+		glTranslatef(-posicion.fila, -posicion.columna, -0.1f);
+		break;
+	case 1:
+		DamaN.setCenter(lado / 2, lado / 2);
+		DamaN.setSize(lado, lado);
+		glTranslatef(posicion.fila, posicion.columna, 0.1f);
+		glColor3f(1.0f, 0.0f, 0.0f);
+		DamaN.draw();
+		glTranslatef(-posicion.fila, -posicion.columna, -0.1f);
+		break;
+	}
 }

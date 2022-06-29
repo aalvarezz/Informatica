@@ -20,9 +20,11 @@ bool Alfil::comprueba(Tablero* tablero, Pos inicio, Pos fin) {
 	case 1:	//1. Arriba derecha
 		for (int j = 1; j <= 7; j++) {
 			Pos posaux1(j, j);
-			if (((inicio + posaux1) == fin) && (tablero->getPieza(fin) == 0) || (tablero->getPieza(fin)->getColor() != color))
+			posaux1.columna = posaux1.columna + inicio.columna;
+			posaux1.fila = posaux1.fila + inicio.fila;
+			if (((posaux1) == fin) && (tablero->getPieza(fin) == nullptr) || (tablero->getPieza(fin)->getColor() != color))
 				return true;
-			else if (tablero->getPieza(inicio + posaux1) != 0)
+			else if (tablero->getPieza(posaux1) != nullptr)
 				return false;
 		}
 		break;
@@ -30,19 +32,23 @@ bool Alfil::comprueba(Tablero* tablero, Pos inicio, Pos fin) {
 	case 2:	//2. Abajo derecha
 		for (int j = 1; j <= 7; j++) {
 			Pos posaux2(-j, j);
-				if (((inicio + posaux2) == fin) && (tablero->getPieza(fin) == 0) || (tablero->getPieza(fin)->getColor() != color))
-					return true;
-				else if (tablero->getPieza(inicio + posaux2) != 0)
-					return false;
+			posaux2.columna = posaux2.columna + inicio.columna;
+			posaux2.fila = posaux2.fila + inicio.fila;
+			if (((posaux2) == fin) && (tablero->getPieza(fin) == nullptr) || (tablero->getPieza(fin)->getColor() != color))
+				return true;
+			else if (tablero->getPieza(posaux2) != nullptr)
+				return false;
 		}
 		break;
 
 	case 3:	//3. Abajo izquierda
 		for (int j = 1; j <= 7; j++) {
 			Pos posaux3(-j, -j);
-			if (((inicio + posaux3) == fin) && (tablero->getPieza(fin) == 0) || (tablero->getPieza(fin)->getColor() != color))
+			posaux3.columna = posaux3.columna + inicio.columna;
+			posaux3.fila = posaux3.fila + inicio.fila;
+			if (((posaux3) == fin) && (tablero->getPieza(fin) == nullptr) || (tablero->getPieza(fin)->getColor() != color))
 				return true;
-			else if (tablero->getPieza(inicio + posaux3) != 0)
+			else if (tablero->getPieza(posaux3) != nullptr)
 				return false;
 		}
 		break;
@@ -50,11 +56,38 @@ bool Alfil::comprueba(Tablero* tablero, Pos inicio, Pos fin) {
 	case 4: //4. Arriba izquierda
 		for (int j = 1; j <= 7; j++) {
 			Pos posaux4(-j, j);
-			if (((inicio + posaux4) == fin) && (tablero->getPieza(fin) == 0) || (tablero->getPieza(fin)->getColor() != color))
+			posaux4.columna = posaux4.columna + inicio.columna;
+			posaux4.fila = posaux4.fila + inicio.fila;
+			if (((posaux4) == fin) && (tablero->getPieza(fin) == nullptr) || (tablero->getPieza(fin)->getColor() != color))
 				return true;
-			else if (tablero->getPieza(inicio + posaux4) != 0)
+			else if (tablero->getPieza(posaux4) != nullptr)
 				return false;
 		}
 	}
 	return false;
+}
+
+void Alfil::dibujar(Pos posicion)
+{
+	bool color = this->getColor();
+	//en funcion del color de la pieza la dibuja en su posicion correspondiente
+
+	switch (color) {
+	case 0:
+		AlfilB.setCenter(lado / 2, lado / 2);
+		AlfilB.setSize(lado, lado);
+		glTranslatef(posicion.fila, posicion.columna, 0.1f);
+		glColor3f(1.0f, 0.0f, 0.0f);
+		AlfilB.draw();
+		glTranslatef(-posicion.fila, -posicion.columna, -0.1f);
+		break;
+	case 1:
+		AlfilN.setCenter(lado / 2, lado / 2);
+		AlfilN.setSize(lado, lado);
+		glTranslatef(posicion.fila, posicion.columna, 0.1f);
+		glColor3f(1.0f, 0.0f, 0.0f);
+		AlfilN.draw();
+		glTranslatef(-posicion.fila, -posicion.columna, -0.1f);
+		break;
+	}
 }

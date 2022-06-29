@@ -1,66 +1,21 @@
-#include "Tablero.h"
+﻿#include "Tablero.h"
 #include "freeglut.h"
 #include "ETSIDI.h"
 
 Tablero::Tablero() { //Relleno el damero. Muy provisional sin piezas
-	for (int fila = 0; fila < 8; fila++) {
-		for (int columna = 0; columna < 8; columna++) {
-			if (fila > 1 && fila < 6) // Vacías las casillas centrales
-				piezas[fila][columna] = NULL;
-			if (fila == 1 || fila == 6) { //Peones, hay que diferenciar entre color
-				piezas[i][j] = new Pieza();
-			}
-			if (fila == 0) { //blancas
-				switch (columna) {
-				case 0: case 7: //chequear si esto vale
-					piezas[i][j] = new Pieza(); //torres
-					break;
-				case 1: case 6:
-					piezas[i][j] = new Pieza(); //caballos
-					break;
-				case 2: case 5:
-					piezas[i][j] = new Pieza(); //alfiles
-					break;
-				case 3: 
-					piezas[i][j] = new Pieza(); //dama 
-					break;
-				case 4: 
-					piezas[i][j] = new Pieza(); //rey 
-					break;
-				default: break;
-				}	
-			}
-			if (fila == 7) { //negras
-				switch (columna) {
-				case 0: case 7: //chequear si esto vale
-					piezas[i][j] = new Pieza(); //torres
-					break;
-				case 1: case 6:
-					piezas[i][j] = new Pieza(); //caballos
-					break;
-				case 2: case 5:
-					piezas[i][j] = new Pieza(); //alfiles
-					break;
-				case 3:
-					piezas[i][j] = new Pieza(); //rey 
-					break;
-				case 4:
-					piezas[i][j] = new Pieza(); //dama 
-					break;
-				default: break;
-				}
-			}
-		}
-	}
+
 }
 
-void Tablero::dibujoDamero()
-{
+void Tablero::inicializar(Pieza* p, int i, int j) {
+	piezas[i][j] = p;
+}
+
+void Tablero::dibujoDamero() {
 	setLado(2.5f);
 	//CASILLAS DEL TABLERO
 	for (int i = 0; i < 8; i++) {
 		for (int j = 0; j < 8; j++) {
-			
+
 		}
 	}
 
@@ -106,13 +61,17 @@ void Tablero::dibujoDamero()
 }
 
 void Tablero::imprimir() { //solo imprime piezas, la impresion del tablero en sí se hace a parte
+	Pos pos_pieza;
 	for (int i = 0; i < 8; i++) {
-		for (int j = 0; j < 8; j++)
-			piezas[i][j]->dibujar();
+		pos_pieza.fila = i;
+		for (int j = 0; j < 8; j++) {
+			pos_pieza.columna = j;
+			piezas[i][j]->dibujar(pos_pieza);
+		}
 	}
 }
 
-void Tablero::moverPieza(Pos pos_inicial, Pos pos_final) { //actualizar posición de cierta pieza, en principio se usa la posicion del tablero
+/*void Tablero::moverPieza(Pos pos_inicial, Pos pos_final) { //actualizar posición de cierta pieza, en principio se usa la posicion del tablero
 	if (piezas[pos_final.fila][pos_final.columna] == NULL) {
 		*piezas[pos_final.fila][pos_final.columna] = *piezas[pos_inicial.fila][pos_inicial.columna];
 		piezas[pos_inicial.fila][pos_inicial.columna] = NULL;
@@ -120,44 +79,31 @@ void Tablero::moverPieza(Pos pos_inicial, Pos pos_final) { //actualizar posició
 	else {
 
 	}
-	/* //Si se utiliza la pos de dentro de la pieza hay que pasar pieza y pos
-
-	void Tablero::moverPieza(Pieza* p, Pos pos_final){
-		quitarPieza(p->getPos());
-		setPieza(piezas[x][x], pos_final);
-	}
-	*/
-}
-
-void Tablero::comerPieza(Pieza* p)
-{
-	delete p;
-}
+}*/
 
 void Tablero::quitarPieza(Pos posicion) { //hacer null el puntero a la pieza deseada, hacer "0" la posición de esa pieza (suponiendo que la pieza tuviera un atributo pos). Parece prescindible
-	piezas[posicion.fila][posicion.columna] = NULL;
+	piezas[posicion.fila][posicion.columna] = nullptr;
 }
 
-void Tablero::setPieza(Pieza* p, Pos pos) { //otorga a una pieza una posicion
-	p->setPos(pos);
+void Tablero::setPieza(Pieza* p, Pos posicion) { //otorga a una pieza una posicion
+	piezas[posicion.fila][posicion.columna] = p;
 }
 
-Pieza* Tablero::getPieza(Pos p)
-{
-	return pieza[p.fila][p.columna];
+Pieza* Tablero::getPieza(Pos posicion) {
+	return piezas[posicion.fila][posicion.columna];
 }
 
-Pieza* Tablero::getPiezaElegida()
+/*Pieza* Tablero::getPiezaElegida()
 {
 	return pieza_elegida;
-}
+}*/
 
-void Tablero::setLado(float l)
-{
+
+//GETTERS y SETTERS PROVISIONALES
+void Tablero::setLado(float l) {
 	lado = l;
 }
 
-float Tablero::getLado()
-{
+float Tablero::getLado() {
 	return lado;
 }

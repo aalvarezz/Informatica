@@ -1,4 +1,4 @@
-#include "freeglut.h"
+﻿#include "freeglut.h"
 
 //Prototipos de los callbacks
 void OnDraw(void); //esta funcion sera llamada para dibujar
