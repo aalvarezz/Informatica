@@ -1,4 +1,5 @@
 #pragma once
+
 #include <SDL.h>
 #include <iostream>
 #include "ETSIDI.h"
@@ -12,7 +13,7 @@ private:
 	bool tablero_running;
 
 	//menu inicial
-	bool m;
+	bool menu_inicial_activo;
 	SDL_Surface* menu_inicial;
 	SDL_Surface* menu_ajustes;
 	SDL_Surface* menu_jugar;
@@ -42,7 +43,6 @@ private:
 	SDL_Surface* tamano_volver;
 
 public:
-
 	Menu();
 
 	void inicializa();
@@ -50,14 +50,14 @@ public:
 	void liberar();
 
 	void ventana();
-	//bool getTableroRunning();
 
 	SDL_Surface* optimatedsurface(std::string filepath, SDL_Surface* windowsurface);
 
 	void evento();
 
-	//bool getMenuTamano();
-
-
-
+	bool getTableroRunning();
+	bool getMenuTamano();
+	bool getSonido();
+	int getAltura();
+	int getAnchura();
 };

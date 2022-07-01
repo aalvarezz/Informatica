@@ -12,7 +12,7 @@ void Menu::inicializa()
 	tablero_running = true;
 
 
-	m = true;
+	menu_inicial_activo = true;
 	menu_inicial = nullptr;
 	menu_ajustes = nullptr;
 	menu_jugar = nullptr;
@@ -153,7 +153,7 @@ void Menu::evento()
 
 			else if (e.type == SDL_KEYDOWN)
 			{
-				if (m == true && e.key.keysym.sym == SDLK_ESCAPE)
+				if (menu_inicial_activo == true && e.key.keysym.sym == SDLK_ESCAPE)
 				{
 					running = false;
 				}
@@ -161,7 +161,7 @@ void Menu::evento()
 				if (a == true && e.key.keysym.sym == SDLK_ESCAPE)
 				{
 					currentimage = menu_inicial;
-					m = true;
+					menu_inicial_activo = true;
 					a = false;
 
 				}
@@ -190,7 +190,7 @@ void Menu::evento()
 				if (e.button.clicks == 2 && currentimage == menu_jugar)
 				{
 					running = false;
-					m = false;
+					menu_inicial_activo = false;
 					tablero_running = true;
 				}
 
@@ -202,7 +202,7 @@ void Menu::evento()
 				if (e.button.clicks == 2 && currentimage == menu_ajustes)
 				{
 					currentimage = ajustes_inicial;
-					i = false;
+					menu_inicial_activo = false;
 					a = true;
 				}
 
@@ -225,7 +225,7 @@ void Menu::evento()
 				{
 					currentimage = menu_inicial;
 					a = false;
-					m = true;
+					menu_inicial_activo = true;
 				}
 
 				//menu tamano
@@ -277,16 +277,13 @@ void Menu::evento()
 					a = true;
 					s = false;
 				}
-
-
-
 			}
 
 			//posicion del raton
 			else if (e.type == SDL_MOUSEMOTION)
 			{
 				//menu inicial
-				if (m == true)
+				if (menu_inicial_activo == true)
 				{
 					if (e.button.y > 180 && e.button.y < 220)
 						currentimage = menu_jugar;
@@ -314,7 +311,7 @@ void Menu::evento()
 				}
 
 
-				//menu tamaño
+				//menu tamaÃ±o
 
 				else if (t == true)
 				{
@@ -340,14 +337,7 @@ void Menu::evento()
 					else
 						currentimage = sonido_inicial;
 				}
-
-
-
-
 			}
-
-
-
 
 			//escribir texto
 			else if (e.type == SDL_TEXTINPUT || e.type == SDL_KEYDOWN)
@@ -360,13 +350,28 @@ void Menu::evento()
 
 				std::cout << text << std::endl;
 			}
-
-
 		}
-
 		SDL_BlitSurface(currentimage, NULL, windowsurface, &drawingrect);
 		SDL_UpdateWindowSurface(window);
 	}
+}
 
+bool Menu::getMenuTamano() {
+	return Grande;
+}
 
+bool Menu::getSonido() {
+	return sonido;
+}
+
+bool Menu::getTableroRunning() {
+	return tablero_running;
+}
+
+int Menu::getAltura() {
+	return altura;
+}
+
+int Menu::getAnchura() {
+	return anchura;
 }

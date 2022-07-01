@@ -1,5 +1,5 @@
 #include "Pieza.h"
 
-Pieza::Pieza() {
+void Pieza::dibujar(Pos) {
 
 }

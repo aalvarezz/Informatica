@@ -1,18 +1,33 @@
 #include "freeglut.h"
+#include "Coordinador.h"
 
 //Prototipos de los callbacks
 void OnDraw(void); //esta funcion sera llamada para dibujar
 void OnMouseClick(int, int, int, int);
 void OnMotion(int, int);
 
-//DeclaraciÛn de los objetos globales donde se desarrolla toda la gestiÛn del juego
-//Coordinador coordinador;
-//Menu menu;
+//Declaraci√≥n de los objetos globales donde se desarrolla toda la gesti√≥n del juego
+
+Coordinador coordinador;
+
 
 int main(int argc, char* argv[]) {
 
+	coordinador.Inicializa();
+
+
+	glutDisplayFunc(OnDraw);
+	glutMouseFunc(OnMouseClick);
+	glutMotionFunc(OnMotion);
+
+	//pasarle el control a GLUT,que llamara a los callbacks
+	glutMainLoop();
+
+	return 0;
+
 	/*
-	//InicializaciÛn
+	//Inicializaci√≥n
+	
 	menu.inicializa();
 
 	SDL_Init(SDL_INIT_VIDEO);
@@ -71,10 +86,10 @@ void OnDraw(void) {
 	glLoadIdentity();
 
 	gluLookAt(8.75, 8.75, 34,  // posicion del ojo
-		8.75, 8.75, 0,      // hacia quÈ punto mira  (8.75, 8.75, 0) 
+		8.75, 8.75, 0,      // hacia qu√© punto mira  (8.75, 8.75, 0) 
 		0.0, 1.0, 0.0);      // definimos hacia arriba (eje Z)                          SEGURO??  
 
-	//CÛdigo de dibujo
+	//C√≥digo de dibujo
 	//coordinador.Dibuja();
 
 	//Promueve el contenido del back buffer para poder realizar todos los cambios necesarios en la pantalla
@@ -84,7 +99,7 @@ void OnDraw(void) {
 void OnMouseClick(int button, int state, int x, int y) {
 	//coordinador.Tecla(button, state, x, y);
 
-		//Llamada a funciÛn clicar/dejar de clicar de Juego/Coordinador
+		//Llamada a funci√≥n clicar/dejar de clicar de Juego/Coordinador
 
 	glutPostRedisplay();
 }
@@ -92,7 +107,37 @@ void OnMouseClick(int button, int state, int x, int y) {
 void OnMotion(int x, int y) {
 	//coordinador.Movimiento(x, y);
 
-		//Llamada a funciÛn arrastrar de Juego/Coordinador
+		//Llamada a funci√≥n arrastrar de Juego/Coordinador
 
+	glutPostRedisplay();
+}
+
+
+void OnDraw(void) {
+	//Borrado de la pantalla	
+	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+
+	//Para definir el punto de vista
+	glMatrixMode(GL_MODELVIEW);
+	glLoadIdentity();
+
+	gluLookAt(8.75, 8.75, 34,  // posicion del ojo
+		8.75, 8.75, 0,      // hacia que punto mira  (0,0,0) 
+		0.0, 1.0, 0.0);      // definimos hacia arriba (eje Z)   
+
+	//aqui es donde hay que poner el c√≥digo de dibujo
+	coordinador.Dibuja();
+
+	//Promueve el contenido del back buffer para poder realizar todos los cambios necesarios en la pantalla
+	glutSwapBuffers();
+}
+
+void OnMouseClick(int button, int state, int x, int y) {
+	coordinador.cambioEstado(button, state, x, y);
+	glutPostRedisplay();
+}
+
+void Motion(int x, int y) {
+	coordinador.Movimiento(x, y);
 	glutPostRedisplay();
 }
