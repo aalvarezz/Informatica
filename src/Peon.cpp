@@ -1,9 +1,8 @@
 #pragma once
 #include "Peon.h"
 
-bool Peon::comprueba(Tablero* tablero, Pos inicio, Pos fin) const{
+bool Peon::comprueba(Tablero* tablero, Pos inicio, Pos fin) const {
 
-	bool color = this->getColor();
 	Pos posaux1(0, 1), posaux2(-1, 1),  posaux3(1, 1), posaux4(0, -1), posaux5(-1, -1), posaux6(1, -1);
 
 	switch (color) {

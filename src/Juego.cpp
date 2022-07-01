@@ -37,33 +37,33 @@ void Juego::inicializar() {
 				tablero.inicializar(nullptr, i, j);
 			if (i == 1) { //Peones, hay que diferenciar entre color
 				piezas[i][j] = new Peon(0);
-				tablero.inicializar(&piezas[i][j], i, j);
+				tablero.inicializar(piezas[i][j], i, j);
 			}
 			if (i == 6) { //Peones, hay que diferenciar entre color
 				piezas[i - 4][j] = new Peon(1);
-				tablero.inicializar(&piezas[i - 4][j], i, j);
+				tablero.inicializar(piezas[i - 4][j], i, j);
 			}
 			if (i == 0) { //blancas
 				switch (j) {
 				case 0: case 7:
 					piezas[i][j] = new Torre(0); //torres
-					tablero.inicializar(&piezas[i][j], i, j);
+					tablero.inicializar(piezas[i][j], i, j);
 					break;
 				case 1: case 6:
 					piezas[i][j] = new Caballo(0); //caballos
-					tablero.inicializar(&piezas[i][j], i, j);
+					tablero.inicializar(piezas[i][j], i, j);
 					break;
 				case 2: case 5:
 					piezas[i][j] = new Alfil(0); //alfiles
-					tablero.inicializar(&piezas[i][j], i, j);
+					tablero.inicializar(piezas[i][j], i, j);
 					break;
 				case 3:
 					piezas[i][j] = new Dama(0); //dama
-					tablero.inicializar(&piezas[i][j], i, j);
+					tablero.inicializar(piezas[i][j], i, j);
 					break;
 				case 4:
 					piezas[i][j] = new Rey(0); //rey
-					tablero.inicializar(&piezas[i][j], i, j);
+					tablero.inicializar(piezas[i][j], i, j);
 					break;
 				default: break;
 				}
@@ -72,23 +72,23 @@ void Juego::inicializar() {
 				switch (j) {
 				case 0: case 7:
 					piezas[i - 4][j] = new Torre(1); //torres
-					tablero.inicializar(&piezas[i - 4][j], i, j);
+					tablero.inicializar(piezas[i - 4][j], i, j);
 					break;
 				case 1: case 6:
 					piezas[i - 4][j] = new Caballo(1); //caballos
-					tablero.inicializar(&piezas[i - 4][j], i, j);
+					tablero.inicializar(piezas[i - 4][j], i, j);
 					break;
 				case 2: case 5:
 					piezas[i - 4][j] = new Alfil(1); //alfiles
-					tablero.inicializar(&piezas[i - 4][j], i, j);
+					tablero.inicializar(piezas[i - 4][j], i, j);
 					break;
 				case 3:
 					piezas[i - 4][j] = new Dama(1); //dama
-					tablero.inicializar(&piezas[i - 4][j], i, j);
+					tablero.inicializar(piezas[i - 4][j], i, j);
 					break;
 				case 4:
 					piezas[i - 4][j] = new Rey(1); //rey
-					tablero.inicializar(&piezas[i - 4][j], i, j);
+					tablero.inicializar(piezas[i - 4][j], i, j);
 					break;
 				default: break;
 				}

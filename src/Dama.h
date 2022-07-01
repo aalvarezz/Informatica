@@ -3,7 +3,7 @@
 
 class Dama : public Pieza{
 public:
-	Dama(bool _color) : Pieza(_color) {};
-	virtual bool comprueba(Tablero*, Pos, Pos);
+	Dama(bool _color) : Pieza(_color) {}
+	bool comprueba(Tablero*, Pos, Pos) const;
 };
 

@@ -6,7 +6,7 @@
 class Juego {
 private:
 	Tablero tablero;
-	Pieza piezas[4][8];
+	Pieza* piezas[4][8];
 	Pos pos_inicial, pos_final;
 	Pieza* pieza_elegida;
 	int AJUSTE_X, AJUSTE_Y, LIM_TABLERO, LIM_CASILLA;
