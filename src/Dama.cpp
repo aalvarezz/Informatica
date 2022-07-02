@@ -1,7 +1,7 @@
 #pragma once
 #include "Dama.h"
 
-bool Dama::comprueba(Tablero* tablero, Pos inicio, Pos fin) const {
+bool Dama::comprueba(Tablero* tablero, Pos inicio, Pos fin) const{
 	int sentido;
 	for (int j = 1; j <= 7; j++) {
 		Pos aux1(0, j), aux2(0, -j), aux3(j, 0), aux4(-j, 0), aux5(j, j), aux6(j, -j), aux7(-j, -j), aux8(-j, j);

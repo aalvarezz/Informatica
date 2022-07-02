@@ -7,7 +7,7 @@ bool Peon::comprueba(Tablero* tablero, Pos inicio, Pos fin) const {
 
 	switch (color) {
 	case 0:		//BLANCO
-		//1.Avanza una posiciÃ³n en la columna (Movimiento normal)
+		//1.Avanza una posición en la columna (Movimiento normal)
 	
 		if (((inicio + posaux1) == fin) && (tablero->getPieza(fin) == nullptr))
 			return true;
@@ -25,7 +25,7 @@ bool Peon::comprueba(Tablero* tablero, Pos inicio, Pos fin) const {
 
 
 	case 1:		//NEGRO
-		//1.Avanza una posiciÃ³n en la columna (Movimiento normal)
+		//1.Avanza una posición en la columna (Movimiento normal)
 
 		if (((inicio + posaux4) == fin) && (tablero->getPieza(fin) == nullptr))
 			return true;

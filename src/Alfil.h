@@ -3,6 +3,6 @@
 
 class Alfil : public Pieza {
 public:
-	Alfil(bool _color) : Pieza(_color) {}
-	bool comprueba(Tablero*, Pos, Pos) const;
+	Alfil(bool _color) : Pieza(_color, 4) {};
+	virtual bool comprueba(Tablero*, Pos, Pos) const;
 };

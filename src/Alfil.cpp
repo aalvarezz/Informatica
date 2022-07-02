@@ -1,7 +1,7 @@
 #pragma once
 #include "Alfil.h"
 
-bool Alfil::comprueba(Tablero* tablero, Pos inicio, Pos fin) const {
+bool Alfil::comprueba(Tablero* tablero, Pos inicio, Pos fin) const{
 	int sentido;
 	for (int j = 1; j <= 7; j++) {
 		Pos aux1(j, j), aux2(j, -j), aux3(-j, -j), aux4(-j, j);
