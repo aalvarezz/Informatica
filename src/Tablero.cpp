@@ -23,14 +23,14 @@ void Tablero::dibujoDamero() {
 	glEnable(GL_TEXTURE_2D);
 	glBindTexture(GL_TEXTURE_2D, ETSIDI::getTexture("imagenes/maderaV.png").id);
 	glDisable(GL_LIGHTING);
-	glBegin(GL_POLYGON);//Borde izquierdo del tablero
+	glBegin(GL_POLYGON); //Borde izquierdo del tablero
 	glColor3f(1, 1, 1);
 	glTexCoord2d(0, 1); glVertex2f(0 * lado - lado / 2 - 0.8 * lado, 0 * lado - lado / 2 - 0.8 * lado);
 	glTexCoord2d(1, 1); glVertex2f(0 * lado - lado / 2, 0 * lado - lado / 2);
 	glTexCoord2d(1, 0); glVertex2f(0 * lado - lado / 2, 7 * lado + lado / 2);
 	glTexCoord2d(0, 0); glVertex2f(0 * lado - lado / 2 - 0.8 * lado, 7 * lado + lado / 2 + 0.8 * lado);
 	glEnd();
-	glBegin(GL_POLYGON);//Borde derecho del tablero
+	glBegin(GL_POLYGON); //Borde derecho del tablero
 	glColor3f(1, 1, 1);
 	glTexCoord2d(0, 1); glVertex2f(7 * lado + lado / 2, 0 * lado - lado / 2);
 	glTexCoord2d(1, 1); glVertex2f(7 * lado + lado / 2 + 0.8 * lado, 0 * lado - lado / 2 - 0.8 * lado);
@@ -42,14 +42,14 @@ void Tablero::dibujoDamero() {
 	glEnable(GL_TEXTURE_2D);
 	glBindTexture(GL_TEXTURE_2D, ETSIDI::getTexture("imagenes/maderaH.png").id);
 	glDisable(GL_LIGHTING);
-	glBegin(GL_POLYGON);//Borde inferior del tablero
+	glBegin(GL_POLYGON); //Borde inferior del tablero
 	glColor3f(1, 1, 1);
 	glTexCoord2d(0, 1); glVertex2f(0 * lado - lado / 2 - 0.8 * lado, 0 * lado - lado / 2 - 0.8 * lado);
 	glTexCoord2d(1, 1); glVertex2f(7 * lado + lado / 2 + 0.8 * lado, 0 * lado - lado / 2 - 0.8 * lado);
 	glTexCoord2d(1, 0); glVertex2f(7 * lado + lado / 2, 0 * lado - lado / 2);
 	glTexCoord2d(0, 0); glVertex2f(0 * lado - lado / 2, 0 * lado - lado / 2);
 	glEnd();
-	glBegin(GL_POLYGON);//Borde superior del tablero
+	glBegin(GL_POLYGON); //Borde superior del tablero
 	glColor3f(1, 1, 1);
 	glTexCoord2d(0, 1); glVertex2f(0 * lado - lado / 2, 7 * lado + lado / 2);
 	glTexCoord2d(1, 1); glVertex2f(7 * lado + lado / 2, 7 * lado + lado / 2);

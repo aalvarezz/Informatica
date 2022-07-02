@@ -1,5 +1,4 @@
 #include "Juego.h"
-
 #include "Peon.h"
 #include "Rey.h"
 #include "Dama.h"
@@ -27,43 +26,43 @@ Juego::Juego() {
 	enroqueblancoizq = 0;
 	enroquenegroder = 0;
 	enroquenegroizq = 0;
-  
 }
 
 void Juego::inicializar() {
+	Pieza* pieza_ini;
 	for (int i = 0; i < 8; i++) {
 		for (int j = 0; j < 8; j++) {
 			if (i > 1 && i < 6) // Vacías las casillas centrales
 				tablero.inicializar(nullptr, i, j);
 			if (i == 1) { //Peones, hay que diferenciar entre color
-				piezas[i][j] = new Peon(0);
-				tablero.inicializar(&piezas[i][j], i, j);
+				pieza_ini = new Peon(0);
+				tablero.inicializar(pieza_ini, i, j);
 			}
 			if (i == 6) { //Peones, hay que diferenciar entre color
-				piezas[i - 4][j] = new Peon(1);
-				tablero.inicializar(&piezas[i - 4][j], i, j);
+				pieza_ini = new Peon(1);
+				tablero.inicializar(pieza_ini, i, j);
 			}
 			if (i == 0) { //blancas
 				switch (j) {
 				case 0: case 7:
-					piezas[i][j] = new Torre(0); //torres
-					tablero.inicializar(&piezas[i][j], i, j);
+					pieza_ini = new Torre(0); //torres
+					tablero.inicializar(pieza_ini, i, j);
 					break;
 				case 1: case 6:
-					piezas[i][j] = new Caballo(0); //caballos
-					tablero.inicializar(&piezas[i][j], i, j);
+					pieza_ini = new Caballo(0); //caballos
+					tablero.inicializar(pieza_ini, i, j);
 					break;
 				case 2: case 5:
-					piezas[i][j] = new Alfil(0); //alfiles
-					tablero.inicializar(&piezas[i][j], i, j);
+					pieza_ini = new Alfil(0); //alfiles
+					tablero.inicializar(pieza_ini, i, j);
 					break;
 				case 3:
-					piezas[i][j] = new Dama(0); //dama
-					tablero.inicializar(&piezas[i][j], i, j);
+					pieza_ini = new Dama(0); //dama
+					tablero.inicializar(pieza_ini, i, j);
 					break;
 				case 4:
-					piezas[i][j] = new Rey(0); //rey
-					tablero.inicializar(&piezas[i][j], i, j);
+					pieza_ini = new Rey(0); //rey
+					tablero.inicializar(pieza_ini, i, j);
 					break;
 				default: break;
 				}
@@ -71,24 +70,24 @@ void Juego::inicializar() {
 			if (i == 7) { //negras
 				switch (j) {
 				case 0: case 7:
-					piezas[i - 4][j] = new Torre(1); //torres
-					tablero.inicializar(&piezas[i - 4][j], i, j);
+					pieza_ini = new Torre(1); //torres
+					tablero.inicializar(pieza_ini, i, j);
 					break;
 				case 1: case 6:
-					piezas[i - 4][j] = new Caballo(1); //caballos
-					tablero.inicializar(&piezas[i - 4][j], i, j);
+					pieza_ini = new Caballo(1); //caballos
+					tablero.inicializar(pieza_ini, i, j);
 					break;
 				case 2: case 5:
-					piezas[i - 4][j] = new Alfil(1); //alfiles
-					tablero.inicializar(&piezas[i - 4][j], i, j);
+					pieza_ini = new Alfil(1); //alfiles
+					tablero.inicializar(pieza_ini, i, j);
 					break;
 				case 3:
-					piezas[i - 4][j] = new Dama(1); //dama
-					tablero.inicializar(&piezas[i - 4][j], i, j);
+					pieza_ini = new Dama(1); //dama
+					tablero.inicializar(pieza_ini, i, j);
 					break;
 				case 4:
-					piezas[i - 4][j] = new Rey(1); //rey
-					tablero.inicializar(&piezas[i - 4][j], i, j);
+					pieza_ini = new Rey(1); //rey
+					tablero.inicializar(pieza_ini, i, j);
 					break;
 				default: break;
 				}
@@ -246,7 +245,7 @@ bool Juego::movimientoValido() {
 	//Cï¿½DIGO EXCEPCIONES
 
 	//MOVER DE 2 EL PEON. IMPORTANTE: SE HA AÃADIDO UN FLAG EN PIEZA QUE INDICA QUE LA PIEZA NUNCA SE HA MOVIDO ANTES. 
-	if (pieza_elegida == "PEON" && pieza_elegida->posoriginal == 0)  //si la pieza es un peon y nunca se ha movido
+	if (pieza_elegida->getTipo() == 1 && !pieza_elegida->checkOrigen())  //si la pieza es un peon y nunca se ha movido
 	{
 		if (pos_final.fila == pos_inicial.fila - 2 && pos_final.fila == NULL) //si se mueve 2 y la casilla final esta vacia
 			return true;
@@ -255,9 +254,12 @@ bool Juego::movimientoValido() {
 	}
 
 	//ENROQUE BLANCO
-	if (pieza_elegida == "REY BLANCO" && pieza_elegida->posoriginal == 0) //MOVER EL REY BLANCO SIEMPRE Y CUANDO NO HAYA SIDO MOVIDO ANTES
+	if (pieza_elegida->getTipo() == 2 && !pieza_elegida->getColor() && !pieza_elegida->checkOrigen()) //MOVER EL REY BLANCO SIEMPRE Y CUANDO NO HAYA SIDO MOVIDO ANTES
 	{
-		if (pos_final.columna == pos_inicial.columna + 2 && "TORRE BLANCA DERECHA".posoriginal == 0)
+		Pos torre_blanca_dcha;
+		torre_blanca_dcha.fila = 0;
+		torre_blanca_dcha.columna = 7;
+		if (pos_final.columna == pos_inicial.columna + 2 && !tablero.getPieza(torre_blanca_dcha)->checkOrigen())
 			//QUE LA TORRE DEL LADO AL QUE HAYAMOS MOVIDO EL REY NO SE HAYA MOVIDO NUNCA. PERDÃN SI ESA NO ES LA POSICIÃN CORRECTA DEL REY EN EL ENROQUE
 		{
 			if (pos_final.columna + 1 == NULL && pos_final.columna + 2 == NULL)
@@ -266,7 +268,7 @@ bool Juego::movimientoValido() {
 				return true;
 			}
 		}
-		if (pos_final.columna == pos_inicial.columna - 2 && "TORRE BLANCA DERECHA".posoriginal == 0)
+		if (pos_final.columna == pos_inicial.columna - 2 && !tablero.getPieza(torre_blanca_dcha)->checkOrigen())
 			//QUE LA TORRE DEL LADO AL QUE HAYAMOS MOVIDO EL REY NO SE HAYA MOVIDO NUNCA. PERDÃN SI ESA NO ES LA POSICIÃN CORRECTA DEL REY EN EL ENROQUE
 		{
 			if (pos_final.columna - 1 == NULL && pos_final.columna - 2 == NULL && pos_final.columna - 3 == NULL)
@@ -278,9 +280,12 @@ bool Juego::movimientoValido() {
 	}
 
 	//ENROQUE NEGRO
-	if (pieza_elegida == "REY NEGRO" && pieza_elegida->posoriginal == 0) //MOVER EL REY NEGRO SIEMPRE Y CUANDO NO HAYA SIDO MOVIDO ANTES
+	if (pieza_elegida->getTipo() == 2 && pieza_elegida->getColor() && !pieza_elegida->checkOrigen()) //MOVER EL REY NEGRO SIEMPRE Y CUANDO NO HAYA SIDO MOVIDO ANTES
 	{
-		if (pos_final.columna == pos_inicial.columna + 2 && "TORRE NEGRA DERECHA".posoriginal == 0)
+		Pos torre_negra_dcha;
+		torre_negra_dcha.fila = 7;
+		torre_negra_dcha.columna = 7;
+		if (pos_final.columna == pos_inicial.columna + 2 && !tablero.getPieza(torre_negra_dcha)->checkOrigen())
 			//QUE LA TORRE DEL LADO AL QUE HAYAMOS MOVIDO EL REY NO SE HAYA MOVIDO NUNCA. PERDÃN SI ESA NO ES LA POSICIÃN CORRECTA DEL REY EN EL ENROQUE
 		{
 			if (pos_final.columna + 1 == NULL && pos_final.columna + 2 == NULL)
@@ -289,7 +294,7 @@ bool Juego::movimientoValido() {
 				return true;
 			}
 		}
-		if (pos_final.columna == pos_inicial.columna - 2 && "TORRE NEGRA DERECHA".posoriginal == 0)
+		if (pos_final.columna == pos_inicial.columna - 2 && !tablero.getPieza(torre_negra_dcha)->checkOrigen())
 			//QUE LA TORRE DEL LADO AL QUE HAYAMOS MOVIDO EL REY NO SE HAYA MOVIDO NUNCA. PERDÃN SI ESA NO ES LA POSICIÃN CORRECTA DEL REY EN EL ENROQUE
 		{
 			if (pos_final.columna - 1 == NULL && pos_final.columna - 2 == NULL && pos_final.columna - 3 == NULL)
@@ -304,9 +309,9 @@ bool Juego::movimientoValido() {
 	if (pieza_elegida->comprueba(&tablero, pos_inicial, pos_final))  //Provisional, esto solo debe ser así en el caso de que no se esté dando ninguna excepción o algo de mayor prioridad.
 	{
 		//CONDICION DE CORONACION
-		if (pieza_elegida == "PEON NEGRO" && pos_inicial.fila == 1 && pos_final.fila == 0)
+		if (pieza_elegida->getTipo() == 1 && pieza_elegida->getColor() && pos_inicial.fila == 1 && pos_final.fila == 0)
 			coronegra = 1;
-		if (pieza_elegida == "PEON BLANCO" && pos_inicial.fila == 1 && pos_final.fila == 0)
+		if (pieza_elegida->getTipo() == 1 && !pieza_elegida->getColor() && pos_inicial.fila == 1 && pos_final.fila == 0)
 			coroblanca = 1;
 		return true;
 	}
@@ -315,61 +320,43 @@ bool Juego::movimientoValido() {
 
 //LAS CORONACIONES BLANCAS Y NEGRAS SE TRATAN INDEPENDIENTEMENTES, A LA ESPERA DE VER CÃMO SON TRATADAS LAS PIEZAS
 
-void Juego::coronacionBlanca() {
-	//Mensajes
+void Juego::coronacion() {
 	int elegido = 0;
+	Pieza* pieza_aux;
+
+	//Mensajes
 	cout << endl << "Dama: 3" << endl;
 	cout << "Alfil: 4" << endl;
 	cout << "Caballo: 5" << endl;
 	cout << "Torre: 6" << endl;
+
 	do {
 		elegido = 0;
 		cout << "Elige que pieza quieres: ";
 		cin >> elegido;
 		switch (elegido) {
 		case 3:
-			pieza_elegida.setTipo(3);
+			pieza_aux = new Dama(pieza_elegida->getColor());
+			tablero.quitarPieza(pos_inicial); //COMPROBAR QUE POS ES LA ADECUADA
+			tablero.setPieza(pieza_aux, pos_inicial);
 			break;
 		case 4:
-			pieza_elegida.setTipo(4);
+			pieza_aux = new Alfil(pieza_elegida->getColor());
+			tablero.quitarPieza(pos_inicial); //COMPROBAR QUE POS ES LA ADECUADA
+			tablero.setPieza(pieza_aux, pos_inicial);
 			break;
 		case 5:
-			pieza_elegida.setTipo(5);
+			pieza_aux = new Caballo(pieza_elegida->getColor());
+			tablero.quitarPieza(pos_inicial); //COMPROBAR QUE POS ES LA ADECUADA
+			tablero.setPieza(pieza_aux, pos_inicial);
 			break;
 		case 6:
-			pieza_elegida.setTipo(6);
+			pieza_aux = new Torre(pieza_elegida->getColor());
+			tablero.quitarPieza(pos_inicial); //COMPROBAR QUE POS ES LA ADECUADA
+			tablero.setPieza(pieza_aux, pos_inicial);
 			break;
 		default:
 			cout << endl << "Pieza no valida. ";
 		}
 	} while (elegido > 6 || elegido < 3);
-}
-
-void Juego::coronacionNegra() {
-	int elegido = 0;
-	cout << endl << "Dama: 9" << endl;
-	cout << "Alfil: 10" << endl;
-	cout << "Caballo: 11" << endl;
-	cout << "Torre: 12" << endl;
-	do {
-		elegido = 0;
-		cout << "Elige que pieza quieres: ";
-		std::cin >> elegido;
-		switch (elegido) {
-		case 3:
-			pieza_elegida.setTipo(9);
-			break;
-		case 4:
-			pieza_elegida.setTipo(10);
-			break;
-		case 5:
-			pieza_elegida.setTipo(11);
-			break;
-		case 6:
-			pieza_elegida.setTipo(12);
-			break;
-		default:
-			cout << endl << "Pieza no valida. ";
-		}
-	} while (elegido > 12 || elegido < 9);
 }

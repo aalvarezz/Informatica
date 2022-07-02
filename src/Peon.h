@@ -3,6 +3,6 @@
 
 class Peon : public Pieza {
 public:
-	Peon(bool _color) : Pieza(_color) {};
+	Peon(bool _color) : Pieza(_color, 1) {};
 	virtual bool comprueba(Tablero*, Pos, Pos) const;
 };

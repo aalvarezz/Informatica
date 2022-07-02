@@ -1,8 +1,7 @@
 #pragma once
 #include "Torre.h"
 
-bool Torre::comprueba(Tablero* tablero, Pos inicio, Pos fin) {
-	bool color = this->getColor();
+bool Torre::comprueba(Tablero* tablero, Pos inicio, Pos fin) const{
 	int sentido;
 	for (int j = 1; j <= 7; j++) {
 		Pos aux1(0, j), aux2(0, -j), aux3(j, 0), aux4(-j, 0);

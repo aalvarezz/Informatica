@@ -1,5 +1,8 @@
 #pragma once
-#include "Pieza.h"
+//#include "Pieza.h"
+#include "Pos.h"
+
+class Pieza;
 
 class Tablero {
 private:
@@ -8,6 +11,10 @@ private:
 	Pieza* pieza_elegida; //pieza que se está movimiendo, necesario la funcionalidad de arrastrar
 public:
 	Tablero();
+
+	/*
+		PROBLEMA IMPORTANTE: inicializar() y setPieza() hacen lo mismo
+	*/
 
 	void inicializar(Pieza*, int, int);
 	void dibujoDamero();
