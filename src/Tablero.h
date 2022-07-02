@@ -3,9 +3,10 @@
 
 class Tablero {
 private:
-	float lado;
+	float lado; //lado de las casillas. NO ESTÁ INICIALIZADO PORQUE NO SÉ CUÁNTO PONER :)
 	Pieza* piezas[8][8]; //nombre/tamaño provisionales
 	Pieza* pieza_elegida; //pieza que se está movimiendo, necesario la funcionalidad de arrastrar
+	bool posible; //hace posible visualizar las posibles casillas de movimiento
 public:
 	Tablero();
 
@@ -17,7 +18,7 @@ public:
 	void quitarPieza(Pos);
 	void setPieza(Pieza*, Pos); //PROBABLEMENTE HAYA QUE HACER AJUSTES, YA QUE moverPieza() = quitarPieza() + setPieza()
 
-	//void setPosibleCasilla(); //muy provisional, pero se va a implementar en esta clase. Hay que pensar forma de borrar posibles casillas
+	void setPosibleCasilla(Pos); //muy provisional, pero se va a implementar en esta clase. Hay que pensar forma de borrar posibles casillas
 	Pieza* getPieza(Pos);
 	//Pieza* getPiezaElegida();
 

@@ -40,3 +40,21 @@ void Caballo::dibujar(Pos posicion)
 		break;
 	}
 }
+
+void Caballo::posibleCasilla(Tablero* tablero, Pos posicion)
+{
+
+	//el bucle "for" se emplea para barrer todos los posibles movimientos de las piezas
+	//las condiciones dentro del bucle verifican si los posibles movimientos de la pieza están limitados de algun modo.
+	//si no lo estuvieran, se haría llamada al método con el que se dibujan los posibles movimientos de la pieza
+
+	for (int j = -2; j <= 2; j++) {
+		for (int k = -2; k <= 2; k++) {
+			if ((abs(j) != abs(k)) && (j != 0) && (k != 0)) {
+				Pos posaux(j, k);
+				if ((this->getColor() != tablero->getPieza(posaux)->getColor()) || (tablero->getPieza(posaux) == nullptr))
+					tablero->setPosibleCasilla(posaux);
+			}
+		}
+	}
+}

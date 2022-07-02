@@ -36,3 +36,18 @@ void Rey::dibujar(Pos posicion)
 		break;
 	}
 }
+
+void Rey::posibleCasilla(Tablero* tablero, Pos posicion)
+{
+	//el bucle "for" se emplea para barrer todos los posibles movimientos de las piezas
+	//las condiciones dentro del bucle verifican si los posibles movimientos de la pieza están limitados de algun modo.
+	//si no lo estuvieran, se haría llamada al método con el que se dibujan los posibles movimientos de la pieza
+	for (int j = -1; j <= 1; j++) {
+		for (int k = -1; k <= 1; k++) {
+			Pos posaux(j, k);
+			if ((j != 0) && (k != 0) &&
+				((this->getColor() != tablero->getPieza(posaux)->getColor()) || (tablero->getPieza(posaux) == nullptr)))
+				tablero->setPosibleCasilla(posaux);
+		}
+	}
+}

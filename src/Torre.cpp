@@ -65,6 +65,10 @@ void Torre::dibujar(Pos posicion)
 	bool color = this->getColor();
 	//en funcion del color de la pieza la dibuja en su posicion correspondiente
 
+	//los bucles "for" se emplean para barrer todos los posibles movimientos de las piezas
+	//las condiciones dentro de los bucles verifican si los posibles movimientos de la pieza están limitados de algun modo.
+	//si no lo estuvieran, se haría llamada al método con el que se dibujan los posibles movimientos de la pieza
+
 	switch (color) {
 	case 0:
 		TorreB.setCenter(lado / 2, lado / 2);
@@ -82,5 +86,73 @@ void Torre::dibujar(Pos posicion)
 		TorreN.draw();
 		glTranslatef(-posicion.fila, -posicion.columna, -0.1f);
 		break;
+	}
+}
+
+void Torre::posibleCasilla(Tablero* tablero, Pos inicio)
+{
+	bool color = this->getColor();
+	//Hacia arriba
+	for (int j = 1; j <= 7; j++) {
+		Pos posaux5(0, j);
+		posaux5.columna = posaux5.columna + inicio.columna;
+		posaux5.fila = posaux5.fila + inicio.fila;
+		if (tablero->getPieza(posaux5)->getColor() == color)
+			break;
+		else if (tablero->getPieza(posaux5)->getColor() != color)
+		{
+			tablero->setPosibleCasilla(posaux5);
+			break;
+		}
+		else
+			tablero->setPosibleCasilla(posaux5);
+	}
+
+	//Hacia abajo
+	for (int j = 1; j <= 7; j++) {
+		Pos posaux6(0, -j);
+		posaux6.columna = posaux6.columna + inicio.columna;
+		posaux6.fila = posaux6.fila + inicio.fila;
+		if (tablero->getPieza(posaux6)->getColor() == color)
+			break;
+		else if (tablero->getPieza(posaux6)->getColor() != color)
+		{
+			tablero->setPosibleCasilla(posaux6);
+			break;
+		}
+		else
+			tablero->setPosibleCasilla(posaux6);
+	}
+
+	//Derecha
+	for (int j = 1; j <= 7; j++) {
+		Pos posaux7(j, 0);
+		posaux7.columna = posaux7.columna + inicio.columna;
+		posaux7.fila = posaux7.fila + inicio.fila;
+		if (tablero->getPieza(posaux7)->getColor() == color)
+			break;
+		else if (tablero->getPieza(posaux7)->getColor() != color)
+		{
+			tablero->setPosibleCasilla(posaux7);
+			break;
+		}
+		else
+			tablero->setPosibleCasilla(posaux7);
+	}
+
+	//Izquierda
+	for (int j = 1; j <= 7; j++) {
+		Pos posaux8(-j, 0);
+		posaux8.columna = posaux8.columna + inicio.columna;
+		posaux8.fila = posaux8.fila + inicio.fila;
+		if (tablero->getPieza(posaux8)->getColor() == color)
+			break;
+		else if (tablero->getPieza(posaux8)->getColor() != color)
+		{
+			tablero->setPosibleCasilla(posaux8);
+			break;
+		}
+		else
+			tablero->setPosibleCasilla(posaux8);
 	}
 }

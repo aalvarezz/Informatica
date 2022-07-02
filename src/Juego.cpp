@@ -262,7 +262,7 @@ bool Juego::movimientoValido() {
 		{
 			if (pos_final.columna + 1 == NULL && pos_final.columna + 2 == NULL)
 			{
-				enroqueblancoder == 1;
+				enroqueblancoder = 1;
 				return true;
 			}
 		}
@@ -271,7 +271,7 @@ bool Juego::movimientoValido() {
 		{
 			if (pos_final.columna - 1 == NULL && pos_final.columna - 2 == NULL && pos_final.columna - 3 == NULL)
 			{
-				enroqueblancoizq == 1;
+				enroqueblancoizq = 1;
 				return true;
 			}
 		}
@@ -285,7 +285,7 @@ bool Juego::movimientoValido() {
 		{
 			if (pos_final.columna + 1 == NULL && pos_final.columna + 2 == NULL)
 			{
-				enroquenegroder == 1;
+				enroquenegroder = 1;
 				return true;
 			}
 		}
@@ -294,7 +294,7 @@ bool Juego::movimientoValido() {
 		{
 			if (pos_final.columna - 1 == NULL && pos_final.columna - 2 == NULL && pos_final.columna - 3 == NULL)
 			{
-				enroquenegroizq == 1;
+				enroquenegroizq = 1;
 				return true;
 			}
 		}
