@@ -3,7 +3,6 @@
 //#include "Pos.h"
 
 class Pieza {
-//private:
 protected:
 
 	//Pos pos; //provisional
@@ -14,7 +13,6 @@ public:
 	Pieza() {};
 	Pieza(bool _color, unsigned short int _tipo) : color(_color), tipo(_tipo), origen(true) {};
 	void dibujar(Pos);
-	//dibuja la pieza en su posici�n actual (si la pieza sabe su posici�n, la funci�n no necesita argumentos)
 
 	virtual bool comprueba(Tablero*, Pos, Pos) { return false; }
 	//calcula si cierto movimiento es v�lido para la pieza. considera las reglas normales de la pieza consultando el
