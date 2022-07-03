@@ -12,7 +12,7 @@ private:
 	bool tablero_running;
 
 	//menu inicial
-	bool m;
+	bool menu_inicial_activo;
 	SDL_Surface* menu_inicial;
 	SDL_Surface* menu_ajustes;
 	SDL_Surface* menu_jugar;
@@ -42,7 +42,6 @@ private:
 	SDL_Surface* tamano_volver;
 
 public:
-
 	Menu();
 
 	void inicializa();
@@ -57,7 +56,5 @@ public:
 	void evento();
 
 	//bool getMenuTamano();
-
-
 
 };

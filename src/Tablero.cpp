@@ -107,4 +107,3 @@ void Tablero::setLado(float l) {
 float Tablero::getLado() {
 	return lado;
 }
-
