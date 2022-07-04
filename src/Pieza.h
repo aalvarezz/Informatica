@@ -1,17 +1,15 @@
-
 #pragma once
 #include "Tablero.h"
 //#include "Pos.h"
 
 class Pieza {
-
-//private:
+	//private:
 protected:
 
 	//Pos pos; //provisional
 	bool color, origen;
 	unsigned short int tipo;
-	int LIM_CASILLA = 91, AJUSTE_X = 86, AJUSTE_Y = 813;
+	int LIM_CASILLA = 60, AJUSTE_X = 58, AJUSTE_Y = 540;
 
 public:
 	Pieza() {};
@@ -23,14 +21,10 @@ public:
 	//calcula si cierto movimiento es v�lido para la pieza. considera las reglas normales de la pieza consultando el
 	//estado actual del tablero, sin tener en cuenta excepciones (mayor prioridad)
 
+	virtual void posibleCasilla(Tablero*, Pos) {}; //en función de las reglas de movimiento de cada pieza dibuja sus posibles movimientos al ser seleccionada
+
 	unsigned short int getTipo() { return tipo; }
 	bool getColor() { return color; }
 	void setOrigen() { origen = false; } //probablemente mejorable
 	bool checkOrigen() { return origen; }
-
-	/*provisional*/
-	//void setPos(Pos); //solo necesario en el caso de hacer definitivo que las piezas almacenen su posici�n
-	//Pos getPos();
-
-	virtual void posibleCasilla(Tablero*, Pos) {}; //en función de las reglas de movimiento de cada pieza dibuja sus posibles movimientos al ser seleccionada
 };

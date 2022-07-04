@@ -1,4 +1,3 @@
-
 #pragma once
 //#include "Pieza.h"
 #include "Pos.h"
@@ -28,9 +27,9 @@ public:
 	void quitarPieza(Pos);
 	void setPieza(Pieza*, Pos); //PROBABLEMENTE HAYA QUE HACER AJUSTES, YA QUE moverPieza() = quitarPieza() + setPieza()
 
-	void setPosibleCasilla(Pos); //muy provisional, pero se va a implementar en esta clase. Hay que pensar forma de borrar posibles casillas
 	Pieza* getPieza(Pos);
-	//Pieza* getPiezaElegida();
+
+	void setPosibleCasilla(Pos); //muy provisional, pero se va a implementar en esta clase. Hay que pensar forma de borrar posibles casillas
 
 	void setLado(float);
 	float getLado();

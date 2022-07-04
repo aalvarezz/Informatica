@@ -6,9 +6,15 @@ bool Rey::comprueba(Tablero* tablero, Pos inicio, Pos fin) {
 			Pos posaux(j, k);
 
 			posaux = posaux + inicio;
-			if ((j != 0) && (k != 0) && (posaux.fila == fin.fila && posaux.columna==fin.columna) &&
-				((color != tablero->getPieza(fin)->getColor()) || (tablero->getPieza(fin) == nullptr)))
-				return true;
+
+			if (((j != 0) || (k != 0)) && (posaux.fila == fin.fila && posaux.columna == fin.columna)) {
+				if (tablero->getPieza(fin) == nullptr) {
+					return true;
+				}
+				else if (color != tablero->getPieza(fin)->getColor()) {
+					return true;
+				}
+			}
 		}
 	}
 	return false;
@@ -60,8 +66,8 @@ void Rey::draw(float x, float y) {
 		break;
 	}
 }
-void Rey::posibleCasilla(Tablero* tablero, Pos posicion)
-{
+
+void Rey::posibleCasilla(Tablero* tablero, Pos posicion) {
 	//el bucle "for" se emplea para barrer todos los posibles movimientos de las piezas
 	//las condiciones dentro del bucle verifican si los posibles movimientos de la pieza están limitados de algun modo.
 	//si no lo estuvieran, se haría llamada al método con el que se dibujan los posibles movimientos de la pieza

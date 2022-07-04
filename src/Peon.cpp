@@ -23,6 +23,8 @@ bool Peon::comprueba(Tablero* tablero, Pos inicio, Pos fin) {
 		posaux3 = posaux3 + inicio;
 		if ((posaux3.fila == fin.fila && posaux3.columna==fin.columna) && (tablero->getPieza(fin)->getColor() != color))
 			return true;
+
+		return false;
 		break;
 
 

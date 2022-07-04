@@ -4,7 +4,7 @@
 bool Alfil::comprueba(Tablero* tablero, Pos inicio, Pos fin) {
 	int sentido = 0;
 	for (int j = 1; j <= 7; j++) {
-		Pos aux1(j, j), aux2(j, -j), aux3(-j, -j), aux4(-j, j);
+		Pos aux1(j, j), aux2(-j, j), aux3(-j, -j), aux4(j, -j);
 		aux1 = aux1 + inicio;
 		aux2 = aux2 + inicio;
 		aux3 = aux3 + inicio;
@@ -84,7 +84,7 @@ bool Alfil::comprueba(Tablero* tablero, Pos inicio, Pos fin) {
 
 	case 4: //4. Arriba izquierda
 		for (int j = 1; j <= 7; j++) {
-			Pos posaux4(-j, j);
+			Pos posaux4(j, -j);
 			posaux4 = posaux4 + inicio;
 
 			if (posaux4.fila == fin.fila && posaux4.columna == fin.columna) {
