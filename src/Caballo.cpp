@@ -82,9 +82,18 @@ void Caballo::posibleCasilla(Tablero* tablero, Pos posicion)
 	for (int j = -2; j <= 2; j++) {
 		for (int k = -2; k <= 2; k++) {
 			if ((abs(j) != abs(k)) && (j != 0) && (k != 0)) {
-				Pos posaux(j, k);
-				if ((this->getColor() != tablero->getPieza(posaux)->getColor()) || (tablero->getPieza(posaux) == nullptr))
-					tablero->setPosibleCasilla(posaux);
+				Pos posaux(j, k), ayuda;
+				ayuda = posaux + posicion;
+				if (ayuda.columna < 8 && ayuda.columna >= 0 && ayuda.fila < 8 && ayuda.fila >= 0)
+				{
+					if (tablero->getPieza(ayuda) == nullptr) {
+						tablero->setPosibleCasilla(ayuda);
+					}
+					else if (color != tablero->getPieza(ayuda)->getColor()) {
+						tablero->setPosibleCasilla(ayuda);
+					}
+					
+				}
 			}
 		}
 	}

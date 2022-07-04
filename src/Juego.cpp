@@ -108,6 +108,7 @@ void Juego::dibujar() {
 void Juego::dibujarArrastrar() {
 	if (mouse_pressed && pieza_elegida != nullptr) {
 		pieza_elegida->dibujarArrastrar(mouse_pos);
+		pieza_elegida->posibleCasilla(&tablero, pos_inicial);
 		//glutPostRedisplay();
 	}
 }
@@ -176,11 +177,12 @@ void Juego::clicRaton(bool mouseP, bool mouseR, int x, int y) {
 		cout << "mouse_released: " << mouse_released << endl;
 
 		if (!color_elegido && turno_blancas) { //Turno de las blancas
-
+			if (mouse_pressed)
+				//no hay pieza elegida aun
 			if (mouse_pressed && tablero.getPieza(pos_inicial) != nullptr && pieza_elegida == nullptr) { //(mouse_released && tablero[pos_inicial.fila][pos_inicial.columna].getEstado() && puntero_aux == NULL)
 				//Se coge una pieza
 				pieza_elegida = tablero.getPieza(pos_inicial);
-				//pieza_elegida->posibleCasilla(&tablero, pos_inicial);
+				pieza_elegida->posibleCasilla(&tablero, pos_inicial);
 			}
 			//suelto en una casilla válida de la pieza que mueves (tienes q estar moviendo una pieza)
 

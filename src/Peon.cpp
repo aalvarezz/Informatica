@@ -100,7 +100,8 @@ void Peon::draw(float x, float y) {
 void Peon::posibleCasilla(Tablero* tablero, Pos inicio)
 {
 	bool color = this->getColor();
-	Pos posaux1(0, 1), posaux2(-1, 1), posaux3(1, 1), posaux4(0, -1), posaux5(-1, -1), posaux6(1, -1);
+
+	Pos posaux1(1, 0), posaux2(1, -1), posaux3(1, 1), posaux4(-1, 0), posaux5(-1, -1), posaux6(-1, 1);
 
 	//el switch siguiente verifica los posibles movimientos del peon en funcion del color de este.
 	//todo movimiento posible que pueda realizar se mostrara en pantalla
@@ -122,16 +123,19 @@ void Peon::posibleCasilla(Tablero* tablero, Pos inicio)
 			tablero->setPosibleCasilla(posaux1);
 
 		//2.Diagonal izq (Al comer otra ficha)
-
-		if (tablero->getPieza(posaux2)->getColor() != color)
-			tablero->setPosibleCasilla(posaux2);
+		if (tablero->getPieza(posaux2) != nullptr)
+		{
+			if (tablero->getPieza(posaux2)->getColor() != color)
+				tablero->setPosibleCasilla(posaux2);
+		}
 
 		//3.Diagonal dcha (Al comer otra ficha)
-
-		if (tablero->getPieza(posaux3)->getColor() != color)
-			tablero->setPosibleCasilla(posaux3);
+		if (tablero->getPieza(posaux3) != nullptr)
+		{
+			if (tablero->getPieza(posaux3)->getColor() != color || tablero->getPieza(posaux3) == NULL)
+				tablero->setPosibleCasilla(posaux3);
+		}
 		break;
-
 
 	case 1:		//NEGRO
 		//1.Avanza una posición en la columna (Movimiento normal)
@@ -149,13 +153,19 @@ void Peon::posibleCasilla(Tablero* tablero, Pos inicio)
 
 		//2.Diagonal izq (Al comer otra ficha)
 
-		if (tablero->getPieza(posaux5)->getColor() != color)
-			tablero->setPosibleCasilla(posaux5);
+		if (tablero->getPieza(posaux5) != nullptr)
+		{
+			if (tablero->getPieza(posaux5)->getColor() != color)
+				tablero->setPosibleCasilla(posaux5);
+		}
 
 		//3.Diagonal dcha (Al comer otra ficha)
 
-		if (tablero->getPieza(posaux6)->getColor() != color)
-			tablero->setPosibleCasilla(posaux6);
+		if (tablero->getPieza(posaux6) != nullptr)
+		{
+			if (tablero->getPieza(posaux6)->getColor() != color || tablero->getPieza(posaux6) == NULL)
+				tablero->setPosibleCasilla(posaux6);
+		}
 		break;
 	}
 }
