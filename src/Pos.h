@@ -7,9 +7,5 @@ public:
 	~Pos();
 
 	int fila, columna;
-
-	bool operator == (Pos);
 	Pos operator+ (Pos&);
-private:
-
 };
