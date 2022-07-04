@@ -1,22 +1,23 @@
 #pragma once
 #include "Pieza.h"
-#include "Pos.h"
-#include <ETSIDI.h>
+
+#include "ETSIDI.h"
 
 using ETSIDI::Sprite;
 
-class Dama : public Pieza {
-public: //lo pongo así porque no sé si es private o no
-
+class Dama : public Pieza{
+private:
+	float lado;
 	Sprite DamaB{ "imagenes/DamaB.png" };
 	Sprite DamaN{ "imagenes/DamaN.png" };
 
 public:
-	Dama(bool _color) : Pieza(_color) {};
+	Dama(bool _color) : Pieza(_color, 3), lado(2.5f) {};
 	bool comprueba(Tablero*, Pos, Pos);
+	void dibujar(Pos);
+	void dibujarArrastrar(Pos);
+	void draw(float, float);
 
-	void dibujar(Pos); //dibuja la dama del color correspondiente en la posición que se le ordene
-
-	void posibleCasilla(Tablero*, Pos); //en función de las reglas de movimiento de cada pieza dibuja sus posibles movimientos al ser seleccionada
+	void posibleCasilla(Tablero*, Pos); //en funciï¿½n de las reglas de movimiento de cada pieza dibuja sus posibles movimientos al ser seleccionada
 
 };
