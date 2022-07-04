@@ -1,3 +1,4 @@
+
 #include "Juego.h"
 #include "Peon.h"
 #include "Rey.h"
@@ -5,6 +6,7 @@
 #include "Alfil.h"
 #include "Caballo.h"
 #include "Torre.h"
+
 
 //#include "freeglut.h"
 #include <iostream>
@@ -30,6 +32,74 @@ Juego::Juego() {
 	enroqueblancoizq = 0;
 	enroquenegroder = 0;
 	enroquenegroizq = 0;
+
+}
+
+void Juego::inicializar() {
+	for (int i = 0; i < 8; i++) {
+		for (int j = 0; j < 8; j++) {
+			if (i > 1 && i < 6) // Vacías las casillas centrales
+				tablero.inicializar(nullptr, i, j);
+			if (i == 1) { //Peones, hay que diferenciar entre color
+				piezas[i][j] = new Peon(0);
+				tablero.inicializar(&piezas[i][j], i, j);
+			}
+			if (i == 6) { //Peones, hay que diferenciar entre color
+				piezas[i - 4][j] = new Peon(1);
+				tablero.inicializar(&piezas[i - 4][j], i, j);
+			}
+			if (i == 0) { //blancas
+				switch (j) {
+				case 0: case 7:
+					piezas[i][j] = new Torre(0); //torres
+					tablero.inicializar(&piezas[i][j], i, j);
+					break;
+				case 1: case 6:
+					piezas[i][j] = new Caballo(0); //caballos
+					tablero.inicializar(&piezas[i][j], i, j);
+					break;
+				case 2: case 5:
+					piezas[i][j] = new Alfil(0); //alfiles
+					tablero.inicializar(&piezas[i][j], i, j);
+					break;
+				case 3:
+					piezas[i][j] = new Dama(0); //dama
+					tablero.inicializar(&piezas[i][j], i, j);
+					break;
+				case 4:
+					piezas[i][j] = new Rey(0); //rey
+					tablero.inicializar(&piezas[i][j], i, j);
+					break;
+				default: break;
+				}
+			}
+			if (i == 7) { //negras
+				switch (j) {
+				case 0: case 7:
+					piezas[i - 4][j] = new Torre(1); //torres
+					tablero.inicializar(&piezas[i - 4][j], i, j);
+					break;
+				case 1: case 6:
+					piezas[i - 4][j] = new Caballo(1); //caballos
+					tablero.inicializar(&piezas[i - 4][j], i, j);
+					break;
+				case 2: case 5:
+					piezas[i - 4][j] = new Alfil(1); //alfiles
+					tablero.inicializar(&piezas[i - 4][j], i, j);
+					break;
+				case 3:
+					piezas[i - 4][j] = new Dama(1); //dama
+					tablero.inicializar(&piezas[i - 4][j], i, j);
+					break;
+				case 4:
+					piezas[i - 4][j] = new Rey(1); //rey
+					tablero.inicializar(&piezas[i - 4][j], i, j);
+					break;
+				default: break;
+				}
+			}
+		}
+	}
 }
 
 void Juego::inicializar() {
@@ -185,6 +255,7 @@ void Juego::clicRaton(bool mouseP, bool mouseR, int x, int y) {
 				pieza_elegida = tablero.getPieza(pos_inicial);
 			}
 			//suelto en una casilla válida de la pieza que mueves (tienes q estar moviendo una pieza)
+
 			if (mouse_released && (pieza_elegida != nullptr) && movimientoValido()) { //(mouse_pressed && (pieza_elegida != nullptr) && comprueba(pieza_aux, pos_inicial, pos_final))
 				//Se actualiza el tablero
 				tablero.setPieza(pieza_elegida, pos_final);
@@ -209,6 +280,7 @@ void Juego::clicRaton(bool mouseP, bool mouseR, int x, int y) {
 				//Se coge una pieza
 				pieza_elegida = tablero.getPieza(pos_inicial);
 			}
+
 			//Suelto en una casilla válida de la pieza que mueves (tienes q estar moviendo una pieza)
 			if (mouse_released && (pieza_elegida != nullptr) && movimientoValido()) { //(mouse_pressed && (pieza_elegida != nullptr) && comprueba(pieza_aux, pos_inicial, pos_final))
 				//Se actualiza el tablero
@@ -271,7 +343,7 @@ bool Juego::movimientoValido() {
 		{
 			if (pos_final.columna + 1 == NULL && pos_final.columna + 2 == NULL)
 			{
-				enroqueblancoder == 1;
+				enroqueblancoder = 1;
 				return true;
 			}
 		}
@@ -280,7 +352,7 @@ bool Juego::movimientoValido() {
 		{
 			if (pos_final.columna - 1 == NULL && pos_final.columna - 2 == NULL && pos_final.columna - 3 == NULL)
 			{
-				enroqueblancoizq == 1;
+				enroqueblancoizq = 1;
 				return true;
 			}
 		}
@@ -297,7 +369,7 @@ bool Juego::movimientoValido() {
 		{
 			if (pos_final.columna + 1 == NULL && pos_final.columna + 2 == NULL)
 			{
-				enroquenegroder == 1;
+				enroquenegroder = 1;
 				return true;
 			}
 		}
@@ -306,13 +378,14 @@ bool Juego::movimientoValido() {
 		{
 			if (pos_final.columna - 1 == NULL && pos_final.columna - 2 == NULL && pos_final.columna - 3 == NULL)
 			{
-				enroquenegroizq == 1;
+				enroquenegroizq = 1;
 				return true;
 			}
 		}
 	}
 
 	//CÃDIGO DE MOVIMIENTOS NORMALES
+
 	if (pieza_elegida->comprueba(&tablero, pos_inicial, pos_final)) { //Provisional, esto solo debe ser así en el caso de que no se esté dando ninguna excepción o algo de mayor prioridad.
 		//CONDICION DE CORONACION
 		if (pieza_elegida->getTipo() == 1 && pieza_elegida->getColor() && pos_inicial.fila == 1 && pos_final.fila == 0)
@@ -325,6 +398,7 @@ bool Juego::movimientoValido() {
 }
 
 //LAS CORONACIONES BLANCAS Y NEGRAS SE TRATAN INDEPENDIENTEMENTES, A LA ESPERA DE VER CÃMO SON TRATADAS LAS PIEZAS
+
 
 void Juego::coronacion() {
 	int elegido = 0;
@@ -364,5 +438,6 @@ void Juego::coronacion() {
 		default:
 			cout << endl << "Pieza no valida. ";
 		}
+
 	} while (elegido > 6 || elegido < 3);
 }

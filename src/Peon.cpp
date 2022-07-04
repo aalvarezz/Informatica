@@ -3,11 +3,13 @@
 
 bool Peon::comprueba(Tablero* tablero, Pos inicio, Pos fin) {
 
+
 	Pos posaux1(1, 0), posaux2(1, -1),  posaux3(1, 1), posaux4(-1, 0), posaux5(-1, -1), posaux6(-1, 1);
 
 	switch (color) {
 	case 0:		//BLANCO
-		//1.Avanza una posici髇 en la columna (Movimiento normal)
+		//1.Avanza una posici贸n en la columna (Movimiento normal)
+
 		posaux1 = posaux1 + inicio;
 		if ((posaux1.fila == fin.fila && posaux1.columna==fin.columna) && (tablero->getPieza(fin) == nullptr))
 			return true;
@@ -25,7 +27,7 @@ bool Peon::comprueba(Tablero* tablero, Pos inicio, Pos fin) {
 
 
 	case 1:		//NEGRO
-		//1.Avanza una posici髇 en la columna (Movimiento normal)
+		//1.Avanza una posici贸n en la columna (Movimiento normal)
 		posaux4 = posaux4 + inicio;
 		if ((posaux4.fila == fin.fila && posaux4.columna==fin.columna) && (tablero->getPieza(fin) == nullptr))
 			return true;
@@ -44,8 +46,9 @@ bool Peon::comprueba(Tablero* tablero, Pos inicio, Pos fin) {
 	return false;
 }
 
+
 void Peon::dibujar(Pos posicion) {
-	//traslado de la posici髇 de la matriz a coordenadas de glut. x es la columna e y la fila porque las coordenadas de glut est醤 invertidas.
+	//traslado de la posici贸n de la matriz a coordenadas de glut. x es la columna e y la fila porque las coordenadas de glut est谩n invertidas.
 	float x = posicion.columna * lado;
 	float y = posicion.fila * lado;
 
@@ -60,7 +63,7 @@ void Peon::dibujarArrastrar(Pos posicion) {
 	x -= AJUSTE_X;
 	y -= AJUSTE_Y;
 
-	//traslado de la posici髇 del bitmap a coordenadas de glut.
+	//traslado de la posici贸n del bitmap a coordenadas de glut.
 	x = lado / LIM_CASILLA * x - (lado / 2);
 	y = -lado / LIM_CASILLA * y - (lado / 2);
 
@@ -75,6 +78,7 @@ void Peon::draw(float x, float y) {
 	case 0:
 		PeonB.setCenter(lado / 2, lado / 2);
 		PeonB.setSize(lado, lado);
+
 		glTranslatef(x, y, 0.1f);
 		glColor3f(1.0f, 0.0f, 0.0f);
 		PeonB.draw();
@@ -87,6 +91,69 @@ void Peon::draw(float x, float y) {
 		glColor3f(1.0f, 0.0f, 0.0f);
 		PeonN.draw();
 		glTranslatef(-x, -y, -0.1f);
+		break;
+	}
+}
+
+void Peon::posibleCasilla(Tablero* tablero, Pos inicio)
+{
+	bool color = this->getColor();
+	Pos posaux1(0, 1), posaux2(-1, 1), posaux3(1, 1), posaux4(0, -1), posaux5(-1, -1), posaux6(1, -1);
+
+	//el switch siguiente verifica los posibles movimientos del peon en funcion del color de este.
+	//todo movimiento posible que pueda realizar se mostrara en pantalla
+	//no se tienen en cuenta las excepciones como el comer al paso o el avance doble al estar situado en la casilla inicial
+
+	switch (color) {
+	case 0:		//BLANCO
+		//1.Avanza una posici贸n en la columna (Movimiento normal)
+		posaux1.columna = posaux1.columna + inicio.columna;
+		posaux1.fila = posaux1.fila + inicio.fila;
+
+		posaux2.columna = posaux2.columna + inicio.columna;
+		posaux2.fila = posaux2.fila + inicio.fila;
+
+		posaux3.columna = posaux3.columna + inicio.columna;
+		posaux3.fila = posaux3.fila + inicio.fila;
+
+		if (tablero->getPieza(posaux1) == nullptr)
+			tablero->setPosibleCasilla(posaux1);
+
+		//2.Diagonal izq (Al comer otra ficha)
+
+		if (tablero->getPieza(posaux2)->getColor() != color)
+			tablero->setPosibleCasilla(posaux2);
+
+		//3.Diagonal dcha (Al comer otra ficha)
+
+		if (tablero->getPieza(posaux3)->getColor() != color)
+			tablero->setPosibleCasilla(posaux3);
+		break;
+
+
+	case 1:		//NEGRO
+		//1.Avanza una posici贸n en la columna (Movimiento normal)
+		posaux4.columna = posaux4.columna + inicio.columna;
+		posaux4.fila = posaux4.fila + inicio.fila;
+
+		posaux5.columna = posaux5.columna + inicio.columna;
+		posaux5.fila = posaux5.fila + inicio.fila;
+
+		posaux6.columna = posaux6.columna + inicio.columna;
+		posaux6.fila = posaux6.fila + inicio.fila;
+
+		if (tablero->getPieza(posaux4) == nullptr)
+			tablero->setPosibleCasilla(posaux4);
+
+		//2.Diagonal izq (Al comer otra ficha)
+
+		if (tablero->getPieza(posaux5)->getColor() != color)
+			tablero->setPosibleCasilla(posaux5);
+
+		//3.Diagonal dcha (Al comer otra ficha)
+
+		if (tablero->getPieza(posaux6)->getColor() != color)
+			tablero->setPosibleCasilla(posaux6);
 		break;
 	}
 }

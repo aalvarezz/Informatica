@@ -1,8 +1,10 @@
+
 #pragma once
 #include "Tablero.h"
 //#include "Pos.h"
 
 class Pieza {
+
 //private:
 protected:
 
@@ -29,4 +31,6 @@ public:
 	/*provisional*/
 	//void setPos(Pos); //solo necesario en el caso de hacer definitivo que las piezas almacenen su posici�n
 	//Pos getPos();
+
+	virtual void posibleCasilla(Tablero*, Pos) {}; //en función de las reglas de movimiento de cada pieza dibuja sus posibles movimientos al ser seleccionada
 };

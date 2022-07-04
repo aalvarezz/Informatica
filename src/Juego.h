@@ -1,11 +1,13 @@
-#pragma once
+﻿#pragma once
 #include "Tablero.h"
+
 //#include "Pos.h"
 #include "Pieza.h"
 
 class Juego {
 private:
 	Tablero tablero;
+
 	//Pieza piezas[4][8];
 	Pos pos_inicial, pos_final, mouse_pos;
 	Pieza* pieza_elegida;

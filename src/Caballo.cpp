@@ -11,7 +11,7 @@ bool Caballo::comprueba(Tablero* tablero, Pos inicio, Pos fin) {
 
 				//la casilla fin entra en las reglas
 				if ((posaux.fila == fin.fila) && (posaux.columna == fin.columna)) {
-					//Est· vacÌa
+					//Est√° vac√≠a
 					if (tablero->getPieza(fin) == nullptr) {
 						return true;
 					}
@@ -27,7 +27,7 @@ bool Caballo::comprueba(Tablero* tablero, Pos inicio, Pos fin) {
 }
 
 void Caballo::dibujar(Pos posicion) {
-	//traslado de la posiciÛn de la matriz a coordenadas de glut. x es la columna e y la fila porque las coordenadas de glut est·n invertidas.
+	//traslado de la posici√≥n de la matriz a coordenadas de glut. x es la columna e y la fila porque las coordenadas de glut est√°n invertidas.
 	float x = posicion.columna * lado;
 	float y = posicion.fila * lado;
 
@@ -42,7 +42,7 @@ void Caballo::dibujarArrastrar(Pos posicion) {
 	x -= AJUSTE_X;
 	y -= AJUSTE_Y;
 
-	//traslado de la posiciÛn del bitmap a coordenadas de glut.
+	//traslado de la posici√≥n del bitmap a coordenadas de glut.
 	x = lado / LIM_CASILLA * x - (lado / 2);
 	y = -lado / LIM_CASILLA * y - (lado / 2);
 
@@ -70,5 +70,22 @@ void Caballo::draw(float x, float y) {
 		CaballoN.draw();
 		glTranslatef(-x, -y, -0.1f);
 		break;
+	}
+}
+void Caballo::posibleCasilla(Tablero* tablero, Pos posicion)
+{
+
+	//el bucle "for" se emplea para barrer todos los posibles movimientos de las piezas
+	//las condiciones dentro del bucle verifican si los posibles movimientos de la pieza est√°n limitados de algun modo.
+	//si no lo estuvieran, se har√≠a llamada al m√©todo con el que se dibujan los posibles movimientos de la pieza
+
+	for (int j = -2; j <= 2; j++) {
+		for (int k = -2; k <= 2; k++) {
+			if ((abs(j) != abs(k)) && (j != 0) && (k != 0)) {
+				Pos posaux(j, k);
+				if ((this->getColor() != tablero->getPieza(posaux)->getColor()) || (tablero->getPieza(posaux) == nullptr))
+					tablero->setPosibleCasilla(posaux);
+			}
+		}
 	}
 }

@@ -1,8 +1,9 @@
-#include "Tablero.h"
+﻿#include "Tablero.h"
 #include "freeglut.h"
 #include "ETSIDI.h"
 
 Tablero::Tablero() { //Relleno el damero. Muy provisional sin piezas
+
 	lado = 2.5f;
 }
 
@@ -14,6 +15,7 @@ void Tablero::dibujoDamero() {
 	//CASILLAS DEL TABLERO
 	for (int i = 0; i < 8; i++) {
 		for (int j = 0; j < 8; j++) {
+
 
 			if (((j % 2) == 0) && ((i % 2) == 0) || ((j % 2) == 1) && ((i % 2) == 1)) {
 				rojo = 87;
@@ -106,6 +108,29 @@ void Tablero::setPieza(Pieza* p, Pos posicion) { //otorga a una pieza una posici
 	piezas[posicion.fila][posicion.columna] = p;
 }
 
+void Tablero::setPosibleCasilla(Pos posicion) //se le da la posicion de los posibles movimientos para que sean graficados
+{
+	posible = true;
+	if (posible) //si se debe dibujar X numero de casillas...
+	{
+		int n = 20; // Resolución
+		float PI = 3.1415926f;
+		float R = lado / 3; // radio
+		glColor3ub(255, 0, 0);
+		glBegin(GL_POLYGON);
+		for (int ii = 0; ii < n; ii++) 
+		{
+			float theta = 2.0f * PI * ii / n;//obtencion del angulo
+			float a = R * cos(theta);//obtencion de la componente x
+			float b = R * sin(theta);//obtencion de la componente y
+			glVertex3f(a + posicion.columna * lado, b + posicion.fila * lado, 0.05f);//output 
+		}
+
+		glEnd();
+		posible = false;
+		glutPostRedisplay();
+	}
+  
 Pieza* Tablero::getPieza(Pos posicion) {
 	return piezas[posicion.fila][posicion.columna];
 }
