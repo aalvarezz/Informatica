@@ -3,19 +3,36 @@
 #include "ETSIDI.h"
 
 Tablero::Tablero() { //Relleno el damero. Muy provisional sin piezas
-
+	lado = 2.5f;
 }
 
-void Tablero::inicializar(Pieza* p, int i, int j) {
+/*void Tablero::inicializar(Pieza* p, int i, int j) {
 	piezas[i][j] = p;
-}
+}*/
 
 void Tablero::dibujoDamero() {
-	setLado(2.5f);
 	//CASILLAS DEL TABLERO
 	for (int i = 0; i < 8; i++) {
 		for (int j = 0; j < 8; j++) {
-			
+
+			if (((j % 2) == 0) && ((i % 2) == 0) || ((j % 2) == 1) && ((i % 2) == 1)) {
+				rojo = 87;
+				verde = 70;
+				azul = 0;
+			}
+			else {
+				rojo = 255;
+				verde = 253;
+				azul = 208;
+			}
+
+			glColor3ub(rojo, verde, azul);
+			glBegin(GL_POLYGON);
+			glVertex3f(i * lado - lado / 2, j * lado - lado / 2, 0);
+			glVertex3f(i * lado + lado / 2, j * lado - lado / 2, 0);
+			glVertex3f(i * lado + lado / 2, j * lado + lado / 2, 0);
+			glVertex3f(i * lado - lado / 2, j * lado + lado / 2, 0);
+			glEnd();
 		}
 	}
 
@@ -60,7 +77,7 @@ void Tablero::dibujoDamero() {
 	glDisable(GL_TEXTURE_2D);
 }
 
-void Tablero::imprimir() { //solo imprime piezas, la impresion del tablero en sí se hace a parte
+/*void Tablero::imprimir() { //solo imprime piezas, la impresion del tablero en sí se hace a parte
 	Pos pos_pieza;
 	for (int i = 0; i < 8; i++) {
 		pos_pieza.fila = i;
@@ -69,7 +86,7 @@ void Tablero::imprimir() { //solo imprime piezas, la impresion del tablero en s�
 			piezas[i][j]->dibujar(pos_pieza);
 		}
 	}
-}
+}*/
 
 /*void Tablero::moverPieza(Pos pos_inicial, Pos pos_final) { //actualizar posición de cierta pieza, en principio se usa la posicion del tablero
 	if (piezas[pos_final.fila][pos_final.columna] == NULL) {
