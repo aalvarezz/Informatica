@@ -1,4 +1,3 @@
-
 #pragma once
 //#include "Pieza.h"
 #include "Pos.h"
