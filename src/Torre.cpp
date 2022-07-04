@@ -105,32 +105,8 @@ bool Torre::comprueba(Tablero* tablero, Pos inicio, Pos fin) {
 	return false;
 }
 
-void Torre::dibujar(Pos posicion) {
-	//traslado de la posición de la matriz a coordenadas de glut. x es la columna e y la fila porque las coordenadas de glut están invertidas.
-	float x = posicion.columna * lado;
-	float y = posicion.fila * lado;
-
-	draw(x, y);
-}
-
-void Torre::dibujarArrastrar(Pos posicion) {
-	float x = posicion.fila;
-	float y = posicion.columna;
-
-	//Trasladar 0
-	x -= AJUSTE_X;
-	y -= AJUSTE_Y;
-
-	//traslado de la posición del bitmap a coordenadas de glut.
-	x = lado / LIM_CASILLA * x - (lado / 2);
-	y = -lado / LIM_CASILLA * y - (lado / 2);
-
-	draw(x, y);
-}
-
 void Torre::draw(float x, float y) {
 	//en funcion del color de la pieza la dibuja en su posicion correspondiente
-	bool color = this->getColor();
 
 	switch (color) {
 	case 0:
@@ -152,9 +128,7 @@ void Torre::draw(float x, float y) {
 	}
 }
 
-void Torre::posibleCasilla(Tablero* tablero, Pos inicio)
-{
-	bool color = this->getColor();
+void Torre::posibleCasilla(Tablero* tablero, Pos inicio) {
 	//Hacia arriba
 	for (int j = 1; j <= 7; j++) {
 		Pos posaux5(0, j);
