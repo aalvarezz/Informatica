@@ -4,7 +4,7 @@
 bool Dama::comprueba(Tablero* tablero, Pos inicio, Pos fin) {
 	int sentido = 0;
 	for (int j = 1; j <= 7; j++) {
-		Pos aux1(0, j), aux2(0, -j), aux3(j, 0), aux4(-j, 0), aux5(j, j), aux6(j, -j), aux7(-j, -j), aux8(-j, j);
+		Pos aux1(j, 0), aux2(-j, 0), aux3(0, j), aux4(0, -j), aux5(j, j), aux6(-j, j), aux7(-j, -j), aux8(j, -j);
 		aux1 = aux1 + inicio;
 		aux2 = aux2 + inicio;
 		aux3 = aux3 + inicio;
@@ -39,7 +39,7 @@ bool Dama::comprueba(Tablero* tablero, Pos inicio, Pos fin) {
 
 	case 1:	// 1. Hacia arriba
 		for (int j = 1; j <= 7; j++) {
-			Pos posaux1(0, j);
+			Pos posaux1(j, 0);
 			posaux1 = posaux1 + inicio;
 
 			if (posaux1.fila == fin.fila && posaux1.columna == fin.columna) {
@@ -58,7 +58,7 @@ bool Dama::comprueba(Tablero* tablero, Pos inicio, Pos fin) {
 
 	case 2:	// 2. Hacia abajo
 		for (int j = 1; j <= 7; j++) {
-			Pos posaux2(0, -j);
+			Pos posaux2(-j, 0);
 			posaux2 = posaux2 + inicio;
 
 			if (posaux2.fila == fin.fila && posaux2.columna == fin.columna) {
@@ -77,7 +77,7 @@ bool Dama::comprueba(Tablero* tablero, Pos inicio, Pos fin) {
 
 	case 3:	// 3. Derecha
 		for (int j = 1; j <= 7; j++) {
-			Pos posaux3(j, 0);
+			Pos posaux3(0, j);
 			posaux3 = posaux3 + inicio;
 
 			if (posaux3.fila == fin.fila && posaux3.columna == fin.columna) {
@@ -96,7 +96,7 @@ bool Dama::comprueba(Tablero* tablero, Pos inicio, Pos fin) {
 
 	case 4:	//4. Izquierda
 		for (int j = 1; j <= 7; j++) {
-			Pos posaux4(-j, j);
+			Pos posaux4(0, -j);
 			posaux4 = posaux4 + inicio;
 
 			if (posaux4.fila == fin.fila && posaux4.columna == fin.columna) {
@@ -172,7 +172,7 @@ bool Dama::comprueba(Tablero* tablero, Pos inicio, Pos fin) {
 
 	case 8: //8. Arriba izquierda
 		for (int j = 1; j <= 7; j++) {
-			Pos posaux8(-j, j);
+			Pos posaux8(j, -j);
 			posaux8 = posaux8 + inicio;
 
 			if (posaux8.fila == fin.fila && posaux8.columna == fin.columna) {
@@ -194,7 +194,7 @@ bool Dama::comprueba(Tablero* tablero, Pos inicio, Pos fin) {
 }
 
 void Dama::dibujar(Pos posicion) {
-	//traslado de la posici�n de la matriz a coordenadas de glut. x es la columna e y la fila porque las coordenadas de glut est�n invertidas.
+	//traslado de la posición de la matriz a coordenadas de glut. x es la columna e y la fila porque las coordenadas de glut están invertidas.
 	float x = posicion.columna * lado;
 	float y = posicion.fila * lado;
 
@@ -209,7 +209,7 @@ void Dama::dibujarArrastrar(Pos posicion) {
 	x -= AJUSTE_X;
 	y -= AJUSTE_Y;
 
-	//traslado de la posici�n del bitmap a coordenadas de glut.
+	//traslado de la posición del bitmap a coordenadas de glut.
 	x = lado / LIM_CASILLA * x - (lado / 2);
 	y = -lado / LIM_CASILLA * y - (lado / 2);
 
@@ -238,4 +238,141 @@ void Dama::draw(float x, float y) {
 		glTranslatef(-x, -y, -0.1f);
 		break;
 	}
+}
+void Dama::posibleCasilla(Tablero* tablero, Pos inicio)
+{
+	bool color = this->getColor();
+
+	//los bucles "for" se emplean para barrer todos los posibles movimientos de las piezas
+	//las condiciones dentro de los bucles verifican si los posibles movimientos de la pieza están limitados de algun modo.
+	//si no lo estuvieran, se haría llamada al método con el que se dibujan los posibles movimientos de la pieza
+
+	//Arriba derecha
+	for (int j = 1; j <= 7; j++) {
+		Pos posaux1(j, j);
+		posaux1.columna = posaux1.columna + inicio.columna;
+		posaux1.fila = posaux1.fila + inicio.fila;
+		if (tablero->getPieza(posaux1)->getColor() == color)
+			break;
+		else if (tablero->getPieza(posaux1)->getColor() != color)
+		{
+			tablero->setPosibleCasilla(posaux1);
+			break;
+		}
+		else
+			tablero->setPosibleCasilla(posaux1);
+	}
+
+	//Abajo derecha
+	for (int j = 1; j <= 7; j++) {
+		Pos posaux2(-j, j);
+		posaux2.columna = posaux2.columna + inicio.columna;
+		posaux2.fila = posaux2.fila + inicio.fila;
+		if (tablero->getPieza(posaux2)->getColor() == color)
+			break;
+		else if (tablero->getPieza(posaux2)->getColor() != color)
+		{
+			tablero->setPosibleCasilla(posaux2);
+			break;
+		}
+		else
+			tablero->setPosibleCasilla(posaux2);
+	}
+
+	//Abajo izquierda
+	for (int j = 1; j <= 7; j++) {
+		Pos posaux3(-j, -j);
+		posaux3.columna = posaux3.columna + inicio.columna;
+		posaux3.fila = posaux3.fila + inicio.fila;
+		if (tablero->getPieza(posaux3)->getColor() == color)
+			break;
+		else if (tablero->getPieza(posaux3)->getColor() != color)
+		{
+			tablero->setPosibleCasilla(posaux3);
+			break;
+		}
+		else
+			tablero->setPosibleCasilla(posaux3);
+	}
+
+	//Arriba izquierda
+	for (int j = 1; j <= 7; j++) {
+		Pos posaux4(-j, j);
+		posaux4.columna = posaux4.columna + inicio.columna;
+		posaux4.fila = posaux4.fila + inicio.fila;
+		if (tablero->getPieza(posaux4)->getColor() == color)
+			break;
+		else if (tablero->getPieza(posaux4)->getColor() != color)
+		{
+			tablero->setPosibleCasilla(posaux4);
+			break;
+		}
+		else
+			tablero->setPosibleCasilla(posaux4);
+	}
+
+	//Hacia arriba
+	for (int j = 1; j <= 7; j++) {
+		Pos posaux5(0, j);
+		posaux5.columna = posaux5.columna + inicio.columna;
+		posaux5.fila = posaux5.fila + inicio.fila;
+		if (tablero->getPieza(posaux5)->getColor() == color)
+			break;
+		else if (tablero->getPieza(posaux5)->getColor() != color)
+		{
+			tablero->setPosibleCasilla(posaux5);
+			break;
+		}
+		else
+			tablero->setPosibleCasilla(posaux5);
+	}
+
+	//Hacia abajo
+	for (int j = 1; j <= 7; j++) {
+		Pos posaux6(0, -j);
+		posaux6.columna = posaux6.columna + inicio.columna;
+		posaux6.fila = posaux6.fila + inicio.fila;
+		if (tablero->getPieza(posaux6)->getColor() == color)
+			break;
+		else if (tablero->getPieza(posaux6)->getColor() != color)
+		{
+			tablero->setPosibleCasilla(posaux6);
+			break;
+		}
+		else
+			tablero->setPosibleCasilla(posaux6);
+	}
+
+	//Derecha
+	for (int j = 1; j <= 7; j++) {
+		Pos posaux7(j, 0);
+		posaux7.columna = posaux7.columna + inicio.columna;
+		posaux7.fila = posaux7.fila + inicio.fila;
+		if (tablero->getPieza(posaux7)->getColor() == color)
+			break;
+		else if (tablero->getPieza(posaux7)->getColor() != color)
+		{
+			tablero->setPosibleCasilla(posaux7);
+			break;
+		}
+		else
+			tablero->setPosibleCasilla(posaux7);
+	}
+
+	//Izquierda
+	for (int j = 1; j <= 7; j++) {
+		Pos posaux8(-j, 0);
+		posaux8.columna = posaux8.columna + inicio.columna;
+		posaux8.fila = posaux8.fila + inicio.fila;
+		if (tablero->getPieza(posaux8)->getColor() == color)
+			break;
+		else if (tablero->getPieza(posaux8)->getColor() != color)
+		{
+			tablero->setPosibleCasilla(posaux8);
+			break;
+		}
+		else
+			tablero->setPosibleCasilla(posaux8);
+	}
+
 }

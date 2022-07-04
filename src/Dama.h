@@ -1,5 +1,6 @@
 #pragma once
 #include "Pieza.h"
+
 #include "ETSIDI.h"
 
 using ETSIDI::Sprite;
@@ -16,5 +17,7 @@ public:
 	void dibujar(Pos);
 	void dibujarArrastrar(Pos);
 	void draw(float, float);
-};
 
+	void posibleCasilla(Tablero*, Pos); //en funci�n de las reglas de movimiento de cada pieza dibuja sus posibles movimientos al ser seleccionada
+
+};

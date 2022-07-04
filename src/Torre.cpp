@@ -4,7 +4,7 @@
 bool Torre::comprueba(Tablero* tablero, Pos inicio, Pos fin) {
 	int sentido = 0;
 	for (int j = 1; j <= 7; j++) {
-		Pos aux1(0, j), aux2(0, -j), aux3(j, 0), aux4(-j, 0);
+		Pos aux1(j, 0), aux2(-j, 0), aux3(0, j), aux4(0, -j);
 		aux1 = aux1 + inicio;
 		aux2 = aux2 + inicio;
 		aux3 = aux3 + inicio;
@@ -27,7 +27,7 @@ bool Torre::comprueba(Tablero* tablero, Pos inicio, Pos fin) {
 
 	case 1:	// 1. Hacia arriba
 		for (int j = 1; j <= 7; j++) {
-			Pos posaux1(0, j);
+			Pos posaux1(j, 0);
 			posaux1 = posaux1 + inicio;
 
 			if (posaux1.fila == fin.fila && posaux1.columna==fin.columna) {
@@ -46,7 +46,7 @@ bool Torre::comprueba(Tablero* tablero, Pos inicio, Pos fin) {
 
 	case 2:	// 2. Hacia abajo
 		for (int j = 1; j <= 7; j++) {
-			Pos posaux2(0, -j);
+			Pos posaux2(-j, 0);
 			posaux2 = posaux2 + inicio;
 
 			if (posaux2.fila == fin.fila && posaux2.columna==fin.columna) {
@@ -65,7 +65,7 @@ bool Torre::comprueba(Tablero* tablero, Pos inicio, Pos fin) {
 
 	case 3:	// 3. Derecha
 		for (int j = 1; j <= 7; j++) {
-			Pos posaux3(j, 0);
+			Pos posaux3(0, j);
 			posaux3 = posaux3 + inicio;
 
 			if (posaux3.fila == fin.fila && posaux3.columna==fin.columna) {
@@ -84,7 +84,7 @@ bool Torre::comprueba(Tablero* tablero, Pos inicio, Pos fin) {
 
 	case 4:	//4. Izquierda
 		for (int j = 1; j <= 7; j++) {
-			Pos posaux4(-j, j);
+			Pos posaux4(0, -j);
 			posaux4 = posaux4 + inicio;
 
 			if (posaux4.fila == fin.fila && posaux4.columna==fin.columna) {
@@ -106,7 +106,7 @@ bool Torre::comprueba(Tablero* tablero, Pos inicio, Pos fin) {
 }
 
 void Torre::dibujar(Pos posicion) {
-	//traslado de la posición de la matriz a coordenadas de glut. x es la columna e y la fila porque las coordenadas de glut están invertidas.
+	//traslado de la posiciÃ³n de la matriz a coordenadas de glut. x es la columna e y la fila porque las coordenadas de glut estÃ¡n invertidas.
 	float x = posicion.columna * lado;
 	float y = posicion.fila * lado;
 
@@ -121,7 +121,7 @@ void Torre::dibujarArrastrar(Pos posicion) {
 	x -= AJUSTE_X;
 	y -= AJUSTE_Y;
 
-	//traslado de la posición del bitmap a coordenadas de glut.
+	//traslado de la posiciÃ³n del bitmap a coordenadas de glut.
 	x = lado / LIM_CASILLA * x - (lado / 2);
 	y = -lado / LIM_CASILLA * y - (lado / 2);
 
@@ -149,5 +149,73 @@ void Torre::draw(float x, float y) {
 		TorreN.draw();
 		glTranslatef(-x, -y, -0.1f);
 		break;
+	}
+}
+
+void Torre::posibleCasilla(Tablero* tablero, Pos inicio)
+{
+	bool color = this->getColor();
+	//Hacia arriba
+	for (int j = 1; j <= 7; j++) {
+		Pos posaux5(0, j);
+		posaux5.columna = posaux5.columna + inicio.columna;
+		posaux5.fila = posaux5.fila + inicio.fila;
+		if (tablero->getPieza(posaux5)->getColor() == color)
+			break;
+		else if (tablero->getPieza(posaux5)->getColor() != color)
+		{
+			tablero->setPosibleCasilla(posaux5);
+			break;
+		}
+		else
+			tablero->setPosibleCasilla(posaux5);
+	}
+
+	//Hacia abajo
+	for (int j = 1; j <= 7; j++) {
+		Pos posaux6(0, -j);
+		posaux6.columna = posaux6.columna + inicio.columna;
+		posaux6.fila = posaux6.fila + inicio.fila;
+		if (tablero->getPieza(posaux6)->getColor() == color)
+			break;
+		else if (tablero->getPieza(posaux6)->getColor() != color)
+		{
+			tablero->setPosibleCasilla(posaux6);
+			break;
+		}
+		else
+			tablero->setPosibleCasilla(posaux6);
+	}
+
+	//Derecha
+	for (int j = 1; j <= 7; j++) {
+		Pos posaux7(j, 0);
+		posaux7.columna = posaux7.columna + inicio.columna;
+		posaux7.fila = posaux7.fila + inicio.fila;
+		if (tablero->getPieza(posaux7)->getColor() == color)
+			break;
+		else if (tablero->getPieza(posaux7)->getColor() != color)
+		{
+			tablero->setPosibleCasilla(posaux7);
+			break;
+		}
+		else
+			tablero->setPosibleCasilla(posaux7);
+	}
+
+	//Izquierda
+	for (int j = 1; j <= 7; j++) {
+		Pos posaux8(-j, 0);
+		posaux8.columna = posaux8.columna + inicio.columna;
+		posaux8.fila = posaux8.fila + inicio.fila;
+		if (tablero->getPieza(posaux8)->getColor() == color)
+			break;
+		else if (tablero->getPieza(posaux8)->getColor() != color)
+		{
+			tablero->setPosibleCasilla(posaux8);
+			break;
+		}
+		else
+			tablero->setPosibleCasilla(posaux8);
 	}
 }

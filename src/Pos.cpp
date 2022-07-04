@@ -1,5 +1,11 @@
 #include "Pos.h"
 
+Pos::Pos(int f, int c)
+{
+	fila = f;
+	columna = c;
+}
+
 Pos::Pos() {
 	fila = columna = 0;
 }
