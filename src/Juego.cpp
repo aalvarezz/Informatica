@@ -173,7 +173,7 @@ void Juego::inicializar() {
 	}
 }
 
-void Juego::dibujar(){
+void Juego::dibujar() {
 	tablero.dibujoDamero();
 	dibujarPiezas();
 }

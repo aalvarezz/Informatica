@@ -4,7 +4,7 @@
 bool Torre::comprueba(Tablero* tablero, Pos inicio, Pos fin) {
 	int sentido = 0;
 	for (int j = 1; j <= 7; j++) {
-		Pos aux1(0, j), aux2(0, -j), aux3(j, 0), aux4(-j, 0);
+		Pos aux1(j, 0), aux2(-j, 0), aux3(0, j), aux4(0, -j);
 		aux1 = aux1 + inicio;
 		aux2 = aux2 + inicio;
 		aux3 = aux3 + inicio;
@@ -27,7 +27,7 @@ bool Torre::comprueba(Tablero* tablero, Pos inicio, Pos fin) {
 
 	case 1:	// 1. Hacia arriba
 		for (int j = 1; j <= 7; j++) {
-			Pos posaux1(0, j);
+			Pos posaux1(j, 0);
 			posaux1 = posaux1 + inicio;
 
 			if (posaux1.fila == fin.fila && posaux1.columna==fin.columna) {
@@ -46,7 +46,7 @@ bool Torre::comprueba(Tablero* tablero, Pos inicio, Pos fin) {
 
 	case 2:	// 2. Hacia abajo
 		for (int j = 1; j <= 7; j++) {
-			Pos posaux2(0, -j);
+			Pos posaux2(-j, 0);
 			posaux2 = posaux2 + inicio;
 
 			if (posaux2.fila == fin.fila && posaux2.columna==fin.columna) {
@@ -65,7 +65,7 @@ bool Torre::comprueba(Tablero* tablero, Pos inicio, Pos fin) {
 
 	case 3:	// 3. Derecha
 		for (int j = 1; j <= 7; j++) {
-			Pos posaux3(j, 0);
+			Pos posaux3(0, j);
 			posaux3 = posaux3 + inicio;
 
 			if (posaux3.fila == fin.fila && posaux3.columna==fin.columna) {
@@ -84,7 +84,7 @@ bool Torre::comprueba(Tablero* tablero, Pos inicio, Pos fin) {
 
 	case 4:	//4. Izquierda
 		for (int j = 1; j <= 7; j++) {
-			Pos posaux4(-j, j);
+			Pos posaux4(0, -j);
 			posaux4 = posaux4 + inicio;
 
 			if (posaux4.fila == fin.fila && posaux4.columna==fin.columna) {
