@@ -225,15 +225,22 @@ void Dama::posibleCasilla(Tablero* tablero, Pos inicio) {
 		Pos posaux1(j, j);
 		posaux1.columna = posaux1.columna + inicio.columna;
 		posaux1.fila = posaux1.fila + inicio.fila;
-		if (tablero->getPieza(posaux1)->getColor() == color)
+
+		if (posaux1.columna > 7 || posaux1.fila > 7)
 			break;
-		else if (tablero->getPieza(posaux1)->getColor() != color)
-		{
+
+		if (tablero->getPieza(posaux1) == NULL)
 			tablero->setPosibleCasilla(posaux1);
-			break;
-		}
 		else
-			tablero->setPosibleCasilla(posaux1);
+		{
+			if (tablero->getPieza(posaux1)->getColor() == color)
+				break;
+			else
+			{
+				tablero->setPosibleCasilla(posaux1);
+				break;
+			}
+		}
 	}
 
 	//Abajo derecha
@@ -241,15 +248,23 @@ void Dama::posibleCasilla(Tablero* tablero, Pos inicio) {
 		Pos posaux2(-j, j);
 		posaux2.columna = posaux2.columna + inicio.columna;
 		posaux2.fila = posaux2.fila + inicio.fila;
-		if (tablero->getPieza(posaux2)->getColor() == color)
+
+		if (posaux2.columna > 7 || posaux2.fila < 0)
 			break;
-		else if (tablero->getPieza(posaux2)->getColor() != color)
-		{
+
+		if (tablero->getPieza(posaux2) == NULL)
 			tablero->setPosibleCasilla(posaux2);
-			break;
-		}
 		else
-			tablero->setPosibleCasilla(posaux2);
+		{
+			if (tablero->getPieza(posaux2)->getColor() == color)
+				break;
+			else
+			{
+				tablero->setPosibleCasilla(posaux2);
+				break;
+			}
+		}
+
 	}
 
 	//Abajo izquierda
@@ -257,94 +272,130 @@ void Dama::posibleCasilla(Tablero* tablero, Pos inicio) {
 		Pos posaux3(-j, -j);
 		posaux3.columna = posaux3.columna + inicio.columna;
 		posaux3.fila = posaux3.fila + inicio.fila;
-		if (tablero->getPieza(posaux3)->getColor() == color)
+
+		if (posaux3.columna < 0 || posaux3.fila < 0)
 			break;
-		else if (tablero->getPieza(posaux3)->getColor() != color)
-		{
+
+		if (tablero->getPieza(posaux3) == NULL)
 			tablero->setPosibleCasilla(posaux3);
-			break;
-		}
 		else
-			tablero->setPosibleCasilla(posaux3);
+		{
+			if (tablero->getPieza(posaux3)->getColor() == color)
+				break;
+			else
+			{
+				tablero->setPosibleCasilla(posaux3);
+				break;
+			}
+		}
+
 	}
 
 	//Arriba izquierda
 	for (int j = 1; j <= 7; j++) {
-		Pos posaux4(-j, j);
+		Pos posaux4(j, -j);
 		posaux4.columna = posaux4.columna + inicio.columna;
 		posaux4.fila = posaux4.fila + inicio.fila;
-		if (tablero->getPieza(posaux4)->getColor() == color)
-			break;
-		else if (tablero->getPieza(posaux4)->getColor() != color)
-		{
-			tablero->setPosibleCasilla(posaux4);
-			break;
-		}
-		else
-			tablero->setPosibleCasilla(posaux4);
-	}
 
-	//Hacia arriba
-	for (int j = 1; j <= 7; j++) {
-		Pos posaux5(0, j);
-		posaux5.columna = posaux5.columna + inicio.columna;
-		posaux5.fila = posaux5.fila + inicio.fila;
-		if (tablero->getPieza(posaux5)->getColor() == color)
+		if (posaux4.fila > 7 || posaux4.columna < 0)
 			break;
-		else if (tablero->getPieza(posaux5)->getColor() != color)
-		{
-			tablero->setPosibleCasilla(posaux5);
-			break;
-		}
-		else
-			tablero->setPosibleCasilla(posaux5);
-	}
 
-	//Hacia abajo
-	for (int j = 1; j <= 7; j++) {
-		Pos posaux6(0, -j);
-		posaux6.columna = posaux6.columna + inicio.columna;
-		posaux6.fila = posaux6.fila + inicio.fila;
-		if (tablero->getPieza(posaux6)->getColor() == color)
-			break;
-		else if (tablero->getPieza(posaux6)->getColor() != color)
-		{
-			tablero->setPosibleCasilla(posaux6);
-			break;
-		}
+		if (tablero->getPieza(posaux4) == NULL)
+			tablero->setPosibleCasilla(posaux4);
 		else
-			tablero->setPosibleCasilla(posaux6);
+		{
+			if (tablero->getPieza(posaux4)->getColor() == color)
+				break;
+			else
+			{
+				tablero->setPosibleCasilla(posaux4);
+				break;
+			}
+		}
+
 	}
 
 	//Derecha
 	for (int j = 1; j <= 7; j++) {
-		Pos posaux7(j, 0);
-		posaux7.columna = posaux7.columna + inicio.columna;
-		posaux7.fila = posaux7.fila + inicio.fila;
-		if (tablero->getPieza(posaux7)->getColor() == color)
+		Pos posaux5(0, j);
+		posaux5.columna = posaux5.columna + inicio.columna;
+		posaux5.fila = posaux5.fila + inicio.fila;
+		if (posaux5.columna > 7)
 			break;
-		else if (tablero->getPieza(posaux7)->getColor() != color)
-		{
-			tablero->setPosibleCasilla(posaux7);
-			break;
-		}
+		if (tablero->getPieza(posaux5) == NULL)
+			tablero->setPosibleCasilla(posaux5);
 		else
-			tablero->setPosibleCasilla(posaux7);
+		{
+			if (tablero->getPieza(posaux5)->getColor() == color)
+				break;
+			else
+			{
+				tablero->setPosibleCasilla(posaux5);
+				break;
+			}
+		}
 	}
 
 	//Izquierda
 	for (int j = 1; j <= 7; j++) {
+		Pos posaux6(0, -j);
+		posaux6.columna = posaux6.columna + inicio.columna;
+		posaux6.fila = posaux6.fila + inicio.fila;
+		if (posaux6.columna < 0)
+			break;
+		if (tablero->getPieza(posaux6) == NULL)
+			tablero->setPosibleCasilla(posaux6);
+		else
+		{
+			if (tablero->getPieza(posaux6)->getColor() == color)
+				break;
+			else
+			{
+				tablero->setPosibleCasilla(posaux6);
+				break;
+			}
+		}
+	}
+
+	//Arriba
+	for (int j = 1; j <= 7; j++) {
+		Pos posaux7(j, 0);
+		posaux7.columna = posaux7.columna + inicio.columna;
+		posaux7.fila = posaux7.fila + inicio.fila;
+		if (posaux7.fila > 7)
+			break;
+		if (tablero->getPieza(posaux7) == NULL)
+			tablero->setPosibleCasilla(posaux7);
+		else
+		{
+			if (tablero->getPieza(posaux7)->getColor() == color)
+				break;
+			else
+			{
+				tablero->setPosibleCasilla(posaux7);
+				break;
+			}
+		}
+	}
+
+	//Abajo
+	for (int j = 1; j <= 7; j++) {
 		Pos posaux8(-j, 0);
 		posaux8.columna = posaux8.columna + inicio.columna;
 		posaux8.fila = posaux8.fila + inicio.fila;
-		if (tablero->getPieza(posaux8)->getColor() == color)
+		if (posaux8.fila < 0)
 			break;
-		else if (tablero->getPieza(posaux8)->getColor() != color)
-		{
+		if (tablero->getPieza(posaux8) == NULL)
 			tablero->setPosibleCasilla(posaux8);
-			break;
-		}
 		else
-			tablero->setPosibleCasilla(posaux8);
+		{
+			if (tablero->getPieza(posaux8)->getColor() == color)
+				break;
+			else
+			{
+				tablero->setPosibleCasilla(posaux8);
+				break;
+			}
+		}
 	}
 }

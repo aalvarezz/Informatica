@@ -3,12 +3,14 @@
 //#include "Pos.h"
 
 class Pieza {
+
 protected:
 	//Pos pos; //provisional
 	bool color, origen = true;
 	unsigned short int tipo;
+	int LIM_CASILLA = 60, AJUSTE_X = 58, AJUSTE_Y = 540;
+
 	float lado = 2.5f;
-	int LIM_CASILLA = 91, AJUSTE_X = 86, AJUSTE_Y = 813;
 public:
 	//Pieza() {};
 	Pieza(bool _color, unsigned short int _tipo) : color(_color), tipo(_tipo) {};
@@ -21,6 +23,7 @@ public:
 	virtual bool comprueba(Tablero*, Pos, Pos) { return false; }
 
 	virtual void posibleCasilla(Tablero*, Pos) {}; //en función de las reglas de movimiento de cada pieza dibuja sus posibles movimientos al ser seleccionada
+
 	unsigned short int getTipo() { return tipo; }
 	bool getColor() { return color; }
 	void setOrigen() { origen = false; } //probablemente mejorable

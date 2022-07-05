@@ -15,7 +15,6 @@ private:
 	bool within_board, mouse_pressed, mouse_released, turno_blancas, turno_negras, color_elegido;
 
 	bool coronegra, coroblanca;
-	bool enroqueblancoder, enroqueblancoizq, enroquenegroder, enroquenegroizq;
 public:
 	Juego();
 	void inicializar(); //provisional, crearia instancia de tablero como mínimo. Posible conflicto con Coordinador

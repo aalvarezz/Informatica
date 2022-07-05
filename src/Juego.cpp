@@ -12,10 +12,10 @@ using namespace std; //cuidado
 
 Juego::Juego() {
 
-	AJUSTE_X = 86;
-	AJUSTE_Y = 813;
-	LIM_TABLERO = 728;
-	LIM_CASILLA = 91;
+	AJUSTE_X = 58;
+	AJUSTE_Y = 540;
+	LIM_TABLERO = 480;
+	LIM_CASILLA = 60;
 
 	turno_blancas = true;
 	turno_negras = false;
@@ -25,11 +25,6 @@ Juego::Juego() {
 
 	coronegra = 0;
 	coroblanca = 0;
-
-	enroqueblancoder = 0;
-	enroqueblancoizq = 0;
-	enroquenegroder = 0;
-	enroquenegroizq = 0;
 }
 
 void Juego::inicializar() {
@@ -111,6 +106,7 @@ void Juego::dibujar() {
 void Juego::dibujarArrastrar() {
 	if (mouse_pressed && pieza_elegida != nullptr) {
 		pieza_elegida->dibujarArrastrar(mouse_pos);
+		pieza_elegida->posibleCasilla(&tablero, pos_inicial);
 		//glutPostRedisplay();
 	}
 }
@@ -174,15 +170,23 @@ void Juego::clicRaton(bool mouseP, bool mouseR, int x, int y) {
 	if (within_board) { //Acciones a ejecutar si se ha clicado/dejado de clicar dentro del tablero
 
 		if (!color_elegido && turno_blancas) { //Turno de las blancas
-
+			if (mouse_pressed)
+				//no hay pieza elegida aun
 			if (mouse_pressed && tablero.getPieza(pos_inicial) != nullptr && pieza_elegida == nullptr) { //(mouse_released && tablero[pos_inicial.fila][pos_inicial.columna].getEstado() && puntero_aux == NULL)
 				//Se coge una pieza
 				pieza_elegida = tablero.getPieza(pos_inicial);
+				pieza_elegida->posibleCasilla(&tablero, pos_inicial);
 			}
 			//suelto en una casilla válida de la pieza que mueves (tienes q estar moviendo una pieza)
 			if (mouse_released && (pieza_elegida != nullptr) && movimientoValido()) { //(mouse_pressed && (pieza_elegida != nullptr) && comprueba(pieza_aux, pos_inicial, pos_final))
 				//Se actualiza el tablero
 				tablero.setPieza(pieza_elegida, pos_final);
+				pieza_elegida->setOrigen(); //indica que la pieza ha sido movida al menos una vez, para realizar movimientos excepcionales
+				if (coroblanca == 1) //se cumple que un peon ha llegado al final, siendo este coronado
+				{
+					coroblanca = 0;
+					coronacion();
+				}
 				//Se finalizó el movimiento, por lo que se devuelve el puntero a null
 				pieza_elegida = nullptr;
 				//Gestión de turnos
@@ -208,6 +212,12 @@ void Juego::clicRaton(bool mouseP, bool mouseR, int x, int y) {
 			if (mouse_released && (pieza_elegida != nullptr) && movimientoValido()) { //(mouse_pressed && (pieza_elegida != nullptr) && comprueba(pieza_aux, pos_inicial, pos_final))
 				//Se actualiza el tablero
 				tablero.setPieza(pieza_elegida, pos_final);
+				pieza_elegida->setOrigen(); //indica que la pieza ha sido movida al menos una vez, para realizar movimientos excepcionales
+				if (coronegra == 1) //se cumple que un peon ha llegado al final, siendo este coronado
+				{
+					coronegra = 0;
+					coronacion();
+				}
 				//Se finalizó el movimiento, por lo que se devuelve el puntero a null
 				pieza_elegida = nullptr;
 				//Gestión de turnos
@@ -247,41 +257,73 @@ bool Juego::movimientoValido() {
 	//Cï¿½DIGO EXCEPCIONES
 
 	//MOVER DE 2 EL PEON. IMPORTANTE: SE HA AÃADIDO UN FLAG EN PIEZA QUE INDICA QUE LA PIEZA NUNCA SE HA MOVIDO ANTES. 
-	if (pieza_elegida->getTipo() == 1 && !pieza_elegida->checkOrigen())  //si la pieza es un peon y nunca se ha movido
+	if (pieza_elegida->getTipo() == 1 && pieza_elegida->checkOrigen())  //si la pieza es un peon y nunca se ha movido
 	{
-		if (pos_final.fila == pos_inicial.fila - 2 && pos_final.fila == NULL) //si se mueve 2 y la casilla final esta vacia
+		if (pos_final.fila == pos_inicial.fila - 2 /*&& pos_final.fila == NULL*/) //si se mueve 2 y la casilla final esta vacia
+		{
 			return true;
-		if (pos_final.fila == pos_inicial.fila + 2 && pos_final.fila == NULL) //si se mueve 2 y la casilla final esta vacia
+		}
+		if (pos_final.fila == pos_inicial.fila + 2 /*&& pos_final.fila == NULL*/) //si se mueve 2 y la casilla final esta vacia
+		{
 			return true;
+		}
 	}
 
 	//ENROQUE BLANCO
-	if (pieza_elegida->getTipo() == 2 && !pieza_elegida->getColor() && !pieza_elegida->checkOrigen()) //MOVER EL REY BLANCO SIEMPRE Y CUANDO NO HAYA SIDO MOVIDO ANTES
+	if (pieza_elegida->getTipo() == 2 && !pieza_elegida->getColor() && pieza_elegida->checkOrigen()) //MOVER EL REY BLANCO SIEMPRE Y CUANDO NO HAYA SIDO MOVIDO ANTES
 	{
+		//se declaran las posiciones que deben de tener las torres que participan en el enroque
 		Pos torre_blanca_dcha;
+		Pos torre_blanca_izq;
 		torre_blanca_dcha.fila = 0;
 		torre_blanca_dcha.columna = 7;
-		if (pos_final.columna == pos_inicial.columna + 2 && !tablero.getPieza(torre_blanca_dcha)->checkOrigen())
+		torre_blanca_izq.fila = 0;
+		torre_blanca_izq.columna = 0;
+		if (pos_final.columna == pos_inicial.columna + 2 && tablero.getPieza(torre_blanca_dcha)->checkOrigen())
 			//QUE LA TORRE DEL LADO AL QUE HAYAMOS MOVIDO EL REY NO SE HAYA MOVIDO NUNCA. PERDÃN SI ESA NO ES LA POSICIÃN CORRECTA DEL REY EN EL ENROQUE
 		{
-			if (pos_final.columna + 1 == NULL && pos_final.columna + 2 == NULL)
+			//se especifican las posiciones entre el rey y la torre que participa en el enroque
+			Pos aux1;
+			Pos aux2;
+			aux1.columna = 6;
+			aux1.fila = 0;
+			aux2.columna = 5;
+			aux2.fila = 0;
+			if (tablero.getPieza(aux1) == NULL && tablero.getPieza(aux2) == NULL) //si las casillas entre rey y torre se encuentran vacías se realiza el enroque
 			{
-				enroqueblancoder == 1;
+				Pieza* pieza_aux;
+				tablero.quitarPieza(torre_blanca_dcha); //eliminamos la torre de su posicion para ponerla en la del enroque
+				pieza_aux = new Torre(pieza_elegida->getColor());
+				tablero.setPieza(pieza_aux, aux2);
 				return true;
 			}
 		}
-		if (pos_final.columna == pos_inicial.columna - 2 && !tablero.getPieza(torre_blanca_dcha)->checkOrigen())
+		if (pos_final.columna == pos_inicial.columna - 2 && tablero.getPieza(torre_blanca_izq)->checkOrigen())
 			//QUE LA TORRE DEL LADO AL QUE HAYAMOS MOVIDO EL REY NO SE HAYA MOVIDO NUNCA. PERDÃN SI ESA NO ES LA POSICIÃN CORRECTA DEL REY EN EL ENROQUE
 		{
-			if (pos_final.columna - 1 == NULL && pos_final.columna - 2 == NULL && pos_final.columna - 3 == NULL)
+			//se especifican las posiciones entre el rey y la torre que participa en el enroque
+			Pos aux1;
+			Pos aux2;
+			Pos aux3;
+			aux1.columna = 3;
+			aux1.fila = 0;
+			aux2.columna = 2;
+			aux2.fila = 0;
+			aux3.columna = 1;
+			aux3.fila = 0;
+			if (tablero.getPieza(aux1) == NULL && tablero.getPieza(aux2) == NULL && tablero.getPieza(aux3) == NULL) //si las casillas entre rey y torre se encuentran vacías se realiza el enroque
 			{
-				enroqueblancoizq == 1;
+				Pieza* pieza_aux;
+				tablero.quitarPieza(torre_blanca_izq); //eliminamos la torre de su posicion para ponerla en la del enroque
+				pieza_aux = new Torre(pieza_elegida->getColor());
+				tablero.setPieza(pieza_aux, aux1);
 				return true;
 			}
 		}
 	}
 
 	//ENROQUE NEGRO
+	/*
 	if (pieza_elegida->getTipo() == 2 && pieza_elegida->getColor() && !pieza_elegida->checkOrigen()) //MOVER EL REY NEGRO SIEMPRE Y CUANDO NO HAYA SIDO MOVIDO ANTES
 	{
 		Pos torre_negra_dcha;
@@ -292,7 +334,6 @@ bool Juego::movimientoValido() {
 		{
 			if (pos_final.columna + 1 == NULL && pos_final.columna + 2 == NULL)
 			{
-				enroquenegroder == 1;
 				return true;
 			}
 		}
@@ -301,7 +342,59 @@ bool Juego::movimientoValido() {
 		{
 			if (pos_final.columna - 1 == NULL && pos_final.columna - 2 == NULL && pos_final.columna - 3 == NULL)
 			{
-				enroquenegroizq == 1;
+				return true;
+			}
+		}
+	}
+	*/
+
+	if (pieza_elegida->getTipo() == 2 && pieza_elegida->getColor() && pieza_elegida->checkOrigen()) //MOVER EL REY NEGRO SIEMPRE Y CUANDO NO HAYA SIDO MOVIDO ANTES
+	{
+		//se declaran las posiciones que deben de tener las torres que participan en el enroque
+		Pos torre_negra_dcha;
+		Pos torre_negra_izq;
+		torre_negra_dcha.fila = 7;
+		torre_negra_dcha.columna = 7;
+		torre_negra_izq.fila = 7;
+		torre_negra_izq.columna = 0;
+		if (pos_final.columna == pos_inicial.columna + 2 && tablero.getPieza(torre_negra_dcha)->checkOrigen())
+			//QUE LA TORRE DEL LADO AL QUE HAYAMOS MOVIDO EL REY NO SE HAYA MOVIDO NUNCA. PERDÃN SI ESA NO ES LA POSICIÃN CORRECTA DEL REY EN EL ENROQUE
+		{
+			//se especifican las posiciones entre el rey y la torre que participa en el enroque
+			Pos aux1;
+			Pos aux2;
+			aux1.columna = 6;
+			aux1.fila = 7;
+			aux2.columna = 5;
+			aux2.fila = 7;
+			if (tablero.getPieza(aux1) == NULL && tablero.getPieza(aux2) == NULL) //si las casillas entre rey y torre se encuentran vacías se realiza el enroque
+			{
+				Pieza* pieza_aux;
+				tablero.quitarPieza(torre_negra_dcha); //eliminamos la torre de su posicion para ponerla en la del enroque
+				pieza_aux = new Torre(pieza_elegida->getColor());
+				tablero.setPieza(pieza_aux, aux2);
+				return true;
+			}
+		}
+		if (pos_final.columna == pos_inicial.columna - 2 && tablero.getPieza(torre_negra_izq)->checkOrigen())
+			//QUE LA TORRE DEL LADO AL QUE HAYAMOS MOVIDO EL REY NO SE HAYA MOVIDO NUNCA. PERDÃN SI ESA NO ES LA POSICIÃN CORRECTA DEL REY EN EL ENROQUE
+		{
+			//se especifican las posiciones entre el rey y la torre que participa en el enroque
+			Pos aux1;
+			Pos aux2;
+			Pos aux3;
+			aux1.columna = 3;
+			aux1.fila = 7;
+			aux2.columna = 2;
+			aux2.fila = 7;
+			aux3.columna = 1;
+			aux3.fila = 7;
+			if (tablero.getPieza(aux1) == NULL && tablero.getPieza(aux2) == NULL && tablero.getPieza(aux3) == NULL) //si las casillas entre rey y torre se encuentran vacías se realiza el enroque
+			{
+				Pieza* pieza_aux;
+				tablero.quitarPieza(torre_negra_izq); //eliminamos la torre de su posicion para ponerla en la del enroque
+				pieza_aux = new Torre(pieza_elegida->getColor());
+				tablero.setPieza(pieza_aux, aux1);
 				return true;
 			}
 		}
@@ -310,10 +403,10 @@ bool Juego::movimientoValido() {
 	//CÃDIGO DE MOVIMIENTOS NORMALES
 	if (pieza_elegida->comprueba(&tablero, pos_inicial, pos_final)) { //Provisional, esto solo debe ser así en el caso de que no se esté dando ninguna excepción o algo de mayor prioridad.
 		//CONDICION DE CORONACION
-		if (pieza_elegida->getTipo() == 1 && pieza_elegida->getColor() && pos_inicial.fila == 1 && pos_final.fila == 0)
-			coronegra = 1;
-		if (pieza_elegida->getTipo() == 1 && !pieza_elegida->getColor() && pos_inicial.fila == 1 && pos_final.fila == 0)
+		if (pieza_elegida->getTipo() == 1 && !pieza_elegida->getColor() && pos_final.fila == 7)
 			coroblanca = 1;
+		if (pieza_elegida->getTipo() == 1 && pieza_elegida->getColor() && pos_final.fila == 0)
+			coronegra = 1;
 		return true;
 	}
 
@@ -337,24 +430,24 @@ void Juego::coronacion() {
 		cin >> elegido;
 		switch (elegido) {
 		case 3:
+			tablero.quitarPieza(pos_final);
 			pieza_aux = new Dama(pieza_elegida->getColor());
-			tablero.quitarPieza(pos_inicial); //COMPROBAR QUE POS ES LA ADECUADA
-			tablero.setPieza(pieza_aux, pos_inicial);
+			tablero.setPieza(pieza_aux, pos_final);
 			break;
 		case 4:
+			tablero.quitarPieza(pos_final);
 			pieza_aux = new Alfil(pieza_elegida->getColor());
-			tablero.quitarPieza(pos_inicial); //COMPROBAR QUE POS ES LA ADECUADA
-			tablero.setPieza(pieza_aux, pos_inicial);
+			tablero.setPieza(pieza_aux, pos_final);
 			break;
 		case 5:
+			tablero.quitarPieza(pos_final);
 			pieza_aux = new Caballo(pieza_elegida->getColor());
-			tablero.quitarPieza(pos_inicial); //COMPROBAR QUE POS ES LA ADECUADA
-			tablero.setPieza(pieza_aux, pos_inicial);
+			tablero.setPieza(pieza_aux, pos_final);
 			break;
 		case 6:
+			tablero.quitarPieza(pos_final);
 			pieza_aux = new Torre(pieza_elegida->getColor());
-			tablero.quitarPieza(pos_inicial); //COMPROBAR QUE POS ES LA ADECUADA
-			tablero.setPieza(pieza_aux, pos_inicial);
+			tablero.setPieza(pieza_aux, pos_final);
 			break;
 		default:
 			cout << endl << "Pieza no valida. ";

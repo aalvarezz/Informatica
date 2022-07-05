@@ -1,4 +1,4 @@
-﻿#include "Tablero.h"
+#include "Tablero.h"
 #include "freeglut.h"
 #include "ETSIDI.h"
 
