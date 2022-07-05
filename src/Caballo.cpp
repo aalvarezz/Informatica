@@ -26,32 +26,8 @@ bool Caballo::comprueba(Tablero* tablero, Pos inicio, Pos fin) {
 	return false;
 }
 
-void Caballo::dibujar(Pos posicion) {
-	//traslado de la posición de la matriz a coordenadas de glut. x es la columna e y la fila porque las coordenadas de glut están invertidas.
-	float x = posicion.columna * lado;
-	float y = posicion.fila * lado;
-
-	draw(x, y);
-}
-
-void Caballo::dibujarArrastrar(Pos posicion) {
-	float x = posicion.fila;
-	float y = posicion.columna;
-
-	//Trasladar 0
-	x -= AJUSTE_X;
-	y -= AJUSTE_Y;
-
-	//traslado de la posición del bitmap a coordenadas de glut.
-	x = lado / LIM_CASILLA * x - (lado / 2);
-	y = -lado / LIM_CASILLA * y - (lado / 2);
-
-	draw(x, y);
-}
-
 void Caballo::draw(float x, float y) {
 	//en funcion del color de la pieza la dibuja en su posicion correspondiente
-	bool color = this->getColor();
 
 	switch (color) {
 	case 0:
@@ -72,9 +48,7 @@ void Caballo::draw(float x, float y) {
 		break;
 	}
 }
-void Caballo::posibleCasilla(Tablero* tablero, Pos posicion)
-{
-
+void Caballo::posibleCasilla(Tablero* tablero, Pos posicion) {
 	//el bucle "for" se emplea para barrer todos los posibles movimientos de las piezas
 	//las condiciones dentro del bucle verifican si los posibles movimientos de la pieza están limitados de algun modo.
 	//si no lo estuvieran, se haría llamada al método con el que se dibujan los posibles movimientos de la pieza

@@ -2,22 +2,23 @@
 #include "Peon.h"
 
 bool Peon::comprueba(Tablero* tablero, Pos inicio, Pos fin) {
-
-
 	Pos posaux1(1, 0), posaux2(1, -1),  posaux3(1, 1), posaux4(-1, 0), posaux5(-1, -1), posaux6(-1, 1);
 
 	switch (color) {
 	case 0:		//BLANCO
 		//1.Avanza una posición en la columna (Movimiento normal)
-
 		posaux1 = posaux1 + inicio;
-		if ((posaux1.fila == fin.fila && posaux1.columna==fin.columna) && (tablero->getPieza(fin) == nullptr))
+		if ((posaux1.fila == fin.fila && posaux1.columna == fin.columna) && (tablero->getPieza(fin) == nullptr)) {
 			return true;
+		}
 
 		//2.Diagonal izq (Al comer otra ficha)
 		posaux2 = posaux2 + inicio;
-		if ((posaux2.fila == fin.fila && posaux2.columna==fin.columna) && (tablero->getPieza(fin)->getColor() != color))
-			return true;
+		if ((posaux2.fila == fin.fila && posaux2.columna == fin.columna) && (tablero->getPieza(fin) != nullptr)) {
+			if (tablero->getPieza(fin)->getColor() != color) {
+				return true;
+			}
+		}
 
 		//3.Diagonal dcha (Al comer otra ficha)
 		posaux3 = posaux3 + inicio;
@@ -27,54 +28,36 @@ bool Peon::comprueba(Tablero* tablero, Pos inicio, Pos fin) {
 		return false;
 		break;
 
-
 	case 1:		//NEGRO
 		//1.Avanza una posición en la columna (Movimiento normal)
 		posaux4 = posaux4 + inicio;
-		if ((posaux4.fila == fin.fila && posaux4.columna==fin.columna) && (tablero->getPieza(fin) == nullptr))
+		if ((posaux4.fila == fin.fila && posaux4.columna == fin.columna) && (tablero->getPieza(fin) == nullptr)) {
 			return true;
+		}
 
 		//2.Diagonal izq (Al comer otra ficha)
 		posaux5 = posaux5 + inicio;
-		if ((posaux5.fila == fin.fila && posaux5.columna==fin.columna) && (tablero->getPieza(fin)->getColor() != color))
-			return true;
+		if ((posaux5.fila == fin.fila && posaux5.columna == fin.columna) && (tablero->getPieza(fin) != nullptr)) {
+			if (tablero->getPieza(fin)->getColor() != color) {
+				return true;
+			}
+		}
 
 		//3.Diagonal dcha (Al comer otra ficha)
 		posaux6 = posaux6 + inicio;
-		if ((posaux6.fila == fin.fila && posaux6.columna==fin.columna) && (tablero->getPieza(fin)->getColor() != color))
-			return true;
+		if ((posaux6.fila == fin.fila && posaux6.columna == fin.columna) && (tablero->getPieza(fin) != nullptr)) {
+			if (tablero->getPieza(fin)->getColor() != color) {
+				return true;
+			}
+		}
 		break;
+
 	}
 	return false;
 }
 
-
-void Peon::dibujar(Pos posicion) {
-	//traslado de la posición de la matriz a coordenadas de glut. x es la columna e y la fila porque las coordenadas de glut están invertidas.
-	float x = posicion.columna * lado;
-	float y = posicion.fila * lado;
-
-	draw(x, y);
-}
-
-void Peon::dibujarArrastrar(Pos posicion) {
-	float x = posicion.fila;
-	float y = posicion.columna;
-
-	//Trasladar 0
-	x -= AJUSTE_X;
-	y -= AJUSTE_Y;
-
-	//traslado de la posición del bitmap a coordenadas de glut.
-	x = lado / LIM_CASILLA * x - (lado / 2);
-	y = -lado / LIM_CASILLA * y - (lado / 2);
-
-	draw(x, y);
-}
-
 void Peon::draw(float x, float y) {
 	//en funcion del color de la pieza la dibuja en su posicion correspondiente
-	bool color = this->getColor();
 
 	switch (color) {
 	case 0:
