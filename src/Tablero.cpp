@@ -3,8 +3,13 @@
 #include "ETSIDI.h"
 
 Tablero::Tablero() { //Relleno el damero. Muy provisional sin piezas
+
 	lado = 2.5f;
 }
+
+/*void Tablero::inicializar(Pieza* p, int i, int j) {
+	piezas[i][j] = p;
+}*/
 
 void Tablero::dibujoDamero() {
 	//CASILLAS DEL TABLERO
@@ -73,6 +78,27 @@ void Tablero::dibujoDamero() {
 	glEnable(GL_LIGHTING);
 	glDisable(GL_TEXTURE_2D);
 }
+
+/*void Tablero::imprimir() { //solo imprime piezas, la impresion del tablero en sí se hace a parte
+	Pos pos_pieza;
+	for (int i = 0; i < 8; i++) {
+		pos_pieza.fila = i;
+		for (int j = 0; j < 8; j++) {
+			pos_pieza.columna = j;
+			piezas[i][j]->dibujar(pos_pieza);
+		}
+	}
+}*/
+
+/*void Tablero::moverPieza(Pos pos_inicial, Pos pos_final) { //actualizar posición de cierta pieza, en principio se usa la posicion del tablero
+	if (piezas[pos_final.fila][pos_final.columna] == NULL) {
+		*piezas[pos_final.fila][pos_final.columna] = *piezas[pos_inicial.fila][pos_inicial.columna];
+		piezas[pos_inicial.fila][pos_inicial.columna] = NULL;
+	}
+	else {
+
+	}
+}*/
 
 void Tablero::quitarPieza(Pos posicion) { //hacer null el puntero a la pieza deseada, hacer "0" la posición de esa pieza (suponiendo que la pieza tuviera un atributo pos). Parece prescindible
 	piezas[posicion.fila][posicion.columna] = nullptr;

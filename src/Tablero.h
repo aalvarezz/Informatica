@@ -1,6 +1,6 @@
 #pragma once
-#include "Pos.h"
 //#include "Pieza.h"
+#include "Pos.h"
 
 class Pieza;
 
