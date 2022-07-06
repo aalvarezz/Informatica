@@ -11,10 +11,13 @@ private:
 	//Pieza piezas[4][8];
 	Pos pos_inicial, pos_final, mouse_pos;
 	Pieza* pieza_elegida;
+	Pos doblenegro, dobleblanco; //posiciones de las piezas que se mueven doble
 	int AJUSTE_X, AJUSTE_Y, LIM_TABLERO, LIM_CASILLA;
 	bool within_board, mouse_pressed, mouse_released, turno_blancas, turno_negras, color_elegido;
 
 	bool coronegra, coroblanca;
+	bool pasonegro, pasoblanco;
+
 public:
 	Juego();
 	void inicializar(); //provisional, crearia instancia de tablero como mínimo. Posible conflicto con Coordinador

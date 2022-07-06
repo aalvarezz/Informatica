@@ -7,51 +7,55 @@ bool Peon::comprueba(Tablero* tablero, Pos inicio, Pos fin) {
 	switch (color) {
 	case 0:		//BLANCO
 		//1.Avanza una posición en la columna (Movimiento normal)
-		posaux1 = posaux1 + inicio;
-		if ((posaux1.fila == fin.fila && posaux1.columna == fin.columna) && (tablero->getPieza(fin) == nullptr)) {
-			return true;
-		}
-
-		//2.Diagonal izq (Al comer otra ficha)
-		posaux2 = posaux2 + inicio;
-		if ((posaux2.fila == fin.fila && posaux2.columna == fin.columna) && (tablero->getPieza(fin) != nullptr)) {
-			if (tablero->getPieza(fin)->getColor() != color) {
+		if (tablero->getPieza(fin) == nullptr)
+		{
+			posaux1 = posaux1 + inicio;
+			if (posaux1.fila == fin.fila && posaux1.columna == fin.columna)
 				return true;
-			}
+			else
+				return false;
 		}
 
-		//3.Diagonal dcha (Al comer otra ficha)
-		posaux3 = posaux3 + inicio;
-		if ((posaux3.fila == fin.fila && posaux3.columna==fin.columna) && (tablero->getPieza(fin)->getColor() != color))
-			return true;
+		if (tablero->getPieza(fin) != nullptr)
+		{
+			//2.Diagonal izq (Al comer otra ficha)
+			posaux2 = posaux2 + inicio;
+			if ((posaux2.fila == fin.fila && posaux2.columna == fin.columna) && (tablero->getPieza(fin)->getColor() != color))
+				return true;
 
+			//3.Diagonal dcha (Al comer otra ficha)
+			posaux3 = posaux3 + inicio;
+			if ((posaux3.fila == fin.fila && posaux3.columna == fin.columna) && (tablero->getPieza(fin)->getColor() != color))
+				return true;
+		}
 		return false;
 		break;
 
 	case 1:		//NEGRO
 		//1.Avanza una posición en la columna (Movimiento normal)
-		posaux4 = posaux4 + inicio;
-		if ((posaux4.fila == fin.fila && posaux4.columna == fin.columna) && (tablero->getPieza(fin) == nullptr)) {
-			return true;
+		if (tablero->getPieza(fin) == nullptr)
+		{
+			posaux4 = posaux4 + inicio;
+			if (posaux4.fila == fin.fila && posaux4.columna == fin.columna)
+				return true;
+			else
+				return false;
 		}
 
-		//2.Diagonal izq (Al comer otra ficha)
-		posaux5 = posaux5 + inicio;
-		if ((posaux5.fila == fin.fila && posaux5.columna == fin.columna) && (tablero->getPieza(fin) != nullptr)) {
-			if (tablero->getPieza(fin)->getColor() != color) {
+		if (tablero->getPieza(fin) != nullptr)
+		{
+			//2.Diagonal izq (Al comer otra ficha)
+			posaux5 = posaux5 + inicio;
+			if ((posaux5.fila == fin.fila && posaux5.columna == fin.columna) && (tablero->getPieza(fin)->getColor() != color))
 				return true;
-			}
-		}
 
-		//3.Diagonal dcha (Al comer otra ficha)
-		posaux6 = posaux6 + inicio;
-		if ((posaux6.fila == fin.fila && posaux6.columna == fin.columna) && (tablero->getPieza(fin) != nullptr)) {
-			if (tablero->getPieza(fin)->getColor() != color) {
+			//3.Diagonal dcha (Al comer otra ficha)
+			posaux6 = posaux6 + inicio;
+			if ((posaux6.fila == fin.fila && posaux6.columna == fin.columna) && (tablero->getPieza(fin)->getColor() != color))
 				return true;
-			}
 		}
+		return false;
 		break;
-
 	}
 	return false;
 }
@@ -85,6 +89,7 @@ void Peon::posibleCasilla(Tablero* tablero, Pos inicio)
 	bool color = this->getColor();
 
 	Pos posaux1(1, 0), posaux2(1, -1), posaux3(1, 1), posaux4(-1, 0), posaux5(-1, -1), posaux6(-1, 1);
+	Pos dobleb(2, 0), doblen(-2, 0);
 
 	//el switch siguiente verifica los posibles movimientos del peon en funcion del color de este.
 	//todo movimiento posible que pueda realizar se mostrara en pantalla
@@ -93,17 +98,16 @@ void Peon::posibleCasilla(Tablero* tablero, Pos inicio)
 	switch (color) {
 	case 0:		//BLANCO
 		//1.Avanza una posición en la columna (Movimiento normal)
-		posaux1.columna = posaux1.columna + inicio.columna;
-		posaux1.fila = posaux1.fila + inicio.fila;
-
-		posaux2.columna = posaux2.columna + inicio.columna;
-		posaux2.fila = posaux2.fila + inicio.fila;
-
-		posaux3.columna = posaux3.columna + inicio.columna;
-		posaux3.fila = posaux3.fila + inicio.fila;
+		posaux1 = posaux1 + inicio;
+		posaux2 = posaux2 + inicio;
+		posaux3 = posaux3 + inicio;
+		dobleb = dobleb + inicio;
 
 		if (tablero->getPieza(posaux1) == nullptr)
 			tablero->setPosibleCasilla(posaux1);
+
+		if (tablero->getPieza(dobleb) == nullptr && origen == 1) //condicion para que el peon avance dos casillas al no haberse movido antes
+			tablero->setPosibleCasilla(dobleb);
 
 		//2.Diagonal izq (Al comer otra ficha)
 		if (tablero->getPieza(posaux2) != nullptr)
@@ -122,17 +126,16 @@ void Peon::posibleCasilla(Tablero* tablero, Pos inicio)
 
 	case 1:		//NEGRO
 		//1.Avanza una posición en la columna (Movimiento normal)
-		posaux4.columna = posaux4.columna + inicio.columna;
-		posaux4.fila = posaux4.fila + inicio.fila;
-
-		posaux5.columna = posaux5.columna + inicio.columna;
-		posaux5.fila = posaux5.fila + inicio.fila;
-
-		posaux6.columna = posaux6.columna + inicio.columna;
-		posaux6.fila = posaux6.fila + inicio.fila;
+		posaux4 = posaux4 + inicio;
+		posaux5 = posaux5 + inicio;
+		posaux6 = posaux6 + inicio;
+		doblen = doblen + inicio;
 
 		if (tablero->getPieza(posaux4) == nullptr)
 			tablero->setPosibleCasilla(posaux4);
+
+		if (tablero->getPieza(doblen) == nullptr && origen == 1) //condicion para que el peon avance dos casillas al no haberse movido antes
+			tablero->setPosibleCasilla(doblen);
 
 		//2.Diagonal izq (Al comer otra ficha)
 

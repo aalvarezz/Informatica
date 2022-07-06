@@ -135,8 +135,9 @@ void Torre::posibleCasilla(Tablero* tablero, Pos inicio)
 
 	for (int j = 1; j <= 7; j++) {
 		Pos posaux5(0, j);
-		posaux5.columna = posaux5.columna + inicio.columna;
-		posaux5.fila = posaux5.fila + inicio.fila;
+		
+		posaux5 = posaux5 + inicio;
+
 		if (posaux5.columna > 7)
 			break;
 		if (tablero->getPieza(posaux5) == NULL)
@@ -156,8 +157,9 @@ void Torre::posibleCasilla(Tablero* tablero, Pos inicio)
 	//Izquierda
 	for (int j = 1; j <= 7; j++) {
 		Pos posaux6(0, -j);
-		posaux6.columna = posaux6.columna + inicio.columna;
-		posaux6.fila = posaux6.fila + inicio.fila;
+		
+		posaux6 = posaux6 + inicio;
+
 		if (posaux6.columna < 0)
 			break;
 		if (tablero->getPieza(posaux6) == NULL)
@@ -177,8 +179,9 @@ void Torre::posibleCasilla(Tablero* tablero, Pos inicio)
 	//Arriba
 	for (int j = 1; j <= 7; j++) {
 		Pos posaux7(j, 0);
-		posaux7.columna = posaux7.columna + inicio.columna;
-		posaux7.fila = posaux7.fila + inicio.fila;
+		
+		posaux7 = posaux7 + inicio;
+
 		if (posaux7.fila > 7)
 			break;
 		if (tablero->getPieza(posaux7) == NULL)
@@ -198,8 +201,9 @@ void Torre::posibleCasilla(Tablero* tablero, Pos inicio)
 	//Abajo
 	for (int j = 1; j <= 7; j++) {
 		Pos posaux8(-j, 0);
-		posaux8.columna = posaux8.columna + inicio.columna;
-		posaux8.fila = posaux8.fila + inicio.fila;
+		
+		posaux8 = posaux8 + inicio;
+
 		if (posaux8.fila < 0)
 			break;
 		if (tablero->getPieza(posaux8) == NULL)

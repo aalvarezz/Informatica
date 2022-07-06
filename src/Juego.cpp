@@ -25,6 +25,9 @@ Juego::Juego() {
 
 	coronegra = 0;
 	coroblanca = 0;
+
+	pasonegro = 0;
+	pasoblanco = 0;
 }
 
 void Juego::inicializar() {
@@ -256,15 +259,46 @@ void Juego::movimientoRaton(int x, int y) {
 bool Juego::movimientoValido() {
 	//Cï¿½DIGO EXCEPCIONES
 
+	//COMER AL PASO
+	if (pasonegro == 1) //el peon negro puede ser comido por el blanco
+	{
+		if (pieza_elegida->getTipo() == 1 && pieza_elegida->getColor() == 0)
+		{
+			if (pos_final.fila == doblenegro.fila + 1 && pos_final.columna == doblenegro.columna)
+			{
+				tablero.quitarPieza(doblenegro); //eliminamos el peon comido al paso
+				return true;
+			}
+		}
+		pasonegro = 0;
+	}
+
+	if (pasoblanco == 1) //el peon blanco puede ser comido por el negro
+	{
+		if (pieza_elegida->getTipo() == 1 && pieza_elegida->getColor() != 0)
+		{
+			if (pos_final.fila == dobleblanco.fila - 1 && pos_final.columna == dobleblanco.columna)
+			{
+				tablero.quitarPieza(dobleblanco); //eliminamos el peon comido al paso
+				return true;
+			}
+		}
+		pasoblanco = 0;
+	}
+
 	//MOVER DE 2 EL PEON. IMPORTANTE: SE HA AÃADIDO UN FLAG EN PIEZA QUE INDICA QUE LA PIEZA NUNCA SE HA MOVIDO ANTES. 
 	if (pieza_elegida->getTipo() == 1 && pieza_elegida->checkOrigen())  //si la pieza es un peon y nunca se ha movido
 	{
 		if (pos_final.fila == pos_inicial.fila - 2 /*&& pos_final.fila == NULL*/) //si se mueve 2 y la casilla final esta vacia
 		{
+			doblenegro = pos_final;
+			pasonegro = 1;
 			return true;
 		}
 		if (pos_final.fila == pos_inicial.fila + 2 /*&& pos_final.fila == NULL*/) //si se mueve 2 y la casilla final esta vacia
 		{
+			dobleblanco = pos_final;
+			pasoblanco = 1;
 			return true;
 		}
 	}
@@ -323,30 +357,6 @@ bool Juego::movimientoValido() {
 	}
 
 	//ENROQUE NEGRO
-	/*
-	if (pieza_elegida->getTipo() == 2 && pieza_elegida->getColor() && !pieza_elegida->checkOrigen()) //MOVER EL REY NEGRO SIEMPRE Y CUANDO NO HAYA SIDO MOVIDO ANTES
-	{
-		Pos torre_negra_dcha;
-		torre_negra_dcha.fila = 7;
-		torre_negra_dcha.columna = 7;
-		if (pos_final.columna == pos_inicial.columna + 2 && !tablero.getPieza(torre_negra_dcha)->checkOrigen())
-			//QUE LA TORRE DEL LADO AL QUE HAYAMOS MOVIDO EL REY NO SE HAYA MOVIDO NUNCA. PERDÃN SI ESA NO ES LA POSICIÃN CORRECTA DEL REY EN EL ENROQUE
-		{
-			if (pos_final.columna + 1 == NULL && pos_final.columna + 2 == NULL)
-			{
-				return true;
-			}
-		}
-		if (pos_final.columna == pos_inicial.columna - 2 && !tablero.getPieza(torre_negra_dcha)->checkOrigen())
-			//QUE LA TORRE DEL LADO AL QUE HAYAMOS MOVIDO EL REY NO SE HAYA MOVIDO NUNCA. PERDÃN SI ESA NO ES LA POSICIÃN CORRECTA DEL REY EN EL ENROQUE
-		{
-			if (pos_final.columna - 1 == NULL && pos_final.columna - 2 == NULL && pos_final.columna - 3 == NULL)
-			{
-				return true;
-			}
-		}
-	}
-	*/
 
 	if (pieza_elegida->getTipo() == 2 && pieza_elegida->getColor() && pieza_elegida->checkOrigen()) //MOVER EL REY NEGRO SIEMPRE Y CUANDO NO HAYA SIDO MOVIDO ANTES
 	{
@@ -403,9 +413,9 @@ bool Juego::movimientoValido() {
 	//CÃDIGO DE MOVIMIENTOS NORMALES
 	if (pieza_elegida->comprueba(&tablero, pos_inicial, pos_final)) { //Provisional, esto solo debe ser así en el caso de que no se esté dando ninguna excepción o algo de mayor prioridad.
 		//CONDICION DE CORONACION
-		if (pieza_elegida->getTipo() == 1 && !pieza_elegida->getColor() && pos_final.fila == 7)
+		if (pieza_elegida->getTipo() == 1 && !pieza_elegida->getColor() && pos_final.fila == 7) //comprueba si el peon blanco puede o no coronar
 			coroblanca = 1;
-		if (pieza_elegida->getTipo() == 1 && pieza_elegida->getColor() && pos_final.fila == 0)
+		if (pieza_elegida->getTipo() == 1 && pieza_elegida->getColor() && pos_final.fila == 0) //comprueba si el peon negro puede o no coronar
 			coronegra = 1;
 		return true;
 	}
