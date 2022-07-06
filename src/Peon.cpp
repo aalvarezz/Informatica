@@ -60,30 +60,6 @@ bool Peon::comprueba(Tablero* tablero, Pos inicio, Pos fin) {
 	return false;
 }
 
-void Peon::draw(float x, float y) {
-	//en funcion del color de la pieza la dibuja en su posicion correspondiente
-
-	switch (color) {
-	case 0:
-		PeonB.setCenter(lado / 2, lado / 2);
-		PeonB.setSize(lado, lado);
-
-		glTranslatef(x, y, 0.1f);
-		glColor3f(1.0f, 0.0f, 0.0f);
-		PeonB.draw();
-		glTranslatef(-x, -y, -0.1f);
-		break;
-	case 1:
-		PeonN.setCenter(lado / 2, lado / 2);
-		PeonN.setSize(lado, lado);
-		glTranslatef(x, y, 0.1f);
-		glColor3f(1.0f, 0.0f, 0.0f);
-		PeonN.draw();
-		glTranslatef(-x, -y, -0.1f);
-		break;
-	}
-}
-
 void Peon::posibleCasilla(Tablero* tablero, Pos inicio)
 {
 	bool color = this->getColor();
@@ -130,10 +106,8 @@ void Peon::posibleCasilla(Tablero* tablero, Pos inicio)
 		posaux5 = posaux5 + inicio;
 		posaux6 = posaux6 + inicio;
 		doblen = doblen + inicio;
-
 		if (tablero->getPieza(posaux4) == nullptr)
 			tablero->setPosibleCasilla(posaux4);
-
 		if (tablero->getPieza(doblen) == nullptr && origen == 1) //condicion para que el peon avance dos casillas al no haberse movido antes
 			tablero->setPosibleCasilla(doblen);
 

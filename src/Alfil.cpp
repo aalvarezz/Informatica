@@ -105,29 +105,6 @@ bool Alfil::comprueba(Tablero* tablero, Pos inicio, Pos fin) {
 	return false;
 }
 
-void Alfil::draw(float x, float y) {
-	//en funcion del color de la pieza la dibuja en su posicion correspondiente
-
-	switch (color) {
-	case 0:
-		AlfilB.setCenter(lado / 2, lado / 2);
-		AlfilB.setSize(lado, lado);
-		glTranslatef(x, y, 0.1f);
-		glColor3f(1.0f, 0.0f, 0.0f);
-		AlfilB.draw();
-		glTranslatef(-x, -y, -0.1f);
-		break;
-	case 1:
-		AlfilN.setCenter(lado / 2, lado / 2);
-		AlfilN.setSize(lado, lado);
-		glTranslatef(x, y, 0.1f);
-		glColor3f(1.0f, 0.0f, 0.0f);
-		AlfilN.draw();
-		glTranslatef(-x, -y, -0.1f);
-		break;
-	}
-}
-
 void Alfil::posibleCasilla(Tablero* tablero, Pos inicio) {
 	//los bucles "for" se emplean para barrer todos los posibles movimientos de las piezas
 	//las condiciones dentro de los bucles verifican si los posibles movimientos de la pieza están limitados de algun modo.
