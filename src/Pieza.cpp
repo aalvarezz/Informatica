@@ -6,7 +6,6 @@ void Pieza::dibujar(Pos posicion) {
 	float y = posicion.fila * lado;
 
 	draw(x, y);
-}
 
 void Pieza::dibujarArrastrar(Pos posicion) {
 	float x = posicion.fila;

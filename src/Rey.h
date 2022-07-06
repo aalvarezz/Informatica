@@ -5,6 +5,9 @@
 using ETSIDI::Sprite;
 
 class Rey : public Pieza{
+private:
+	Sprite ReyB{ "imagenes/ReyB.png" };
+	Sprite ReyN{ "imagenes/ReyN.png" };
 public:
 	Rey(bool _color) : Pieza(_color, 2) {
 		if (color) { sprite.setState(1); }

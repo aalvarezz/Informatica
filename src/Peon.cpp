@@ -106,10 +106,8 @@ void Peon::posibleCasilla(Tablero* tablero, Pos inicio)
 		posaux5 = posaux5 + inicio;
 		posaux6 = posaux6 + inicio;
 		doblen = doblen + inicio;
-
 		if (tablero->getPieza(posaux4) == nullptr)
 			tablero->setPosibleCasilla(posaux4);
-
 		if (tablero->getPieza(doblen) == nullptr && origen == 1) //condicion para que el peon avance dos casillas al no haberse movido antes
 			tablero->setPosibleCasilla(doblen);
 

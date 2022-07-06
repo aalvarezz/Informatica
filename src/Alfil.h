@@ -5,6 +5,9 @@
 using ETSIDI::Sprite;
 
 class Alfil : public Pieza {
+private:
+	Sprite AlfilB{ "imagenes/AlfilB.png" };
+	Sprite AlfilN{ "imagenes/AlfilN.png" };
 public:
 	Alfil(bool _color) : Pieza(_color, 4) {
 		if (color) { sprite.setState(3); }
