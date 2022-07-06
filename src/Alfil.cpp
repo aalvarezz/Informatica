@@ -105,32 +105,8 @@ bool Alfil::comprueba(Tablero* tablero, Pos inicio, Pos fin) {
 	return false;
 }
 
-void Alfil::dibujar(Pos posicion) {
-	//traslado de la posición de la matriz a coordenadas de glut. x es la columna e y la fila porque las coordenadas de glut están invertidas.
-	float x = posicion.columna * lado;
-	float y = posicion.fila * lado;
-
-	draw(x, y);
-}
-
-void Alfil::dibujarArrastrar(Pos posicion) {
-	float x = posicion.fila;
-	float y = posicion.columna;
-
-	//Trasladar 0
-	x -= AJUSTE_X;
-	y -= AJUSTE_Y;
-
-	//traslado de la posición del bitmap a coordenadas de glut.
-	x = lado / LIM_CASILLA * x - (lado / 2);
-	y = -lado / LIM_CASILLA * y - (lado / 2);
-
-	draw(x, y);
-}
-
 void Alfil::draw(float x, float y) {
 	//en funcion del color de la pieza la dibuja en su posicion correspondiente
-	bool color = this->getColor();
 
 	switch (color) {
 	case 0:
@@ -151,8 +127,8 @@ void Alfil::draw(float x, float y) {
 		break;
 	}
 }
-void Alfil::posibleCasilla(Tablero* tablero, Pos inicio)
-{
+
+void Alfil::posibleCasilla(Tablero* tablero, Pos inicio) {
 	//los bucles "for" se emplean para barrer todos los posibles movimientos de las piezas
 	//las condiciones dentro de los bucles verifican si los posibles movimientos de la pieza están limitados de algun modo.
 	//si no lo estuvieran, se haría llamada al método con el que se dibujan los posibles movimientos de la pieza
@@ -160,8 +136,8 @@ void Alfil::posibleCasilla(Tablero* tablero, Pos inicio)
 	//Arriba derecha
 	for (int j = 1; j <= 7; j++) {
 		Pos posaux1(j, j);
-		posaux1.columna = posaux1.columna + inicio.columna;
-		posaux1.fila = posaux1.fila + inicio.fila;
+
+		posaux1 = posaux1 + inicio;
 
 		if (posaux1.columna > 7 || posaux1.fila > 7)
 			break;
@@ -183,8 +159,8 @@ void Alfil::posibleCasilla(Tablero* tablero, Pos inicio)
 	//Abajo derecha
 	for (int j = 1; j <= 7; j++) {
 		Pos posaux2(-j, j);
-		posaux2.columna = posaux2.columna + inicio.columna;
-		posaux2.fila = posaux2.fila + inicio.fila;
+
+		posaux2 = posaux2 + inicio;
 
 		if (posaux2.columna > 7 || posaux2.fila < 0)
 			break;
@@ -207,8 +183,8 @@ void Alfil::posibleCasilla(Tablero* tablero, Pos inicio)
 	//Abajo izquierda
 	for (int j = 1; j <= 7; j++) {
 		Pos posaux3(-j, -j);
-		posaux3.columna = posaux3.columna + inicio.columna;
-		posaux3.fila = posaux3.fila + inicio.fila;
+
+		posaux3 = posaux3 + inicio;
 
 		if (posaux3.columna < 0 || posaux3.fila < 0)
 			break;
@@ -231,8 +207,8 @@ void Alfil::posibleCasilla(Tablero* tablero, Pos inicio)
 	//Arriba izquierda
 	for (int j = 1; j <= 7; j++) {
 		Pos posaux4(j, -j);
-		posaux4.columna = posaux4.columna + inicio.columna;
-		posaux4.fila = posaux4.fila + inicio.fila;
+		
+		posaux4 = posaux4 + inicio;
 
 		if (posaux4.fila > 7 || posaux4.columna < 0)
 			break;
@@ -248,7 +224,6 @@ void Alfil::posibleCasilla(Tablero* tablero, Pos inicio)
 				tablero->setPosibleCasilla(posaux4);
 				break;
 			}
-		}
-		
+		}	
 	}
 }

@@ -17,6 +17,7 @@ private:
 
 	bool coronegra, coroblanca;
 	bool pasonegro, pasoblanco;
+
 public:
 	Juego();
 	void inicializar(); //provisional, crearia instancia de tablero como mínimo. Posible conflicto con Coordinador
