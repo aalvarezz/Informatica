@@ -7,78 +7,57 @@ bool Peon::comprueba(Tablero* tablero, Pos inicio, Pos fin) {
 	switch (color) {
 	case 0:		//BLANCO
 		//1.Avanza una posición en la columna (Movimiento normal)
-		posaux1 = posaux1 + inicio;
-		if ((posaux1.fila == fin.fila && posaux1.columna == fin.columna) && (tablero->getPieza(fin) == nullptr)) {
-			return true;
+		if (tablero->getPieza(fin) == nullptr)
+		{
+			posaux1 = posaux1 + inicio;
+			if (posaux1.fila == fin.fila && posaux1.columna == fin.columna)
+				return true;
+			else
+				return false;
 		}
 
-		//2.Diagonal izq (Al comer otra ficha)
-		posaux2 = posaux2 + inicio;
-		if ((posaux2.fila == fin.fila && posaux2.columna == fin.columna) && (tablero->getPieza(fin) != nullptr)) {
-			if (tablero->getPieza(fin)->getColor() != color) {
+		if (tablero->getPieza(fin) != nullptr)
+		{
+			//2.Diagonal izq (Al comer otra ficha)
+			posaux2 = posaux2 + inicio;
+			if ((posaux2.fila == fin.fila && posaux2.columna == fin.columna) && (tablero->getPieza(fin)->getColor() != color))
 				return true;
-			}
-		}
 
-		//3.Diagonal dcha (Al comer otra ficha)
-		posaux3 = posaux3 + inicio;
-		if ((posaux3.fila == fin.fila && posaux3.columna == fin.columna) && (tablero->getPieza(fin) != nullptr)) {
-			if (tablero->getPieza(fin)->getColor() != color) {
+			//3.Diagonal dcha (Al comer otra ficha)
+			posaux3 = posaux3 + inicio;
+			if ((posaux3.fila == fin.fila && posaux3.columna == fin.columna) && (tablero->getPieza(fin)->getColor() != color))
 				return true;
-			}
 		}
+		return false;
 		break;
 
 	case 1:		//NEGRO
 		//1.Avanza una posición en la columna (Movimiento normal)
-		posaux4 = posaux4 + inicio;
-		if ((posaux4.fila == fin.fila && posaux4.columna == fin.columna) && (tablero->getPieza(fin) == nullptr)) {
-			return true;
+		if (tablero->getPieza(fin) == nullptr)
+		{
+			posaux4 = posaux4 + inicio;
+			if (posaux4.fila == fin.fila && posaux4.columna == fin.columna)
+				return true;
+			else
+				return false;
 		}
 
-		//2.Diagonal izq (Al comer otra ficha)
-		posaux5 = posaux5 + inicio;
-		if ((posaux5.fila == fin.fila && posaux5.columna == fin.columna) && (tablero->getPieza(fin) != nullptr)) {
-			if (tablero->getPieza(fin)->getColor() != color) {
+		if (tablero->getPieza(fin) != nullptr)
+		{
+			//2.Diagonal izq (Al comer otra ficha)
+			posaux5 = posaux5 + inicio;
+			if ((posaux5.fila == fin.fila && posaux5.columna == fin.columna) && (tablero->getPieza(fin)->getColor() != color))
 				return true;
-			}
-		}
 
-		//3.Diagonal dcha (Al comer otra ficha)
-		posaux6 = posaux6 + inicio;
-		if ((posaux6.fila == fin.fila && posaux6.columna == fin.columna) && (tablero->getPieza(fin) != nullptr)) {
-			if (tablero->getPieza(fin)->getColor() != color) {
+			//3.Diagonal dcha (Al comer otra ficha)
+			posaux6 = posaux6 + inicio;
+			if ((posaux6.fila == fin.fila && posaux6.columna == fin.columna) && (tablero->getPieza(fin)->getColor() != color))
 				return true;
-			}
 		}
+		return false;
 		break;
-
 	}
 	return false;
-}
-
-void Peon::draw(float x, float y) {
-	//en funcion del color de la pieza la dibuja en su posicion correspondiente
-
-	switch (color) {
-	case 0:
-		PeonB.setCenter(lado / 2, lado / 2);
-		PeonB.setSize(lado, lado);
-
-		glTranslatef(x, y, 0.1f);
-		glColor3f(1.0f, 0.0f, 0.0f);
-		PeonB.draw();
-		glTranslatef(-x, -y, -0.1f);
-		break;
-	case 1:
-		PeonN.setCenter(lado / 2, lado / 2);
-		PeonN.setSize(lado, lado);
-		glTranslatef(x, y, 0.1f);
-		glColor3f(1.0f, 0.0f, 0.0f);
-		PeonN.draw();
-		glTranslatef(-x, -y, -0.1f);
-		break;
-	}
 }
 
 void Peon::posibleCasilla(Tablero* tablero, Pos inicio)
@@ -129,6 +108,8 @@ void Peon::posibleCasilla(Tablero* tablero, Pos inicio)
 
 		if (tablero->getPieza(posaux4) == nullptr)
 			tablero->setPosibleCasilla(posaux4);
+		if (tablero->getPieza(doblen) == nullptr && origen == 1) //condicion para que el peon avance dos casillas al no haberse movido antes
+			tablero->setPosibleCasilla(doblen);
 
 		if (tablero->getPieza(doblen) == nullptr && origen == 1) //condicion para que el peon avance dos casillas al no haberse movido antes
 			tablero->setPosibleCasilla(doblen);

@@ -12,10 +12,10 @@ using namespace std; //cuidado
 
 Juego::Juego() {
 
-	AJUSTE_X = 86;
-	AJUSTE_Y = 813;
-	LIM_TABLERO = 728;
-	LIM_CASILLA = 91;
+	AJUSTE_X = 58;
+	AJUSTE_Y = 540;
+	LIM_TABLERO = 480;
+	LIM_CASILLA = 60;
 
 	pieza_elegida = nullptr;
 	within_board = false;
@@ -115,7 +115,7 @@ void Juego::dibujarArrastrar() {
 	if (mouse_pressed && pieza_elegida != nullptr) {
 		pieza_elegida->dibujarArrastrar(mouse_pos);
 
-		pieza_elegida->posibleCasilla(&tablero, pos_inicial); //CUIDADO
+		pieza_elegida->posibleCasilla(&tablero, pos_inicial);
 
 		//glutPostRedisplay();
 	}
@@ -189,6 +189,7 @@ void Juego::clicRaton(bool mouseP, bool mouseR, int x, int y) {
 			//Se clica en una casilla que contiene pieza para cogerla e iniciar el movimiento
 			if (mouse_pressed && tablero.getPieza(pos_inicial) != nullptr && pieza_elegida == nullptr) {
 				pieza_elegida = tablero.getPieza(pos_inicial);
+				pieza_elegida->posibleCasilla(&tablero, pos_inicial);
 			}
 			//Se suelta el clic en una casilla válida de la pieza que mueves (tienes que estar moviendo una pieza). 
 			//El movimiento no puede provocar que el color pase a estar en jaque.
@@ -318,6 +319,33 @@ bool Juego::movimientoValido(Pieza* pieza, Pos pos_inicio, Pos pos_fin, Tablero 
 			if (pos_fin.fila == dobleblanco.fila - 1 && pos_fin.columna == dobleblanco.columna)
 			{
 				tab.quitarPieza(dobleblanco); //eliminamos el peon comido al paso
+				return true;
+			}
+		}
+		pasoblanco = 0;
+	}
+
+	//COMER AL PASO
+	if (pasonegro == 1) //el peon negro puede ser comido por el blanco
+	{
+		if (pieza_elegida->getTipo() == 1 && pieza_elegida->getColor() == 0)
+		{
+			if (pos_final.fila == doblenegro.fila + 1 && pos_final.columna == doblenegro.columna)
+			{
+				tablero.quitarPieza(doblenegro); //eliminamos el peon comido al paso
+				return true;
+			}
+		}
+		pasonegro = 0;
+	}
+
+	if (pasoblanco == 1) //el peon blanco puede ser comido por el negro
+	{
+		if (pieza_elegida->getTipo() == 1 && pieza_elegida->getColor() != 0)
+		{
+			if (pos_final.fila == dobleblanco.fila - 1 && pos_final.columna == dobleblanco.columna)
+			{
+				tablero.quitarPieza(dobleblanco); //eliminamos el peon comido al paso
 				return true;
 			}
 		}

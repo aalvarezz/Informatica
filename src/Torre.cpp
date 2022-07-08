@@ -105,28 +105,10 @@ bool Torre::comprueba(Tablero* tablero, Pos inicio, Pos fin) {
 	return false;
 }
 
-void Torre::draw(float x, float y) {
-	//en funcion del color de la pieza la dibuja en su posicion correspondiente
-
-	switch (color) {
-	case 0:
-		TorreB.setCenter(lado / 2, lado / 2);
-		TorreB.setSize(lado, lado);
-		glTranslatef(x, y, 0.1f);
-		glColor3f(1.0f, 0.0f, 0.0f);
-		TorreB.draw();
-		glTranslatef(-x, -y, -0.1f);
-		break;
-	case 1:
-		TorreN.setCenter(lado / 2, lado / 2);
-		TorreN.setSize(lado, lado);
-		glTranslatef(x, y, 0.1f);
-		glColor3f(1.0f, 0.0f, 0.0f);
-		TorreN.draw();
-		glTranslatef(-x, -y, -0.1f);
-		break;
-	}
-}
+void Torre::posibleCasilla(Tablero* tablero, Pos inicio)
+{
+	bool color = this->getColor();
+	//Derecha
 
 void Torre::posibleCasilla(Tablero* tablero, Pos inicio)
 {

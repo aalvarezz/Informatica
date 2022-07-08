@@ -2,7 +2,7 @@
 
 #include "Juego.h"
 
-#define TAM_VENTANA 900 //PROVISIONAL
+#define TAM_VENTANA 600 //PROVISIONAL
 
 //Prototipos de los callbacks
 void OnDraw(void); //esta funcion sera llamada para dibujar
