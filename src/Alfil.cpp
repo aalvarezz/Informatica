@@ -136,64 +136,94 @@ void Alfil::posibleCasilla(Tablero* tablero, Pos inicio) {
 	//Arriba derecha
 	for (int j = 1; j <= 7; j++) {
 		Pos posaux1(j, j);
-		posaux1.columna = posaux1.columna + inicio.columna;
-		posaux1.fila = posaux1.fila + inicio.fila;
-		if (tablero->getPieza(posaux1)->getColor() == color)
+
+		posaux1 = posaux1 + inicio;
+
+		if (posaux1.columna > 7 || posaux1.fila > 7)
 			break;
-		else if (tablero->getPieza(posaux1)->getColor() != color)
-		{
+
+		if (tablero->getPieza(posaux1) == NULL)
 			tablero->setPosibleCasilla(posaux1);
-			break;
-		}
 		else
-			tablero->setPosibleCasilla(posaux1);
+		{
+			if (tablero->getPieza(posaux1)->getColor() == color)
+				break;
+			else
+			{
+				tablero->setPosibleCasilla(posaux1);
+				break;
+			}
+		}
 	}
 
 	//Abajo derecha
 	for (int j = 1; j <= 7; j++) {
 		Pos posaux2(-j, j);
-		posaux2.columna = posaux2.columna + inicio.columna;
-		posaux2.fila = posaux2.fila + inicio.fila;
-		if (tablero->getPieza(posaux2)->getColor() == color)
+
+		posaux2 = posaux2 + inicio;
+
+		if (posaux2.columna > 7 || posaux2.fila < 0)
 			break;
-		else if (tablero->getPieza(posaux2)->getColor() != color)
-		{
+
+		if (tablero->getPieza(posaux2) == NULL)
 			tablero->setPosibleCasilla(posaux2);
-			break;
-		}
 		else
-			tablero->setPosibleCasilla(posaux2);
+		{
+			if (tablero->getPieza(posaux2)->getColor() == color)
+				break;
+			else
+			{
+				tablero->setPosibleCasilla(posaux2);
+				break;
+			}
+		}
+
 	}
 
 	//Abajo izquierda
 	for (int j = 1; j <= 7; j++) {
 		Pos posaux3(-j, -j);
-		posaux3.columna = posaux3.columna + inicio.columna;
-		posaux3.fila = posaux3.fila + inicio.fila;
-		if (tablero->getPieza(posaux3)->getColor() == color)
+
+		posaux3 = posaux3 + inicio;
+
+		if (posaux3.columna < 0 || posaux3.fila < 0)
 			break;
-		else if (tablero->getPieza(posaux3)->getColor() != color)
-		{
+
+		if (tablero->getPieza(posaux3) == NULL)
 			tablero->setPosibleCasilla(posaux3);
-			break;
-		}
 		else
-			tablero->setPosibleCasilla(posaux3);
+		{
+			if (tablero->getPieza(posaux3)->getColor() == color)
+				break;
+			else
+			{
+				tablero->setPosibleCasilla(posaux3);
+				break;
+			}
+		}
+
 	}
 
 	//Arriba izquierda
 	for (int j = 1; j <= 7; j++) {
-		Pos posaux4(-j, j);
-		posaux4.columna = posaux4.columna + inicio.columna;
-		posaux4.fila = posaux4.fila + inicio.fila;
-		if (tablero->getPieza(posaux4)->getColor() == color)
+		Pos posaux4(j, -j);
+
+		posaux4 = posaux4 + inicio;
+
+		if (posaux4.fila > 7 || posaux4.columna < 0)
 			break;
-		else if (tablero->getPieza(posaux4)->getColor() != color)
-		{
+
+		if (tablero->getPieza(posaux4) == NULL)
 			tablero->setPosibleCasilla(posaux4);
-			break;
-		}
 		else
-			tablero->setPosibleCasilla(posaux4);
+		{
+			if (tablero->getPieza(posaux4)->getColor() == color)
+				break;
+			else
+			{
+				tablero->setPosibleCasilla(posaux4);
+				break;
+			}
+		}
 	}
 }
