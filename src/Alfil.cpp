@@ -154,7 +154,7 @@ void Alfil::posibleCasilla(Tablero* tablero, Pos inicio) {
 				break;
 			}
 		}
-		
+
 	}
 	
 	//Abajo izquierda
@@ -178,13 +178,13 @@ void Alfil::posibleCasilla(Tablero* tablero, Pos inicio) {
 				break;
 			}
 		}
-		
+
 	}
 	
 	//Arriba izquierda
 	for (int j = 1; j <= 7; j++) {
 		Pos posaux4(j, -j);
-		
+
 		posaux4 = posaux4 + inicio;
 
 		if (posaux4.fila > 7 || posaux4.columna < 0)
@@ -201,6 +201,6 @@ void Alfil::posibleCasilla(Tablero* tablero, Pos inicio) {
 				tablero->setPosibleCasilla(posaux4);
 				break;
 			}
-		}	
+		}
 	}
 }

@@ -110,9 +110,14 @@ void Torre::posibleCasilla(Tablero* tablero, Pos inicio)
 	bool color = this->getColor();
 	//Derecha
 
+void Torre::posibleCasilla(Tablero* tablero, Pos inicio)
+{
+	bool color = this->getColor();
+	//Derecha
+
 	for (int j = 1; j <= 7; j++) {
 		Pos posaux5(0, j);
-		
+
 		posaux5 = posaux5 + inicio;
 
 		if (posaux5.columna > 7)
@@ -134,7 +139,7 @@ void Torre::posibleCasilla(Tablero* tablero, Pos inicio)
 	//Izquierda
 	for (int j = 1; j <= 7; j++) {
 		Pos posaux6(0, -j);
-		
+
 		posaux6 = posaux6 + inicio;
 
 		if (posaux6.columna < 0)
@@ -156,7 +161,7 @@ void Torre::posibleCasilla(Tablero* tablero, Pos inicio)
 	//Arriba
 	for (int j = 1; j <= 7; j++) {
 		Pos posaux7(j, 0);
-		
+
 		posaux7 = posaux7 + inicio;
 
 		if (posaux7.fila > 7)
@@ -178,7 +183,7 @@ void Torre::posibleCasilla(Tablero* tablero, Pos inicio)
 	//Abajo
 	for (int j = 1; j <= 7; j++) {
 		Pos posaux8(-j, 0);
-		
+
 		posaux8 = posaux8 + inicio;
 
 		if (posaux8.fila < 0)

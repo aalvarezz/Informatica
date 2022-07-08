@@ -224,7 +224,7 @@ void Dama::posibleCasilla(Tablero* tablero, Pos inicio) {
 	//Abajo derecha
 	for (int j = 1; j <= 7; j++) {
 		Pos posaux2(-j, j);
-		
+
 		posaux2 = posaux2 + inicio;
 
 		if (posaux2.columna > 7 || posaux2.fila < 0)
@@ -248,7 +248,7 @@ void Dama::posibleCasilla(Tablero* tablero, Pos inicio) {
 	//Abajo izquierda
 	for (int j = 1; j <= 7; j++) {
 		Pos posaux3(-j, -j);
-		
+
 		posaux3 = posaux3 + inicio;
 
 		if (posaux3.columna < 0 || posaux3.fila < 0)
@@ -272,7 +272,7 @@ void Dama::posibleCasilla(Tablero* tablero, Pos inicio) {
 	//Arriba izquierda
 	for (int j = 1; j <= 7; j++) {
 		Pos posaux4(j, -j);
-		
+
 		posaux4 = posaux4 + inicio;
 
 		if (posaux4.fila > 7 || posaux4.columna < 0)
@@ -296,7 +296,7 @@ void Dama::posibleCasilla(Tablero* tablero, Pos inicio) {
 	//Derecha
 	for (int j = 1; j <= 7; j++) {
 		Pos posaux5(0, j);
-		
+
 		posaux5 = posaux5 + inicio;
 
 		if (posaux5.columna > 7)
@@ -318,7 +318,7 @@ void Dama::posibleCasilla(Tablero* tablero, Pos inicio) {
 	//Izquierda
 	for (int j = 1; j <= 7; j++) {
 		Pos posaux6(0, -j);
-		
+
 		posaux6 = posaux6 + inicio;
 
 		if (posaux6.columna < 0)
@@ -340,7 +340,7 @@ void Dama::posibleCasilla(Tablero* tablero, Pos inicio) {
 	//Arriba
 	for (int j = 1; j <= 7; j++) {
 		Pos posaux7(j, 0);
-		
+
 		posaux7 = posaux7 + inicio;
 
 		if (posaux7.fila > 7)
@@ -362,7 +362,7 @@ void Dama::posibleCasilla(Tablero* tablero, Pos inicio) {
 	//Abajo
 	for (int j = 1; j <= 7; j++) {
 		Pos posaux8(-j, 0);
-		
+
 		posaux8 = posaux8 + inicio;
 
 		if (posaux8.fila < 0)

@@ -63,7 +63,6 @@ bool Peon::comprueba(Tablero* tablero, Pos inicio, Pos fin) {
 void Peon::posibleCasilla(Tablero* tablero, Pos inicio)
 {
 	bool color = this->getColor();
-
 	Pos posaux1(1, 0), posaux2(1, -1), posaux3(1, 1), posaux4(-1, 0), posaux5(-1, -1), posaux6(-1, 1);
 	Pos dobleb(2, 0), doblen(-2, 0);
 
@@ -106,8 +105,12 @@ void Peon::posibleCasilla(Tablero* tablero, Pos inicio)
 		posaux5 = posaux5 + inicio;
 		posaux6 = posaux6 + inicio;
 		doblen = doblen + inicio;
+
 		if (tablero->getPieza(posaux4) == nullptr)
 			tablero->setPosibleCasilla(posaux4);
+		if (tablero->getPieza(doblen) == nullptr && origen == 1) //condicion para que el peon avance dos casillas al no haberse movido antes
+			tablero->setPosibleCasilla(doblen);
+
 		if (tablero->getPieza(doblen) == nullptr && origen == 1) //condicion para que el peon avance dos casillas al no haberse movido antes
 			tablero->setPosibleCasilla(doblen);
 

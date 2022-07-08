@@ -44,7 +44,7 @@ void Caballo::posibleCasilla(Tablero* tablero, Pos posicion) {
 					else if (color != tablero->getPieza(ayuda)->getColor()) {
 						tablero->setPosibleCasilla(ayuda);
 					}
-					
+
 				}
 			}
 		}
