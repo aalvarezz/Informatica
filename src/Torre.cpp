@@ -9,12 +9,12 @@ bool Torre::comprueba(Tablero* tablero, Pos inicio, Pos fin) {
 		aux2 = aux2 + inicio;
 		aux3 = aux3 + inicio;
 		aux4 = aux4 + inicio;
-
-		if (aux1.fila == fin.fila && aux1.columna==fin.columna)
+    
+		if (aux1.fila == fin.fila && aux1.columna == fin.columna)
 			sentido = 1;
-		if (aux2.fila == fin.fila && aux2.columna==fin.columna)
+		if (aux2.fila == fin.fila && aux2.columna == fin.columna)
 			sentido = 2;
-		if (aux3.fila == fin.fila && aux3.columna==fin.columna)
+		if (aux3.fila == fin.fila && aux3.columna == fin.columna)
 			sentido = 3;
 		if (aux4.fila == fin.fila && aux4.columna == fin.columna)
 			sentido = 4;
@@ -29,12 +29,12 @@ bool Torre::comprueba(Tablero* tablero, Pos inicio, Pos fin) {
 		for (int j = 1; j <= 7; j++) {
 			Pos posaux1(j, 0);
 			posaux1 = posaux1 + inicio;
-
-			if (posaux1.fila == fin.fila && posaux1.columna==fin.columna) {
-				if(tablero->getPieza(fin) == nullptr) {
+      
+			if (posaux1.fila == fin.fila && posaux1.columna == fin.columna) {
+				if (tablero->getPieza(fin) == nullptr) {
 					return true;
 				}
-				else if(tablero->getPieza(fin)->getColor() != color) {
+				else if (tablero->getPieza(fin)->getColor() != color) {
 					return true;
 				}
 				return false;
@@ -48,12 +48,12 @@ bool Torre::comprueba(Tablero* tablero, Pos inicio, Pos fin) {
 		for (int j = 1; j <= 7; j++) {
 			Pos posaux2(-j, 0);
 			posaux2 = posaux2 + inicio;
-
-			if (posaux2.fila == fin.fila && posaux2.columna==fin.columna) {
-				if(tablero->getPieza(fin) == nullptr) {
+      
+			if (posaux2.fila == fin.fila && posaux2.columna == fin.columna) {
+				if (tablero->getPieza(fin) == nullptr) {
 					return true;
 				}
-				else if(tablero->getPieza(fin)->getColor() != color) {
+				else if (tablero->getPieza(fin)->getColor() != color) {
 					return true;
 				}
 				return false;
@@ -68,11 +68,11 @@ bool Torre::comprueba(Tablero* tablero, Pos inicio, Pos fin) {
 			Pos posaux3(0, j);
 			posaux3 = posaux3 + inicio;
 
-			if (posaux3.fila == fin.fila && posaux3.columna==fin.columna) {
-				if(tablero->getPieza(fin) == nullptr) {
+			if (posaux3.fila == fin.fila && posaux3.columna == fin.columna) {
+				if (tablero->getPieza(fin) == nullptr) {
 					return true;
 				}
-				else if(tablero->getPieza(fin)->getColor() != color) {
+				else if (tablero->getPieza(fin)->getColor() != color) {
 					return true;
 				}
 				return false;
@@ -87,11 +87,11 @@ bool Torre::comprueba(Tablero* tablero, Pos inicio, Pos fin) {
 			Pos posaux4(0, -j);
 			posaux4 = posaux4 + inicio;
 
-			if (posaux4.fila == fin.fila && posaux4.columna==fin.columna) {
-				if(tablero->getPieza(fin) == nullptr) {
+			if (posaux4.fila == fin.fila && posaux4.columna == fin.columna) {
+				if (tablero->getPieza(fin) == nullptr) {
 					return true;
 				}
-				else if(tablero->getPieza(fin)->getColor() != color) {
+				else if (tablero->getPieza(fin)->getColor() != color) {
 					return true;
 				}
 				return false;

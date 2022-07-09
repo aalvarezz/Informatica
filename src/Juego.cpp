@@ -5,8 +5,9 @@
 #include "Alfil.h"
 #include "Caballo.h"
 #include "Torre.h"
-
 #include <iostream>
+#include "ETSIDI.h"
+
 using namespace std; //cuidado
 
 Juego::Juego() {
@@ -27,7 +28,7 @@ Juego::Juego() {
 
 	pasonegro = 0;
 	pasoblanco = 0;
-  
+
 	miraryactuar = 1;
 
 }
@@ -112,11 +113,9 @@ void Juego::dibujar() { //PROVISIONAL
 void Juego::dibujarArrastrar() {
 	if (mouse_pressed && pieza_elegida != nullptr) {
 		pieza_elegida->dibujarArrastrar(mouse_pos, &tablero);
-
 		miraryactuar = 0;
 		dibujarPosiblesCasillas();
 		miraryactuar = 1;
-
 	}
 }
 
@@ -155,7 +154,7 @@ void Juego::clicRaton(bool mouseP, bool mouseR, int x, int y) {
 	//ENCONTRAR EN QUÉ CASILLA ESTÁ EL CURSOR AL CLICAR/ SOLTAR EL CLIC
 	int fila_clic, columna_clic;
 	int x0 = x - AJUSTE_X;
-	int y0 = y - AJUSTE_Y; 
+	int y0 = y - AJUSTE_Y;
 	int f = 0;
 	int c = 0;
 
@@ -203,11 +202,12 @@ void Juego::clicRaton(bool mouseP, bool mouseR, int x, int y) {
 			}
 			//Se suelta el clic en una casilla válida de la pieza que mueves (tienes que estar moviendo una pieza). 
 			//El movimiento no puede provocar que el color pase a estar en jaque.
-			if (mouse_released && (pieza_elegida != nullptr) && movimientoValido(pieza_elegida, pos_inicial, pos_final, &tablero) 
+			if (mouse_released && (pieza_elegida != nullptr) && movimientoValido(pieza_elegida, pos_inicial, pos_final, &tablero)
 				&& !checkJaque(tablero_fantasma, pieza_elegida->getColor())) {
 
 				//Se actualiza el tablero
 				tablero.setPieza(pieza_elegida, pos_final);
+				ETSIDI::play("Musica/SoltarPieza.mp3");
 
 				if (finDeJuego(true)) {
 					cout << "GG" << endl;
@@ -237,7 +237,7 @@ void Juego::clicRaton(bool mouseP, bool mouseR, int x, int y) {
 				turno_negras = true;
 			}
 			//Si estás moviendo una pieza y el movimiento no es correcto o este provoca que el color pase a estar en jaque, se devuelve a su casilla original
-			if (mouse_released && (pieza_elegida != nullptr) && (!movimientoValido(pieza_elegida, pos_inicial, pos_final, &tablero) 
+			if (mouse_released && (pieza_elegida != nullptr) && (!movimientoValido(pieza_elegida, pos_inicial, pos_final, &tablero)
 				|| checkJaque(tablero_fantasma, pieza_elegida->getColor()))) {
 
 				//Se devuelve a la casilla original
@@ -262,6 +262,7 @@ void Juego::clicRaton(bool mouseP, bool mouseR, int x, int y) {
 
 				//Se actualiza el tablero
 				tablero.setPieza(pieza_elegida, pos_final);
+				ETSIDI::play("Musica/SoltarPieza.mp3");
 
 				if (finDeJuego(false)) {
 					cout << "GG" << endl;
@@ -290,7 +291,6 @@ void Juego::clicRaton(bool mouseP, bool mouseR, int x, int y) {
 				turno_blancas = true;
 				turno_negras = false;
 			}
-      
 			//Si estás moviendo una pieza y el movimiento no es correcto o este provoca que el color pase a estar en jaque, se devuelve a su casilla original
 			if (mouse_released && (pieza_elegida != nullptr) && (!movimientoValido(pieza_elegida, pos_inicial, pos_final, &tablero)
 				|| checkJaque(tablero_fantasma, pieza_elegida->getColor()))) {
@@ -579,7 +579,6 @@ void Juego::setValores(bool t) {
 		LIM_TABLERO = 728;
 		LIM_CASILLA = 91;
 		tablero.setValores(t);
-		
 	}
 	else {
 		AJUSTE_X = 58;

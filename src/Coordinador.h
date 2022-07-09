@@ -15,7 +15,6 @@ private:
 	bool running;
 	Menu menu;
 	Estado estado;
-	
 
 public:
 	Coordinador();
@@ -34,5 +33,4 @@ public:
 	Estado getEstado();
 	//Juego getJuego();
 	bool getRunning() { return running; }
-	
 };

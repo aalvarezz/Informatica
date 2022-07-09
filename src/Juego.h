@@ -1,15 +1,10 @@
-﻿#pragma once
+#pragma once
 #include "Tablero.h"
-
-//#include "Pos.h"
 #include "Pieza.h"
 
 class Juego {
-private:
+protected:
 	Tablero tablero, tablero_fantasma;
-
-	//Pieza piezas[4][8];
-
 	Pos pos_inicial, pos_final, mouse_pos;
 	Pieza* pieza_elegida;
 	Pos doblenegro, dobleblanco; //posiciones de las piezas que se mueven doble
@@ -18,8 +13,8 @@ private:
 
 	bool coronegra, coroblanca;
 	bool pasonegro, pasoblanco;
-
 	bool miraryactuar;
+
 public:
 	Juego();
 	void inicializar(); //provisional, crearia instancia de tablero como mínimo. Posible conflicto con Coordinador
@@ -29,7 +24,8 @@ public:
 
 	void dibujarPosiblesCasillas();
 
-	void dibujarPiezas(); //recorre todas las piezas de tablero y llama a su función de dibujo.
+	virtual void dibujarPiezas(); //recorre todas las piezas de tablero y llama a su función de dibujo.
+
 	void clicRaton(bool, bool, int, int); //raton (nombre y funcionalidad provisionales) + (probablemente) setMouse. Debe consultar de alguna forma si el movimiento es válido
 	void movimientoRaton(int, int);
 
