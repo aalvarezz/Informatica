@@ -2,10 +2,10 @@
 
 #include "Juego.h"
 
-#define TAM_VENTANA 600 //PROVISIONAL
+#define TAM_VENTANA 900 //PROVISIONAL
 
 //Prototipos de los callbacks
-void OnDraw(void); //esta funcion sera llamada para dibujar
+void OnDraw(void);
 void OnMouseClick(int, int, int, int);
 void OnMotion(int, int);
 
@@ -103,9 +103,9 @@ void OnDraw(void) {
 	glMatrixMode(GL_MODELVIEW);
 	glLoadIdentity();
 
-	gluLookAt(8.75, 8.75, 34,  // posicion del ojo
-		8.75, 8.75, 0,      // hacia qué punto mira  (8.75, 8.75, 0) 
-		0.0, 1.0, 0.0);      // definimos hacia arriba (eje Z)                          SEGURO??  
+	gluLookAt(8.75, 8.75, 34,  //Posicion del ojo
+		8.75, 8.75, 0,      //Hacia qué punto mira  (8.75, 8.75, 0) 
+		0.0, 1.0, 0.0);      //Definimos el eje Y hacia arriba 
 
 	//Código de dibujo
 	//coordinador.Dibuja();

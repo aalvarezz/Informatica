@@ -105,100 +105,25 @@ bool Torre::comprueba(Tablero* tablero, Pos inicio, Pos fin) {
 	return false;
 }
 
-void Torre::posibleCasilla(Tablero* tablero, Pos inicio)
-{
-	bool color = this->getColor();
-	//Derecha
+void Torre::draw(float x, float y) {
+	//en funcion del color de la pieza la dibuja en su posicion correspondiente
 
-void Torre::posibleCasilla(Tablero* tablero, Pos inicio)
-{
-	bool color = this->getColor();
-	//Derecha
-
-	for (int j = 1; j <= 7; j++) {
-		Pos posaux5(0, j);
-
-		posaux5 = posaux5 + inicio;
-
-		if (posaux5.columna > 7)
-			break;
-		if (tablero->getPieza(posaux5) == NULL)
-			tablero->setPosibleCasilla(posaux5);
-		else
-		{
-			if (tablero->getPieza(posaux5)->getColor() == color)
-				break;
-			else
-			{
-				tablero->setPosibleCasilla(posaux5);
-				break;
-			}
-		}
-	}
-
-	//Izquierda
-	for (int j = 1; j <= 7; j++) {
-		Pos posaux6(0, -j);
-
-		posaux6 = posaux6 + inicio;
-
-		if (posaux6.columna < 0)
-			break;
-		if (tablero->getPieza(posaux6) == NULL)
-			tablero->setPosibleCasilla(posaux6);
-		else
-		{
-			if (tablero->getPieza(posaux6)->getColor() == color)
-				break;
-			else
-			{
-				tablero->setPosibleCasilla(posaux6);
-				break;
-			}
-		}
-	}
-
-	//Arriba
-	for (int j = 1; j <= 7; j++) {
-		Pos posaux7(j, 0);
-
-		posaux7 = posaux7 + inicio;
-
-		if (posaux7.fila > 7)
-			break;
-		if (tablero->getPieza(posaux7) == NULL)
-			tablero->setPosibleCasilla(posaux7);
-		else
-		{
-			if (tablero->getPieza(posaux7)->getColor() == color)
-				break;
-			else
-			{
-				tablero->setPosibleCasilla(posaux7);
-				break;
-			}
-		}
-	}
-
-	//Abajo
-	for (int j = 1; j <= 7; j++) {
-		Pos posaux8(-j, 0);
-
-		posaux8 = posaux8 + inicio;
-
-		if (posaux8.fila < 0)
-			break;
-		if (tablero->getPieza(posaux8) == NULL)
-			tablero->setPosibleCasilla(posaux8);
-		else
-		{
-			if (tablero->getPieza(posaux8)->getColor() == color)
-				break;
-			else
-			{
-				tablero->setPosibleCasilla(posaux8);
-				break;
-			}
-		}
+	switch (color) {
+	case 0:
+		TorreB.setCenter(lado / 2, lado / 2);
+		TorreB.setSize(lado, lado);
+		glTranslatef(x, y, 0.1f);
+		glColor3f(1.0f, 0.0f, 0.0f);
+		TorreB.draw();
+		glTranslatef(-x, -y, -0.1f);
+		break;
+	case 1:
+		TorreN.setCenter(lado / 2, lado / 2);
+		TorreN.setSize(lado, lado);
+		glTranslatef(x, y, 0.1f);
+		glColor3f(1.0f, 0.0f, 0.0f);
+		TorreN.draw();
+		glTranslatef(-x, -y, -0.1f);
+		break;
 	}
 }
