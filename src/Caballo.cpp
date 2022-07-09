@@ -25,26 +25,3 @@ bool Caballo::comprueba(Tablero* tablero, Pos inicio, Pos fin) {
 	}
 	return false;
 }
-
-void Caballo::draw(float x, float y) {
-	//en funcion del color de la pieza la dibuja en su posicion correspondiente
-
-	switch (color) {
-	case 0:
-		CaballoB.setCenter(lado / 2, lado / 2);
-		CaballoB.setSize(lado, lado);
-		glTranslatef(x, y, 0.1f);
-		glColor3f(1.0f, 0.0f, 0.0f);
-		CaballoB.draw();
-		glTranslatef(-x, -y, -0.1f);
-		break;
-	case 1:
-		CaballoN.setCenter(lado / 2, lado / 2);
-		CaballoN.setSize(lado, lado);
-		glTranslatef(x, y, 0.1f);
-		glColor3f(1.0f, 0.0f, 0.0f);
-		CaballoN.draw();
-		glTranslatef(-x, -y, -0.1f);
-		break;
-	}
-}

@@ -33,6 +33,8 @@ Juego::Juego() {
 	pasonegro = 0;
 	pasoblanco = 0;
 
+	miraryactuar = 1;
+
 }
 
 void Juego::inicializar() {
@@ -196,8 +198,8 @@ void Juego::clicRaton(bool mouseP, bool mouseR, int x, int y) {
 	}
 
 	//ACTUALIZACIÓN DE PIEZAS
+	bool kk;
 	if (within_board) { //Acciones a ejecutar si se ha clicado/dejado de clicar dentro del tablero
-
 		if (!color_elegido && turno_blancas) { //Turno de las blancas
 
 			//Se clica en una casilla que contiene pieza para cogerla e iniciar el movimiento
