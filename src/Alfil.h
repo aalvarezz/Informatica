@@ -6,8 +6,7 @@ using ETSIDI::Sprite;
 
 class Alfil : public Pieza {
 private:
-	Sprite AlfilB{ "imagenes/AlfilB.png" };
-	Sprite AlfilN{ "imagenes/AlfilN.png" };
+
 public:
 	Alfil(bool _color) : Pieza(_color, 4) {
 		if (color) { sprite.setState(3); }
@@ -15,5 +14,5 @@ public:
 	};
 	bool comprueba(Tablero*, Pos, Pos);
 	void draw(float, float);
-  	void posibleCasilla(Tablero*, Pos); //en función de las reglas de movimiento de cada pieza dibuja sus posibles movimientos al ser seleccionada
+  	//void posibleCasilla(Tablero*, Pos); //en función de las reglas de movimiento de cada pieza dibuja sus posibles movimientos al ser seleccionada
 };

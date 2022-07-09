@@ -17,7 +17,9 @@ private:
 
 	bool coronegra, coroblanca;
 	bool pasonegro, pasoblanco;
-	//bool enroqueblancoder, enroqueblancoizq, enroquenegroder, enroquenegroizq;
+
+	bool miraryactuar;
+
 public:
 	Juego();
 	void inicializar(); //provisional, crearia instancia de tablero como mínimo. Posible conflicto con Coordinador
@@ -33,4 +35,6 @@ public:
 	//void jaqueMate(); //condición de máxima prioridad para terminar el juego (pensar en rey ahogado). Importante su relación con Coordinador
   
 	void coronacion();
+	void dibujarPosiblesCasillas();
+
 };

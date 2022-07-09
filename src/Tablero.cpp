@@ -86,7 +86,8 @@ Pieza* Tablero::getPieza(Pos posicion) {
 	return piezas[posicion.fila][posicion.columna];
 }
 
-void Tablero::setPosibleCasilla(Pos posicion) { //se le da la posicion de los posibles movimientos para que sean graficados
+void Tablero::dibujarPosibleCasilla(Pos posicion) { //se le da la posicion de los posibles movimientos para que sean graficados
+	//quitar posible
 	posible = true;
 	if (posible) //si se debe dibujar X numero de casillas...
 	{
@@ -102,7 +103,6 @@ void Tablero::setPosibleCasilla(Pos posicion) { //se le da la posicion de los po
 			float b = R * sin(theta);//obtencion de la componente y
 			glVertex3f(a + posicion.columna * lado, b + posicion.fila * lado, 0.05f);//output 
 		}
-
 		glEnd();
 		posible = false;
 		glutPostRedisplay();

@@ -1,6 +1,6 @@
 #pragma once
 #include "Tablero.h"
-//#include "Pos.h"
+
 #include "ETSIDI.h"
 
 using ETSIDI::SpriteSequence;

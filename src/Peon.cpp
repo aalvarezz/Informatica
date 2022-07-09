@@ -60,75 +60,37 @@ bool Peon::comprueba(Tablero* tablero, Pos inicio, Pos fin) {
 	return false;
 }
 
-void Peon::posibleCasilla(Tablero* tablero, Pos inicio)
+/*void Peon::posibleCasilla(Tablero* tablero, Pos inicio)
 {
 	bool color = this->getColor();
-	Pos posaux1(1, 0), posaux2(1, -1), posaux3(1, 1), posaux4(-1, 0), posaux5(-1, -1), posaux6(-1, 1);
-	Pos dobleb(2, 0), doblen(-2, 0);
 
-	//el switch siguiente verifica los posibles movimientos del peon en funcion del color de este.
-	//todo movimiento posible que pueda realizar se mostrara en pantalla
-	//no se tienen en cuenta las excepciones como el comer al paso o el avance doble al estar situado en la casilla inicial
+	Pos posiciones_blancas;
+	Pos posiciones_negras;
 
-	switch (color) {
-	case 0:		//BLANCO
-		//1.Avanza una posición en la columna (Movimiento normal)
-		posaux1 = posaux1 + inicio;
-		posaux2 = posaux2 + inicio;
-		posaux3 = posaux3 + inicio;
-		dobleb = dobleb + inicio;
+	int j = -1;
 
-		if (tablero->getPieza(posaux1) == nullptr)
-			tablero->setPosibleCasilla(posaux1);
-
-		if (tablero->getPieza(dobleb) == nullptr && origen == 1) //condicion para que el peon avance dos casillas al no haberse movido antes
-			tablero->setPosibleCasilla(dobleb);
-
-		//2.Diagonal izq (Al comer otra ficha)
-		if (tablero->getPieza(posaux2) != nullptr)
+	switch (color)
+	{
+	case 0:
+		for (int k = -1; k <= 1; k++)
 		{
-			if (tablero->getPieza(posaux2)->getColor() != color)
-				tablero->setPosibleCasilla(posaux2);
-		}
-
-		//3.Diagonal dcha (Al comer otra ficha)
-		if (tablero->getPieza(posaux3) != nullptr)
-		{
-			if (tablero->getPieza(posaux3)->getColor() != color || tablero->getPieza(posaux3) == NULL)
-				tablero->setPosibleCasilla(posaux3);
+			for (int f = 1; f <= 2; f++)
+			{
+				posiciones_blancas.fila = inicio.fila + f;
+				posiciones_blancas.columna = inicio.columna + k;
+					if (comprueba(tablero, inicio, posiciones_blancas)) //cambiar comprueba por movimientovalido. para ello tiene que barrer todas las casillas
+						tablero->setPosibleCasilla(posiciones_blancas); //del tablero, o al menos a las que pueda mover el peon
+			}
 		}
 		break;
-
-	case 1:		//NEGRO
-		//1.Avanza una posición en la columna (Movimiento normal)
-		posaux4 = posaux4 + inicio;
-		posaux5 = posaux5 + inicio;
-		posaux6 = posaux6 + inicio;
-		doblen = doblen + inicio;
-
-		if (tablero->getPieza(posaux4) == nullptr)
-			tablero->setPosibleCasilla(posaux4);
-		if (tablero->getPieza(doblen) == nullptr && origen == 1) //condicion para que el peon avance dos casillas al no haberse movido antes
-			tablero->setPosibleCasilla(doblen);
-
-		if (tablero->getPieza(doblen) == nullptr && origen == 1) //condicion para que el peon avance dos casillas al no haberse movido antes
-			tablero->setPosibleCasilla(doblen);
-
-		//2.Diagonal izq (Al comer otra ficha)
-
-		if (tablero->getPieza(posaux5) != nullptr)
-		{
-			if (tablero->getPieza(posaux5)->getColor() != color)
-				tablero->setPosibleCasilla(posaux5);
-		}
-
-		//3.Diagonal dcha (Al comer otra ficha)
-
-		if (tablero->getPieza(posaux6) != nullptr)
-		{
-			if (tablero->getPieza(posaux6)->getColor() != color || tablero->getPieza(posaux6) == NULL)
-				tablero->setPosibleCasilla(posaux6);
+	case 1:
+		for (int k = -1; k <= 1; k++) {
+			posiciones_negras.fila = inicio.fila + j;
+			posiciones_negras.columna = inicio.columna + k;
+			if (comprueba(tablero, inicio, posiciones_negras))
+				tablero->setPosibleCasilla(posiciones_negras);
 		}
 		break;
 	}
-}
+
+}*/

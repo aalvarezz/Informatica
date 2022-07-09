@@ -26,7 +26,7 @@ bool Caballo::comprueba(Tablero* tablero, Pos inicio, Pos fin) {
 	return false;
 }
 
-void Caballo::posibleCasilla(Tablero* tablero, Pos posicion) {
+/*void Caballo::posibleCasilla(Tablero* tablero, Pos posicion) {
 	//el bucle "for" se emplea para barrer todos los posibles movimientos de las piezas
 	//las condiciones dentro del bucle verifican si los posibles movimientos de la pieza están limitados de algun modo.
 	//si no lo estuvieran, se haría llamada al método con el que se dibujan los posibles movimientos de la pieza
@@ -49,4 +49,4 @@ void Caballo::posibleCasilla(Tablero* tablero, Pos posicion) {
 			}
 		}
 	}
-}
+}*/
