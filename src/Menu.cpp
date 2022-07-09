@@ -666,4 +666,3 @@ int Menu::getAnchura() {
 bool Menu::getSonido() {
 	return sonido;
 }
-
