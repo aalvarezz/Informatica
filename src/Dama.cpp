@@ -194,6 +194,7 @@ bool Dama::comprueba(Tablero* tablero, Pos inicio, Pos fin) {
 }
 
 /*void Dama::posibleCasilla(Tablero* tablero, Pos inicio) {
+
 	//los bucles "for" se emplean para barrer todos los posibles movimientos de las piezas
 	//las condiciones dentro de los bucles verifican si los posibles movimientos de la pieza están limitados de algun modo.
 	//si no lo estuvieran, se haría llamada al método con el que se dibujan los posibles movimientos de la pieza

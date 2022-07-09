@@ -33,6 +33,7 @@ Juego::Juego() {
 	pasoblanco = 0;
 
 	miraryactuar = 1;
+
 }
 
 void Juego::inicializar() {
@@ -329,12 +330,14 @@ bool Juego::movimientoValido(Pieza* pieza, Pos pos_inicio, Pos pos_fin, Tablero 
 	if (pieza->getTipo() == 1 && pieza->checkOrigen())  //si la pieza es un peon y nunca se ha movido
 	{
 		if (pos_fin.fila == pos_inicio.fila - 2 && pos_inicio.columna == pos_fin.columna && tablero.getPieza(pos_fin) == NULL) //si se mueve 2 y la casilla final esta vacia
+
 		{
 			doblenegro = pos_fin;
 			pasonegro = 1;
 			return true;
 		}
 		if (pos_fin.fila == pos_inicio.fila + 2 && pos_inicio.columna == pos_fin.columna && tablero.getPieza(pos_fin) == NULL) //si se mueve 2 y la casilla final esta vacia
+
 		{
 			dobleblanco = pos_fin;
 			pasoblanco = 1;
@@ -353,6 +356,7 @@ bool Juego::movimientoValido(Pieza* pieza, Pos pos_inicio, Pos pos_fin, Tablero 
 		torre_blanca_izq.fila = 0;
 		torre_blanca_izq.columna = 0;
 		if (pos_fin.columna == pos_inicio.columna + 2 && pos_fin.fila == pos_inicio.fila &&- tab.getPieza(torre_blanca_dcha)->checkOrigen())
+
 			//QUE LA TORRE DEL LADO AL QUE HAYAMOS MOVIDO EL REY NO SE HAYA MOVIDO NUNCA. PERDÃN SI ESA NO ES LA POSICIÃN CORRECTA DEL REY EN EL ENROQUE
 		{
 			//se especifican las posiciones entre el rey y la torre que participa en el enroque
@@ -375,6 +379,7 @@ bool Juego::movimientoValido(Pieza* pieza, Pos pos_inicio, Pos pos_fin, Tablero 
 			}
 		}
 		if (pos_fin.columna == pos_inicio.columna - 2 && pos_fin.fila == pos_inicio.fila && tab.getPieza(torre_blanca_izq)->checkOrigen())
+
 			//QUE LA TORRE DEL LADO AL QUE HAYAMOS MOVIDO EL REY NO SE HAYA MOVIDO NUNCA. PERDÃN SI ESA NO ES LA POSICIÃN CORRECTA DEL REY EN EL ENROQUE
 		{
 			//se especifican las posiciones entre el rey y la torre que participa en el enroque
@@ -396,6 +401,7 @@ bool Juego::movimientoValido(Pieza* pieza, Pos pos_inicio, Pos pos_fin, Tablero 
 					pieza_aux = new Torre(pieza->getColor());
 					tablero.setPieza(pieza_aux, aux1);
 				}
+
 				return true;
 			}
 		}
@@ -412,6 +418,7 @@ bool Juego::movimientoValido(Pieza* pieza, Pos pos_inicio, Pos pos_fin, Tablero 
 		torre_negra_izq.fila = 7;
 		torre_negra_izq.columna = 0;
 		if (pos_fin.columna == pos_inicio.columna + 2 && pos_fin.fila==pos_inicio.fila && tab.getPieza(torre_negra_dcha)->checkOrigen())
+
 			//QUE LA TORRE DEL LADO AL QUE HAYAMOS MOVIDO EL REY NO SE HAYA MOVIDO NUNCA. PERDÃN SI ESA NO ES LA POSICIÃN CORRECTA DEL REY EN EL ENROQUE
 		{
 			//se especifican las posiciones entre el rey y la torre que participa en el enroque
@@ -434,6 +441,7 @@ bool Juego::movimientoValido(Pieza* pieza, Pos pos_inicio, Pos pos_fin, Tablero 
 			}
 		}
 		if (pos_fin.columna == pos_inicio.columna - 2 && pos_fin.fila == pos_inicio.fila && tab.getPieza(torre_negra_izq)->checkOrigen())
+
 			//QUE LA TORRE DEL LADO AL QUE HAYAMOS MOVIDO EL REY NO SE HAYA MOVIDO NUNCA. PERDÃN SI ESA NO ES LA POSICIÃN CORRECTA DEL REY EN EL ENROQUE
 		{
 			//se especifican las posiciones entre el rey y la torre que participa en el enroque
@@ -455,6 +463,7 @@ bool Juego::movimientoValido(Pieza* pieza, Pos pos_inicio, Pos pos_fin, Tablero 
 					pieza_aux = new Torre(pieza->getColor());
 					tablero.setPieza(pieza_aux, aux1);
 				}
+
 				return true;
 			}
 		}
@@ -470,6 +479,7 @@ bool Juego::movimientoValido(Pieza* pieza, Pos pos_inicio, Pos pos_fin, Tablero 
 			if (pieza->getTipo() == 1 && pieza->getColor() && pos_fin.fila == 0)
 				coronegra = 1;
 		}
+
 		return true;
 	}
 	else return false;

@@ -106,6 +106,7 @@ bool Torre::comprueba(Tablero* tablero, Pos inicio, Pos fin) {
 }
 
 /*void Torre::posibleCasilla(Tablero* tablero, Pos inicio)
+
 {
 	bool color = this->getColor();
 	//Derecha

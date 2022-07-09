@@ -19,6 +19,7 @@ private:
 	bool pasonegro, pasoblanco;
 
 	bool miraryactuar;
+
 public:
 	Juego();
 	void inicializar(); //provisional, crearia instancia de tablero como mínimo. Posible conflicto con Coordinador
@@ -35,4 +36,5 @@ public:
   
 	void coronacion();
 	void dibujarPosiblesCasillas();
+
 };
