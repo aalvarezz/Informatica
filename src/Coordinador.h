@@ -16,7 +16,6 @@ private:
 	Menu menu;
 	Estado estado;
 
-
 public:
 	Coordinador();
 	void Inicializa(int argc, char* argv[]);
@@ -34,5 +33,4 @@ public:
 	Estado getEstado();
 	//Juego getJuego();
 	bool getRunning() { return running; }
-
 };

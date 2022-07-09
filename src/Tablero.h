@@ -1,5 +1,6 @@
 #pragma once
 #include "Pos.h"
+//#include "Pieza.h"
 
 class Pieza;
 
@@ -9,7 +10,6 @@ protected:
 	unsigned char rojo, verde, azul;
 	int LIM_CASILLA, AJUSTE_X, AJUSTE_Y;
 	Pieza* piezas[8][8]; //nombre/tamaño provisionales
-	bool skin; //Elige la apariencia del tablero
 public:
 	Tablero(): lado(2.5f) {};
 	

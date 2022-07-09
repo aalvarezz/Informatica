@@ -10,6 +10,7 @@ bool Alfil::comprueba(Tablero* tablero, Pos inicio, Pos fin) {
 		aux3 = aux3 + inicio;
 		aux4 = aux4 + inicio;
 
+
 		if (aux1.fila == fin.fila && aux1.columna == fin.columna)
 			sentido = 1;
 		if (aux2.fila == fin.fila && aux2.columna == fin.columna)

@@ -26,7 +26,6 @@ void Tablero::dibujoDamero() {
 			glEnd();
 		}
 	}
-	
 	//BORDES DEL TABLERO
 	glEnable(GL_TEXTURE_2D);
 	glBindTexture(GL_TEXTURE_2D, ETSIDI::getTexture("imagenes/maderaV.png").id);
@@ -66,7 +65,6 @@ void Tablero::dibujoDamero() {
 	glEnd();
 	glEnable(GL_LIGHTING);
 	glDisable(GL_TEXTURE_2D);
-	
 }
 
 void Tablero::quitarPieza(Pos posicion) { //hacer null el puntero a la pieza deseada, hacer "0" la posición de esa pieza (suponiendo que la pieza tuviera un atributo pos). Parece prescindible
@@ -76,7 +74,6 @@ void Tablero::quitarPieza(Pos posicion) { //hacer null el puntero a la pieza des
 void Tablero::setPieza(Pieza* p, Pos posicion) { //otorga a una pieza una posicion
 	piezas[posicion.fila][posicion.columna] = p;
 }
-
 Pieza* Tablero::getPieza(Pos posicion) {
 	return piezas[posicion.fila][posicion.columna];
 }

@@ -7,7 +7,8 @@ void Pieza::dibujar(Pos posicion) {
 
 	draw(x, y);
 }
-void Pieza::dibujarArrastrar(Pos posicion, Tablero * tablero) {
+
+void Pieza::dibujarArrastrar(Pos posicion, Tablero* tablero) {
 	//setTamano(true);
 	float x = posicion.fila;
 	float y = posicion.columna;

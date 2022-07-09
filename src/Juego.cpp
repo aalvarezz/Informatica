@@ -7,6 +7,7 @@
 #include "Torre.h"
 #include <iostream>
 #include "ETSIDI.h"
+
 using namespace std; //cuidado
 
 Juego::Juego() {
@@ -21,7 +22,7 @@ Juego::Juego() {
 	color_elegido = false;
 
 	miraryactuar = true;
-
+  
 	coronegra = 0;
 	coroblanca = 0;
 
@@ -112,11 +113,9 @@ void Juego::dibujar() { //PROVISIONAL
 void Juego::dibujarArrastrar() {
 	if (mouse_pressed && pieza_elegida != nullptr) {
 		pieza_elegida->dibujarArrastrar(mouse_pos, &tablero);
-
 		miraryactuar = 0;
 		dibujarPosiblesCasillas();
 		miraryactuar = 1;
-
 	}
 }
 
@@ -193,6 +192,7 @@ void Juego::clicRaton(bool mouseP, bool mouseR, int x, int y) {
 	}
 
 	//ACTUALIZACIÓN DE PIEZAS
+	bool kk;
 	if (within_board) { //Acciones a ejecutar si se ha clicado/dejado de clicar dentro del tablero
 		if (!color_elegido && turno_blancas) { //Turno de las blancas
 
@@ -291,7 +291,6 @@ void Juego::clicRaton(bool mouseP, bool mouseR, int x, int y) {
 				turno_blancas = true;
 				turno_negras = false;
 			}
-
 			//Si estás moviendo una pieza y el movimiento no es correcto o este provoca que el color pase a estar en jaque, se devuelve a su casilla original
 			if (mouse_released && (pieza_elegida != nullptr) && (!movimientoValido(pieza_elegida, pos_inicial, pos_final, &tablero)
 				|| checkJaque(tablero_fantasma, pieza_elegida->getColor()))) {
@@ -580,7 +579,6 @@ void Juego::setValores(bool t) {
 		LIM_TABLERO = 728;
 		LIM_CASILLA = 91;
 		tablero.setValores(t);
-
 	}
 	else {
 		AJUSTE_X = 58;

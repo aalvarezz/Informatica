@@ -1,4 +1,4 @@
-﻿#include "freeglut.h"
+#include "freeglut.h"
 #include "Coordinador.h"
 #include <iostream>
 using namespace std;
