@@ -11,11 +11,6 @@ using namespace std; //cuidado
 
 Juego::Juego() {
 
-	AJUSTE_X = 86;
-	AJUSTE_Y = 813;
-	LIM_TABLERO = 728;
-	LIM_CASILLA = 91;
-
 	pieza_elegida = nullptr;
 	within_board = false;
 
@@ -26,13 +21,13 @@ Juego::Juego() {
 	color_elegido = false;
 
 	miraryactuar = true;
-
+  
 	coronegra = 0;
 	coroblanca = 0;
 
 	pasonegro = 0;
 	pasoblanco = 0;
-
+  
 	miraryactuar = 1;
 
 }
@@ -295,6 +290,7 @@ void Juego::clicRaton(bool mouseP, bool mouseR, int x, int y) {
 				turno_blancas = true;
 				turno_negras = false;
 			}
+      
 			//Si estás moviendo una pieza y el movimiento no es correcto o este provoca que el color pase a estar en jaque, se devuelve a su casilla original
 			if (mouse_released && (pieza_elegida != nullptr) && (!movimientoValido(pieza_elegida, pos_inicial, pos_final, &tablero)
 				|| checkJaque(tablero_fantasma, pieza_elegida->getColor()))) {
@@ -574,6 +570,25 @@ void Juego::coronacion() {
 			cout << endl << "Pieza no valida. ";
 		}
 	} while (elegido > 6 || elegido < 3);
+}
+
+void Juego::setValores(bool t) {
+	grande = t;
+	if (t) {
+		AJUSTE_X = 86;
+		AJUSTE_Y = 813;
+		LIM_TABLERO = 728;
+		LIM_CASILLA = 91;
+		tablero.setValores(t);
+		
+	}
+	else {
+		AJUSTE_X = 58;
+		AJUSTE_Y = 540;
+		LIM_TABLERO = 480;
+		LIM_CASILLA = 60;
+		tablero.setValores(t);
+	}
 }
 
 bool Juego::checkJaque(Tablero tab, bool color) {

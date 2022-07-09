@@ -6,7 +6,6 @@ class Pieza;
 
 class Tablero {
 private:
-
 	//REVISAR
 	float lado;
 	unsigned char rojo, verde, azul;
@@ -25,7 +24,10 @@ public:
 	Pieza* getPieza(Pos);
 
 	void dibujarPosibleCasilla(Pos); //muy provisional, pero se va a implementar en esta clase. Hay que pensar forma de borrar posibles casillas
-
+  void setValores(bool);
 	void setLado(float);
 	float getLado();
+  int getLim() { return LIM_CASILLA; }
+	int getAjusteX() { return AJUSTE_X; }
+	int getAjusteY() { return AJUSTE_Y; }
 };

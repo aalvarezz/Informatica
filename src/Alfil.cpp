@@ -104,4 +104,3 @@ bool Alfil::comprueba(Tablero* tablero, Pos inicio, Pos fin) {
 	}
 	return false;
 }
-

@@ -1,24 +1,24 @@
 #include "Pieza.h"
- 
+
 void Pieza::dibujar(Pos posicion) {
-	//traslado de la posición de la matriz a coordenadas de glut. x es la columna e y la fila porque las coordenadas de glut están invertidas.
+	//traslado de la posiciÃ³n de la matriz a coordenadas de glut. x es la columna e y la fila porque las coordenadas de glut estÃ¡n invertidas.
 	float x = posicion.columna * lado;
 	float y = posicion.fila * lado;
 
 	draw(x, y);
 }
 
-void Pieza::dibujarArrastrar(Pos posicion) {
+void Pieza::dibujarArrastrar(Pos posicion, Tablero* tablero) {
+	//setTamano(true);
 	float x = posicion.fila;
 	float y = posicion.columna;
-
+	//setTamano(grande);
 	//Trasladar 0
-	x -= AJUSTE_X;
-	y -= AJUSTE_Y;
-
-	//traslado de la posición del bitmap a coordenadas de glut.
-	x = lado / LIM_CASILLA * x - (lado / 2);
-	y = -lado / LIM_CASILLA * y - (lado / 2);
+	x -= tablero->getAjusteX();
+	y -= tablero->getAjusteY();
+	//traslado de la posiciÃƒÂ³n del bitmap a coordenadas de glut.
+	x = lado / tablero->getLim() * x - (lado / 2);
+	y = -lado / tablero->getLim() * y - (lado / 2);
 
 	draw(x, y);
 }
