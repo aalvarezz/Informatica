@@ -3,6 +3,9 @@
 
 class Peon : public Pieza {
 public:
-	Peon(bool _color) : Pieza(_color, 1) {};
-	virtual bool comprueba(Tablero*, Pos, Pos) const;
+	Peon(bool _color) : Pieza(_color, 1) {
+		if (color) { sprite.setState(0); }
+		else { sprite.setState(6); }
+	};
+	bool comprueba(Tablero*, Pos, Pos);
 };
