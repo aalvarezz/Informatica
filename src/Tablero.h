@@ -6,31 +6,28 @@ class Pieza;
 
 class Tablero {
 private:
+	//REVISAR
 	float lado;
 	unsigned char rojo, verde, azul;
+	int LIM_CASILLA, AJUSTE_X, AJUSTE_Y;
 	Pieza* piezas[8][8]; //nombre/tamaño provisionales
-	Pieza* pieza_elegida; //pieza que se está movimiendo, necesario la funcionalidad de arrastrar
+
+	//REVISAR
 	bool posible; //hace posible visualizar las posibles casillas de movimiento
 public:
 	Tablero();
 
-
-	/*
-		PROBLEMA IMPORTANTE: inicializar() y setPieza() hacen lo mismo
-	*/
-
-	//void inicializar(Pieza*, int, int);
 	void dibujoDamero();
-	//void imprimir(); //imprime el tablero, en principio lo imprime contando con que él sabe todos los cambios que se han hecho, recorriendo sus piezas
-	//void moverPieza(Pos, Pos); //mínimo debes decirle a donde se va a mover, probablemente tambien cual vas a mover
 
 	void quitarPieza(Pos);
-	void setPieza(Pieza*, Pos); //PROBABLEMENTE HAYA QUE HACER AJUSTES, YA QUE moverPieza() = quitarPieza() + setPieza()
-
+	void setPieza(Pieza*, Pos);
 	Pieza* getPieza(Pos);
 
-	void setPosibleCasilla(Pos); //muy provisional, pero se va a implementar en esta clase. Hay que pensar forma de borrar posibles casillas
-
+	void dibujarPosibleCasilla(Pos); //muy provisional, pero se va a implementar en esta clase. Hay que pensar forma de borrar posibles casillas
+  void setValores(bool);
 	void setLado(float);
 	float getLado();
+  int getLim() { return LIM_CASILLA; }
+	int getAjusteX() { return AJUSTE_X; }
+	int getAjusteY() { return AJUSTE_Y; }
 };

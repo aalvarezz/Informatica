@@ -8,17 +8,17 @@ void Pieza::dibujar(Pos posicion) {
 	draw(x, y);
 }
 
-void Pieza::dibujarArrastrar(Pos posicion) {
+void Pieza::dibujarArrastrar(Pos posicion, Tablero* tablero) {
+	//setTamano(true);
 	float x = posicion.fila;
 	float y = posicion.columna;
-
+	//setTamano(grande);
 	//Trasladar 0
-	x -= AJUSTE_X;
-	y -= AJUSTE_Y;
-
-	//traslado de la posición del bitmap a coordenadas de glut.
-	x = lado / LIM_CASILLA * x - (lado / 2);
-	y = -lado / LIM_CASILLA * y - (lado / 2);
+	x -= tablero->getAjusteX();
+	y -= tablero->getAjusteY();
+	//traslado de la posiciÃ³n del bitmap a coordenadas de glut.
+	x = lado / tablero->getLim() * x - (lado / 2);
+	y = -lado / tablero->getLim() * y - (lado / 2);
 
 	draw(x, y);
 }
