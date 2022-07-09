@@ -15,7 +15,7 @@ void OnMotion(int, int);
 
 
 Coordinador::Coordinador() {
-	estado = MENU;
+	estado = FIN_DE_PARTIDA;
 	running = true;
 }
 
@@ -98,8 +98,6 @@ void Coordinador::cambioEstado() {
 
 	}
 
-
-
 	if (estado == FIN_DE_PARTIDA) {
 		if (menu.getTableroRunning()) {
 			estado = PARTIDA;
@@ -110,6 +108,7 @@ void Coordinador::cambioEstado() {
 			estado = MENU;
 			cout << "cambio estado" << endl;
 		}
+		//else if(menu.getMenuRunning() && menu.getTableroRunning() && menu.getMenuBlancas() &&)
 	}
 }
 

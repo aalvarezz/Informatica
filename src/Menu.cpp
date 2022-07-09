@@ -109,6 +109,11 @@ void Menu::asignaFin()
 	negras_menu = SDL_LoadBMP("imagenes_fin_partida/fin_negras_menu.bmp");
 	negras_salir = SDL_LoadBMP("imagenes_fin_partida/fin_negras_salir.bmp");
 
+	empate_inicial = SDL_LoadBMP("imagenes_fin_partida/fin_empate_inicial.bmp");
+	empate_jugar = SDL_LoadBMP("imagenes_fin_partida/fin_empate_jugar.bmp");
+	empate_menu= SDL_LoadBMP("imagenes_fin_partida/fin_empate_menu.bmp");
+	empate_salir = SDL_LoadBMP("imagenes_fin_partida/fin_empate_salir.bmp");
+
 }
 
 void Menu::liberar()
@@ -168,9 +173,15 @@ void Menu::liberarFin()
 	SDL_FreeSurface(negras_jugar);
 	SDL_FreeSurface(negras_menu);
 	SDL_FreeSurface(negras_salir);
+	SDL_FreeSurface(empate_inicial);
+	SDL_FreeSurface(empate_jugar);
+	SDL_FreeSurface(empate_menu);
+	SDL_FreeSurface(empate_salir);
+
 
 	blancas_inicial = blancas_jugar = blancas_menu = blancas_salir = nullptr;
 	negras_inicial = negras_jugar = negras_menu = negras_salir = nullptr;
+	empate_inicial = empate_jugar = empate_menu = empate_salir = nullptr;
 
 }
 
@@ -473,9 +484,9 @@ void Menu::evento()
 
 void Menu::eventoFin() 
 {
-	bool running = true;
+	//bool running = true;
 	SDL_Event e;
-
+	menu_fin_blancas_activo = true;
 
 	SDL_Rect drawingrect;
 	drawingrect.x = drawingrect.y = 0;
@@ -485,12 +496,16 @@ void Menu::eventoFin()
 	std::string text = "";
 	SDL_StartTextInput();
 
-	while (running)
+	while (menu_fin_blancas_activo || menu_fin_negras_activo)
 	{
 		while (SDL_PollEvent(&e) != 0)
 		{
-			if (e.type == SDL_QUIT)
-				running = false;
+			if (e.type == SDL_QUIT) {
+				menu_fin_blancas_activo = false;
+				menu_fin_negras_activo = false;
+			}
+				
+
 
 			//eventos con teclas
 
@@ -498,15 +513,15 @@ void Menu::eventoFin()
 			{
 				if (menu_fin_blancas_activo == true && e.key.keysym.sym == SDLK_ESCAPE)
 				{
-					running = false;
+					menu_fin_blancas_activo = false;
+					//menu_fin_negras_activo = false;
 				}
 
 				if (menu_fin_negras_activo == true && e.key.keysym.sym == SDLK_ESCAPE)
 				{
-					running = false;
+					//menu_fin_blancas_activo = false;
+					
 				}
-
-
 			}
 
 			//eventos botones raton
@@ -515,44 +530,57 @@ void Menu::eventoFin()
 				//volver a jugar
 				if (e.button.clicks == 2 && currentimage == blancas_jugar)
 				{
-					running = false;
+					
 					menu_fin_blancas_activo = false;
 					tablero_running = true;
 				}
 
 				if (e.button.clicks == 2 && currentimage ==negras_jugar)
 				{
-					running = false;
+					
 					menu_fin_negras_activo = false;
+					tablero_running = true;
+				}
+				///////////////////////////////
+				if (e.button.clicks == 2 && currentimage == empate_jugar)
+				{
+					menu_fin_empate_activo = false;
 					tablero_running = true;
 				}
 
 				//volver al menu
 				if (e.button.clicks == 2 && currentimage == blancas_menu)
-				{
-					running = false;
+				{				
 					menu_fin_blancas_activo = false;
 					menu_running = true;
 				}
 
 				if (e.button.clicks == 2 && currentimage == negras_menu)
 				{
-					running = false;
 					menu_fin_negras_activo = false;
+					menu_running = true;
+				}
+
+				if (e.button.clicks == 2 && currentimage == empate_menu)
+				{
+					menu_fin_empate_activo = false;
 					menu_running = true;
 				}
 
 				//salir
 				if (e.button.clicks == 2 && currentimage == blancas_salir)
 				{
-					running = false;
 					menu_fin_blancas_activo = false;
 				}
 
 				if (e.button.clicks == 2 && currentimage == negras_salir)
 				{
-					running = false;
 					menu_fin_negras_activo = false;
+				}
+
+				if (e.button.clicks == 2 && currentimage == empate_salir)
+				{
+					menu_fin_empate_activo = false;
 				}
 
 			}
@@ -563,11 +591,11 @@ void Menu::eventoFin()
 				//menu victoria blancas
 				if (menu_fin_blancas_activo == true)
 				{
-					if (e.button.y > 180 && e.button.y < 220)
+					if (e.button.y > 180 && e.button.y < 240)
 						currentimage = blancas_jugar;
-					else if (e.button.y > 220 && e.button.y < 265)
+					else if (e.button.y > 240 && e.button.y < 300)
 						currentimage = blancas_menu;
-					else if (e.button.y > 265 && e.button.y < 320)
+					else if (e.button.y > 300 && e.button.y < 360)
 						currentimage = blancas_salir;
 					else
 						currentimage = blancas_inicial;
@@ -578,12 +606,25 @@ void Menu::eventoFin()
 				{
 					if (e.button.y > 180 && e.button.y < 220)
 						currentimage = negras_jugar;
-					else if (e.button.y > 220 && e.button.y < 265)
+					else if (e.button.y > 240 && e.button.y < 300)
 						currentimage = negras_menu;
-					else if (e.button.y > 265 && e.button.y < 320)
+					else if (e.button.y > 300 && e.button.y < 360)
 						currentimage = negras_salir;
 					else
 						currentimage = negras_inicial;
+				}
+
+				//menu empate activo
+				if (menu_fin_empate_activo == true)
+				{
+					if (e.button.y > 180 && e.button.y < 220)
+						currentimage = empate_jugar;
+					else if (e.button.y > 240 && e.button.y < 300)
+						currentimage = empate_menu;
+					else if (e.button.y > 300 && e.button.y < 360)
+						currentimage = empate_salir;
+					else
+						currentimage = empate_inicial;
 				}
 
 			}

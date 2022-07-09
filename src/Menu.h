@@ -54,7 +54,7 @@ private:
 	SDL_Surface* tamano_volver;
 
 	//menu fin de la partida
-	bool menu_fin_blancas_activo, menu_fin_negras_activo;
+	bool menu_fin_blancas_activo, menu_fin_negras_activo, menu_fin_empate_activo;
 	SDL_Surface* blancas_inicial;
 	SDL_Surface* blancas_jugar;
 	SDL_Surface* blancas_menu;
@@ -63,6 +63,10 @@ private:
 	SDL_Surface* negras_jugar;
 	SDL_Surface* negras_menu;
 	SDL_Surface* negras_salir;
+	SDL_Surface* empate_inicial;
+	SDL_Surface* empate_jugar;
+	SDL_Surface* empate_menu;
+	SDL_Surface* empate_salir;
 
 public:
 	Menu();
@@ -87,6 +91,11 @@ public:
 	int getAltura();
 	int getAnchura();
 	bool getMenuRunning() { return menu_running; }
-
+	void setMenuBlanco(bool a) { menu_fin_blancas_activo = true; }
+	void setMenuNegro(bool a) { menu_fin_negras_activo = true; }
+	void setMenuEmpate(bool a) { menu_fin_empate_activo = true; }
+	bool getMenuBlanco() { return menu_fin_blancas_activo; }
+	bool getMenuNegro() { return menu_fin_negras_activo; }
+	bool getMenuEmpate() { return menu_fin_empate_activo; }
 	//void setTableroRunning();
 };
