@@ -17,4 +17,7 @@ int main(int argc, char* argv[]) {
 		coordinador.Inicializa(argc, argv);
 		//cout << "hola7" << endl;
 	}
+
+	return 0;
+}
 	

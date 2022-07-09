@@ -111,7 +111,7 @@ void Juego::dibujar() { //PROVISIONAL
 
 void Juego::dibujarArrastrar() {
 	if (mouse_pressed && pieza_elegida != nullptr) {
-		pieza_elegida->dibujarArrastrar(mouse_pos);
+		pieza_elegida->dibujarArrastrar(mouse_pos, &tablero);
 
 		miraryactuar = 0;
 		dibujarPosiblesCasillas();
@@ -573,7 +573,6 @@ void Juego::coronacion() {
 }
 
 void Juego::setValores(bool t) {
-	grande = t;
 	if (t) {
 		AJUSTE_X = 86;
 		AJUSTE_Y = 813;

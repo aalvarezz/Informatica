@@ -9,7 +9,7 @@ private:
 	//REVISAR
 	float lado;
 	unsigned char rojo, verde, azul;
-
+	int LIM_CASILLA, AJUSTE_X, AJUSTE_Y;
 	Pieza* piezas[8][8]; //nombre/tamaño provisionales
 
 	//REVISAR
