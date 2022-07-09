@@ -14,6 +14,5 @@ public:
 		else { sprite.setState(9); }
 	};
 	bool comprueba(Tablero*, Pos, Pos);
-	void draw(float, float);
   	void posibleCasilla(Tablero*, Pos); //en función de las reglas de movimiento de cada pieza dibuja sus posibles movimientos al ser seleccionada
 };
