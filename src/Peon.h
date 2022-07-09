@@ -3,9 +3,6 @@
 
 class Peon : public Pieza {
 public:
-	Peon(bool _color) : Pieza(_color, 1) {
-		if (color) { sprite.setState(0); }
-		else { sprite.setState(6); }
-	};
+	Peon(bool _color) : Pieza(_color, 1) {};
 	bool comprueba(Tablero*, Pos, Pos);
 };

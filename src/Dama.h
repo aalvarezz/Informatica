@@ -3,9 +3,6 @@
 
 class Dama : public Pieza{
 public:
-	Dama(bool _color) : Pieza(_color, 3) {
-		if (color) { sprite.setState(2); }
-		else { sprite.setState(8); }
-	};
+	Dama(bool _color) : Pieza(_color, 3) {};
 	bool comprueba(Tablero*, Pos, Pos);
 };

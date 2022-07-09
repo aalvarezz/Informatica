@@ -137,10 +137,10 @@ void OnDraw(void) {
 	glLoadIdentity();
 
 	gluLookAt(8.75, 8.75, 34,  // posicion del ojo
-		8.75, 8.75, 0,      // hacia qué punto mira  (8.75, 8.75, 0) 
+		8.75, 8.75, 0,      // hacia quÃ© punto mira  (8.75, 8.75, 0) 
 		0.0, 1.0, 0.0);      // definimos hacia arriba (eje Z)                          SEGURO??  
 
-	//Código de dibujo
+	//CÃ³digo de dibujo
 	//coordinador.Dibuja();
 
 	juego.dibujar();
@@ -165,7 +165,7 @@ void OnMouseClick(int button, int state, int x, int y) {
 }
 
 void OnMotion(int x, int y) {
-	//Llamada a función clicar/dejar de clicar de Juego/Coordinador
+	//Llamada a funciÃ³n clicar/dejar de clicar de Juego/Coordinador
 	juego.movimientoRaton(x, y);
 	//glutPostRedisplay();
 	
