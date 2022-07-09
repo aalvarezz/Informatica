@@ -105,30 +105,7 @@ bool Alfil::comprueba(Tablero* tablero, Pos inicio, Pos fin) {
 	return false;
 }
 
-void Alfil::draw(float x, float y) {
-	//en funcion del color de la pieza la dibuja en su posicion correspondiente
-
-	switch (color) {
-	case 0:
-		AlfilB.setCenter(lado / 2, lado / 2);
-		AlfilB.setSize(lado, lado);
-		glTranslatef(x, y, 0.1f);
-		glColor3f(1.0f, 0.0f, 0.0f);
-		AlfilB.draw();
-		glTranslatef(-x, -y, -0.1f);
-		break;
-	case 1:
-		AlfilN.setCenter(lado / 2, lado / 2);
-		AlfilN.setSize(lado, lado);
-		glTranslatef(x, y, 0.1f);
-		glColor3f(1.0f, 0.0f, 0.0f);
-		AlfilN.draw();
-		glTranslatef(-x, -y, -0.1f);
-		break;
-	}
-}
-
-void Alfil::posibleCasilla(Tablero* tablero, Pos inicio) {
+/*void Alfil::posibleCasilla(Tablero* tablero, Pos inicio) {
 	//los bucles "for" se emplean para barrer todos los posibles movimientos de las piezas
 	//las condiciones dentro de los bucles verifican si los posibles movimientos de la pieza están limitados de algun modo.
 	//si no lo estuvieran, se haría llamada al método con el que se dibujan los posibles movimientos de la pieza
@@ -177,7 +154,7 @@ void Alfil::posibleCasilla(Tablero* tablero, Pos inicio) {
 				break;
 			}
 		}
-		
+
 	}
 	
 	//Abajo izquierda
@@ -201,13 +178,13 @@ void Alfil::posibleCasilla(Tablero* tablero, Pos inicio) {
 				break;
 			}
 		}
-		
+
 	}
 	
 	//Arriba izquierda
 	for (int j = 1; j <= 7; j++) {
 		Pos posaux4(j, -j);
-		
+
 		posaux4 = posaux4 + inicio;
 
 		if (posaux4.fila > 7 || posaux4.columna < 0)
@@ -224,6 +201,6 @@ void Alfil::posibleCasilla(Tablero* tablero, Pos inicio) {
 				tablero->setPosibleCasilla(posaux4);
 				break;
 			}
-		}	
+		}
 	}
-}
+}*/

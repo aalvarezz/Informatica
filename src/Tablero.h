@@ -29,7 +29,7 @@ public:
 
 	Pieza* getPieza(Pos);
 
-	void setPosibleCasilla(Pos); //muy provisional, pero se va a implementar en esta clase. Hay que pensar forma de borrar posibles casillas
+	void dibujarPosibleCasilla(Pos); //muy provisional, pero se va a implementar en esta clase. Hay que pensar forma de borrar posibles casillas
 
 	void setLado(float);
 	float getLado();
