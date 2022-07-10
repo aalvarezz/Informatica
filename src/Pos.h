@@ -2,11 +2,11 @@
 
 class Pos {
 public:
-	Pos(int f, int c);
-	Pos();
-	~Pos();
+	Pos() { fila = columna = 0; }
+	Pos(int f, int c) : fila(f), columna(c) {};
 
 	int fila, columna;
 
-	Pos operator+ (Pos&);
+	Pos operator+(Pos&);
+	bool operator==(Pos&);
 };

@@ -1,18 +1,42 @@
-﻿#include "Tablero.h"
+#include "Tablero.h"
 #include "freeglut.h"
 #include "ETSIDI.h"
 
-Tablero::Tablero() { //Relleno el damero. Muy provisional sin piezas
+Tablero::Tablero() {
 	lado = 2.5f;
-	//RELLENAR CONSTRUCTOR. FALTAN INICIALIZACIONES	
+	LIM_TABLERO = 728;
+	LIM_CASILLA = 91;
+	AJUSTE_X = 86;
+	AJUSTE_Y = 813;
+
+	for (int i = 0; i < 8; i++) {
+		for (int j = 0; j < 8; j++) {
+			piezas[i][j] = nullptr;
+		}
+	}
 }
 
-void Tablero::dibujoDamero() {
+Tablero::Tablero(int LT, int LC, int AX, int AY) {
+	lado = 2.5f;
+	LIM_TABLERO = LT;
+	LIM_CASILLA = LC;
+	AJUSTE_X = AX;
+	AJUSTE_Y = AY;
+
+	for (int i = 0; i < 8; i++) {
+		for (int j = 0; j < 8; j++) {
+			piezas[i][j] = nullptr;
+		}
+	}
+}
+
+void Tablero::dibujarDamero() {
+	//Variables usadas para darle color a las casillas al dibujarlas
+	unsigned char rojo = 0, verde = 0, azul = 0;
+
 	//CASILLAS DEL TABLERO
 	for (int i = 0; i < 8; i++) {
 		for (int j = 0; j < 8; j++) {
-
-
 			if (((j % 2) == 0) && ((i % 2) == 0) || ((j % 2) == 1) && ((i % 2) == 1)) {
 				rojo = 87;
 				verde = 70;
@@ -33,7 +57,6 @@ void Tablero::dibujoDamero() {
 			glEnd();
 		}
 	}
-
 	//BORDES DEL TABLERO
 	glEnable(GL_TEXTURE_2D);
 	glBindTexture(GL_TEXTURE_2D, ETSIDI::getTexture("imagenes/maderaV.png").id);
@@ -75,18 +98,6 @@ void Tablero::dibujoDamero() {
 	glDisable(GL_TEXTURE_2D);
 }
 
-void Tablero::quitarPieza(Pos posicion) { //hacer null el puntero a la pieza deseada, hacer "0" la posición de esa pieza (suponiendo que la pieza tuviera un atributo pos). Parece prescindible
-	piezas[posicion.fila][posicion.columna] = nullptr;
-}
-
-void Tablero::setPieza(Pieza* p, Pos posicion) { //otorga a una pieza una posicion
-	piezas[posicion.fila][posicion.columna] = p;
-}
-
-Pieza* Tablero::getPieza(Pos posicion) {
-	return piezas[posicion.fila][posicion.columna];
-}
-
 void Tablero::dibujarPosibleCasilla(Pos posicion) { //se le da la posicion de los posibles movimientos para que sean graficados
 	int n = 20; //Resolución
 	float PI = 3.1415926f;
@@ -102,26 +113,39 @@ void Tablero::dibujarPosibleCasilla(Pos posicion) { //se le da la posicion de lo
 	glEnd();
 }
 
-//GETTERS y SETTERS PROVISIONALES
-void Tablero::setLado(float l) {
-	lado = l;
+void Tablero::borrarPiezas() {
+	for (int i = 0; i < 8; i++) {
+		for (int j = 0; i < 8; i++) {
+			if (piezas[i][j] != nullptr)
+				delete piezas[i][j];
+		}
+	}
 }
 
-float Tablero::getLado() {
-	return lado;
+void Tablero::quitarPieza(Pos posicion) { //hacer null el puntero a la pieza deseada, hacer "0" la posición de esa pieza (suponiendo que la pieza tuviera un atributo pos). Parece prescindible
+	piezas[posicion.fila][posicion.columna] = nullptr;
 }
 
-void Tablero::setValores(bool t) {
-	if (t) {
-		AJUSTE_X = 86;
-		AJUSTE_Y = 813;
-		LIM_CASILLA = 91;
+void Tablero::quitarPiezaTablero(Pos posicion) { //hacer null el puntero a la pieza deseada, hacer "0" la posición de esa pieza (suponiendo que la pieza tuviera un atributo pos). Parece prescindible
+	delete piezas[posicion.fila][posicion.columna];
+	piezas[posicion.fila][posicion.columna] = nullptr;
+}
 
+void Tablero::setPieza(Pieza* p, Pos posicion) { //otorga a una pieza una posicion	
+	piezas[posicion.fila][posicion.columna] = p;
+}
+
+void Tablero::setPiezaTablero(Pieza* p, Pos posicion) { //otorga a una pieza una posicion
+
+	//En el caso en el que haya una pieza que vaya a ser comida utilizamos el delete
+	if (piezas[posicion.fila][posicion.columna] != nullptr) {
+		delete piezas[posicion.fila][posicion.columna];
+		cout << "deleteada" << endl;
 	}
-	else {
-		AJUSTE_X = 58;
-		AJUSTE_Y = 540;
-		LIM_CASILLA = 60;
-	}
-	LIM_CASILLA, AJUSTE_X, AJUSTE_Y;
+
+	piezas[posicion.fila][posicion.columna] = p;
+}
+
+Pieza* Tablero::getPieza(Pos posicion) {
+	return piezas[posicion.fila][posicion.columna];
 }

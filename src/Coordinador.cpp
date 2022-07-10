@@ -48,12 +48,24 @@ void Coordinador::Inicializa() {
 		cout << "hola5" << endl;
 
 			
-		asignarTamano(menu.getTamano());
+				if (menu.getTamano()) {
+			LT = 728;
+			LC = 91;
+			AX = 86;
+			AY = 813;
+		}
+		else {
+			LT = 480;
+			LC = 60;
+			AX = 58;
+			AY = 540;
+		}
+    
 		// Inicializacion
 		if (estado == PARTIDA_NORMAL)
-			juego.inicializar();
+			juego.inicializar(LT,LC,AX,AY);
 		else if (estado == PARTIDA_ESPECIAL)
-			juegoACiegas.inicializar();
+			juegoACiegas.inicializar(LT,LC,AX,AY);
 		cambioEstado();			
 	}
 
@@ -76,14 +88,12 @@ void Coordinador::cambioEstado() {
 		if (menu.getTableroRunning() && menu.getPartidaNormal()) {
 			//juego.setTamano(menu.getMenuTamano());
 			estado = PARTIDA_NORMAL;
-			asignarTamano(menu.getTamano());
 			cout << "cambio estado" << endl;
 		}
 
 		if (menu.getTableroRunning() && !menu.getPartidaNormal()) {
 			//juego.setTamano(menu.getMenuTamano());
 			estado = PARTIDA_ESPECIAL;
-			asignarTamano(menu.getTamano());
 			cout << "cambio estado" << endl;
 		}
 	}
@@ -91,11 +101,6 @@ void Coordinador::cambioEstado() {
 
 Estado Coordinador::getEstado() {
 	return estado;
-}
-
-void Coordinador::asignarTamano(bool t) {
-	juego.setValores(t);
-	juegoACiegas.setValores(t);
 }
 
 void Coordinador::CambioEstadoDesdeJuego(int a) {
@@ -163,3 +168,4 @@ void Coordinador::CambioEstadoDesdeJuego(int a) {
 	}
 
 }
+

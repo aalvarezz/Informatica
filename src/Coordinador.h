@@ -16,9 +16,6 @@ private:
 	bool running;
 	Menu menu;
 	Estado estado;
-	
-	//Juego juego;
-	
 public:
 	Juego juego;
 	JuegoAciegas juegoACiegas;
@@ -26,15 +23,13 @@ public:
 	void Inicializa();
 	
 	void cambioEstado();
-	
-	void asignarTamano(bool);
+
 	Estado getEstado();
 	
 	//bool getRunningJuego();
 	bool getRunning() { return running; }
+  
 	Menu getMenu() { return menu; }
 	//Juego getJuego() { return juego; }
 	void CambioEstadoDesdeJuego(int a);
-		
-	
 };
