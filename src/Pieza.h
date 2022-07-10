@@ -1,15 +1,10 @@
 #pragma once
 #include "Tablero.h"
-#include "ETSIDI.h"
-
-using ETSIDI::SpriteSequence;
 
 class Pieza {
 protected:
-	//Pos pos; //provisional
 	bool color, origen = true;
 	unsigned short int tipo;
-	float lado = 2.5f;
 	SpriteSequence sprite{ "imagenes/Piezas.png", 6, 2 };
 public:
 	Pieza(bool _color, unsigned short int _tipo) : color(_color), tipo(_tipo) {};
@@ -24,6 +19,6 @@ public:
 	unsigned short int getTipo() { return tipo; }
 	bool getColor() { return color; }
 
-	void setOrigenFalse() { origen = false; } //probablemente mejorable
-	bool checkOrigen() { return origen; }
+	bool getOrigen() { return origen; }
+	void setOrigenFalse() { origen = false; }
 };

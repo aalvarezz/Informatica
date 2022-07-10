@@ -151,7 +151,7 @@ void OnDraw(void) {
 	juego.dibujarArrastrar();
 
 
-	//glutPostRedisplay();
+	glutPostRedisplay();
 
 	//Promueve el contenido del back buffer para poder realizar todos los cambios necesarios en la pantalla
 	glutSwapBuffers();
@@ -171,7 +171,6 @@ void OnMouseClick(int button, int state, int x, int y) {
 void OnMotion(int x, int y) {
 	//Llamada a funci�n clicar/dejar de clicar de Juego/Coordinador
 	juego.movimientoRaton(x, y);
-	//glutPostRedisplay();
 
-	glutPostRedisplay();
+	//glutPostRedisplay();
 }
