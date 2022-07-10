@@ -1,11 +1,44 @@
-#include "Tablero.h"
+﻿#include "Tablero.h"
 #include "freeglut.h"
 #include "ETSIDI.h"
 
-void Tablero::dibujoDamero() {
+Tablero::Tablero() {
+	lado = 2.5f;
+	LIM_TABLERO = 728;
+	LIM_CASILLA = 91;
+	AJUSTE_X = 86;
+	AJUSTE_Y = 813;
+
+	for (int i = 0; i < 8; i++) {
+		for (int j = 0; j < 8; j++) {
+			piezas[i][j] = nullptr;
+		}
+	}
+}
+
+Tablero::Tablero(int LT, int LC, int AX, int AY) {
+	lado = 2.5f;
+	LIM_TABLERO = LT;
+	LIM_CASILLA = LC;
+	AJUSTE_X = AX;
+	AJUSTE_Y = AY;
+
+	for (int i = 0; i < 8; i++) {
+		for (int j = 0; j < 8; j++) {
+			piezas[i][j] = nullptr;
+		}
+	}
+}
+
+void Tablero::dibujarDamero() {
+	//Variables usadas para darle color a las casillas al dibujarlas
+	unsigned char rojo = 0, verde = 0, azul = 0;
+
 	//CASILLAS DEL TABLERO
 	for (int i = 0; i < 8; i++) {
 		for (int j = 0; j < 8; j++) {
+
+
 			if (((j % 2) == 0) && ((i % 2) == 0) || ((j % 2) == 1) && ((i % 2) == 1)) {
 				rojo = 87;
 				verde = 70;
@@ -26,6 +59,7 @@ void Tablero::dibujoDamero() {
 			glEnd();
 		}
 	}
+
 	//BORDES DEL TABLERO
 	glEnable(GL_TEXTURE_2D);
 	glBindTexture(GL_TEXTURE_2D, ETSIDI::getTexture("imagenes/maderaV.png").id);
@@ -67,17 +101,6 @@ void Tablero::dibujoDamero() {
 	glDisable(GL_TEXTURE_2D);
 }
 
-void Tablero::quitarPieza(Pos posicion) { //hacer null el puntero a la pieza deseada, hacer "0" la posición de esa pieza (suponiendo que la pieza tuviera un atributo pos). Parece prescindible
-	piezas[posicion.fila][posicion.columna] = nullptr;
-}
-
-void Tablero::setPieza(Pieza* p, Pos posicion) { //otorga a una pieza una posicion
-	piezas[posicion.fila][posicion.columna] = p;
-}
-Pieza* Tablero::getPieza(Pos posicion) {
-	return piezas[posicion.fila][posicion.columna];
-}
-
 void Tablero::dibujarPosibleCasilla(Pos posicion) { //se le da la posicion de los posibles movimientos para que sean graficados
 	int n = 20; //Resolución
 	float PI = 3.1415926f;
@@ -93,26 +116,14 @@ void Tablero::dibujarPosibleCasilla(Pos posicion) { //se le da la posicion de lo
 	glEnd();
 }
 
-//GETTERS y SETTERS PROVISIONALES
-void Tablero::setLado(float l) {
-	lado = l;
+void Tablero::setPieza(Pieza* p, Pos posicion) { //otorga a una pieza una posicion
+	piezas[posicion.fila][posicion.columna] = p;
+}
+  
+void Tablero::quitarPieza(Pos posicion) { //hacer null el puntero a la pieza deseada, hacer "0" la posición de esa pieza (suponiendo que la pieza tuviera un atributo pos). Parece prescindible
+	piezas[posicion.fila][posicion.columna] = nullptr;
 }
 
-float Tablero::getLado() {
-	return lado;
-}
-
-void Tablero::setValores(bool t) {
-	if (t) {
-		AJUSTE_X = 86;
-		AJUSTE_Y = 813;
-		LIM_CASILLA = 91;
-
-	}
-	else {
-		AJUSTE_X = 58;
-		AJUSTE_Y = 540;
-		LIM_CASILLA = 60;
-	}
-	LIM_CASILLA, AJUSTE_X, AJUSTE_Y;
+Pieza* Tablero::getPieza(Pos posicion) {
+	return piezas[posicion.fila][posicion.columna];
 }

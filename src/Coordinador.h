@@ -15,6 +15,8 @@ private:
 	bool running;
 	Menu menu;
 	Estado estado;
+
+
 public:
 	Coordinador();
 	void Inicializa(int argc, char* argv[]);
@@ -28,7 +30,6 @@ public:
 	//void OnMouseClick(int, int, int, int);
 	//void OnMotion(int, int);
 
-	void asignarTamano(bool);
 	Estado getEstado();
 	//Juego getJuego();
 	bool getRunning() { return running; }

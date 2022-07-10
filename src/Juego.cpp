@@ -5,13 +5,11 @@
 #include "Alfil.h"
 #include "Caballo.h"
 #include "Torre.h"
-#include <iostream>
-#include "ETSIDI.h"
 
+#include <iostream>
 using namespace std; //cuidado
 
 Juego::Juego() {
-
 	pieza_elegida = nullptr;
 	within_board = false;
 
@@ -25,7 +23,8 @@ Juego::Juego() {
 	alpaso_negras = false;
 }
 
-void Juego::inicializar() {
+void Juego::inicializar(int LT, int LC, int AX, int AY) {
+	tablero = Tablero(LT, LC, AX, AY);
 	Pieza* pieza_ini;
 	Pos pos_aux;
 	for (int i = 0; i < 8; i++) {
@@ -98,8 +97,24 @@ void Juego::inicializar() {
 }
 
 void Juego::dibujar() { //PROVISIONAL
-	tablero.dibujoDamero();
+	tablero.dibujarDamero();
 	dibujarPiezas();
+	dibujarArrastrar();
+}
+
+void Juego::dibujarPiezas() {
+	Pieza* pieza_aux;
+	Pos pos_aux;
+	for (int i = 0; i < 8; i++) {
+		for (int j = 0; j < 8; j++) {
+			pos_aux.fila = i;
+			pos_aux.columna = j;
+			pieza_aux = tablero.getPieza(pos_aux);
+			if (pieza_aux != nullptr) {
+				pieza_aux->dibujar(pos_aux, tablero.getLado());
+			}
+		}
+	}
 }
 
 void Juego::dibujarArrastrar() {
@@ -134,21 +149,6 @@ void Juego::dibujarPosiblesCasillas() {
 	}
 }
 
-void Juego::dibujarPiezas() {
-	Pieza* pieza_aux;
-	Pos pos_aux;
-	for (int i = 0; i < 8; i++) {
-		for (int j = 0; j < 8; j++) {
-			pos_aux.fila = i;
-			pos_aux.columna = j;
-			pieza_aux = tablero.getPieza(pos_aux);
-			if (pieza_aux != nullptr) {
-				pieza_aux->dibujar(pos_aux);
-			}
-		}
-	}
-}
-
 void Juego::clicRaton(bool mouseP, bool mouseR, int x, int y) {
 	//Actualización de los atributos de Juego referidos al estado de los clics
 	mouse_pressed = mouseP;
@@ -156,22 +156,22 @@ void Juego::clicRaton(bool mouseP, bool mouseR, int x, int y) {
 
 	//ENCONTRAR EN QUÉ CASILLA ESTÁ EL CURSOR AL CLICAR/ SOLTAR EL CLIC
 	int fila_clic, columna_clic;
-	int x0 = x - AJUSTE_X;
-	int y0 = y - AJUSTE_Y;
+	int x0 = x - tablero.getAjusteX();
+	int y0 = y - tablero.getAjusteY(); 
 	int f = 0;
 	int c = 0;
 
-	if (((x0 >= 0) && (x0 <= LIM_TABLERO)) && ((y0 <= 0) && (y0 >= -LIM_TABLERO))) {
+	if (((x0 >= 0) && (x0 <= tablero.getLT())) && ((y0 <= 0) && (y0 >= -tablero.getLT()))) {
 		for (int i = 0; i < 8; i++) {
-			if ((y0 <= -f) && (y0 > -(f + LIM_CASILLA))) {
+			if ((y0 <= -f) && (y0 > -(f + tablero.getLC()))) {
 				fila_clic = i;
 			}
-			if ((x0 >= c) && (x0 < (c + LIM_CASILLA))) {
+			if ((x0 >= c) && (x0 < (c + tablero.getLC()))) {
 				columna_clic = i;
 			}
 			//dimensiones de la casilla: 91 x 91
-			f += LIM_CASILLA;
-			c += LIM_CASILLA;
+			f += tablero.getLC();
+			c += tablero.getLC();
 		}
 		within_board = true;
 	}
@@ -210,7 +210,6 @@ void Juego::clicRaton(bool mouseP, bool mouseR, int x, int y) {
 
 				//Se actualiza el tablero
 				tablero.setPieza(pieza_elegida, pos_final);
-				ETSIDI::play("Musica/SoltarPieza.mp3");
 
 				if (finDeJuego(true)) {
 					cout << "GG" << endl;
@@ -236,7 +235,7 @@ void Juego::clicRaton(bool mouseP, bool mouseR, int x, int y) {
 				turno_negras = true;
 			}
 			//Si estás moviendo una pieza y el movimiento no es correcto o este provoca que el color pase a estar en jaque, se devuelve a su casilla original
-			if (mouse_released && (pieza_elegida != nullptr) && (!movimientoValido(pieza_elegida, pos_inicial, pos_final, &tablero)
+			if (mouse_released && (pieza_elegida != nullptr) && (!movimientoValido(pieza_elegida, pos_inicial, pos_final, &tablero) 
 				|| checkJaque(tablero_fantasma, pieza_elegida->getColor()))) {
 
 				//Se devuelve a la casilla original
@@ -261,7 +260,6 @@ void Juego::clicRaton(bool mouseP, bool mouseR, int x, int y) {
 
 				//Se actualiza el tablero
 				tablero.setPieza(pieza_elegida, pos_final);
-				ETSIDI::play("Musica/SoltarPieza.mp3");
 
 				if (finDeJuego(false)) {
 					cout << "GG" << endl;
@@ -636,7 +634,8 @@ bool Juego::enroque(Tablero* tab, bool color, bool enroque_corto) {
 
 //la funcion pide al usuario elegir la pieza que desea por haber coronado un peon, siendo representada en el tablero, quedando este acualizado
 void Juego::coronacion(Tablero* tab, Pos pos_coronacion) {
-	int elegido = 0; //sirve para elegir la pieza que queremos, y para mantenernos en el bucle si no escogemos una pieza valida
+	int elegido = 0;
+	bool color_aux = pieza_elegida->getColor();
 
 	//Piezas que puede elegir el jugador en la coronacion
 	cout << endl << "Dama: 3" << endl;
@@ -645,47 +644,37 @@ void Juego::coronacion(Tablero* tab, Pos pos_coronacion) {
 	cout << "Torre: 6" << endl;
 
 	do { //mientras no se elija una pieza valida no se sale del bucle
-		elegido = 0;
 		cout << "Elige que pieza quieres: ";
 		cin >> elegido;
 		switch (elegido) {
 		case 3:
-			pieza_elegida = new Dama(pieza_elegida->getColor());//la pieza seleccionada pasa de ser un peon a ser una dama
-			tab->setPieza(pieza_elegida, pos_coronacion);//se situa la nueva pieza en la casilla en la que se ha coronado el peon
+			delete pieza_elegida;
+			pieza_elegida = nullptr;
+			pieza_elegida = new Dama(color_aux);
+			tablero_fantasma.setPieza(pieza_elegida, pos_coronacion);
 			break;
 		case 4:
-			pieza_elegida = new Alfil(pieza_elegida->getColor());//la pieza seleccionada pasa de ser un peon a ser un alfil
-			tab->setPieza(pieza_elegida, pos_coronacion);//se situa la nueva pieza en la casilla en la que se ha coronado el peon
+			delete pieza_elegida;
+			pieza_elegida = nullptr;
+			pieza_elegida = new Alfil(color_aux);
+			tablero_fantasma.setPieza(pieza_elegida, pos_coronacion);
 			break;
 		case 5:
-			pieza_elegida = new Caballo(pieza_elegida->getColor());//la pieza seleccionada pasa de ser un peon a ser un caballo
-			tab->setPieza(pieza_elegida, pos_coronacion);//se situa la nueva pieza en la casilla en la que se ha coronado el peon
+			delete pieza_elegida;
+			pieza_elegida = nullptr;
+			pieza_elegida = new Caballo(color_aux);
+			tablero_fantasma.setPieza(pieza_elegida, pos_coronacion);
 			break;
 		case 6:
-			pieza_elegida = new Torre(pieza_elegida->getColor());//la pieza seleccionada pasa de ser un peon a ser una torre
-			tab->setPieza(pieza_elegida, pos_coronacion);//se situa la nueva pieza en la casilla en la que se ha coronado el peon
+			delete pieza_elegida;
+			pieza_elegida = nullptr;
+			pieza_elegida = new Torre(color_aux);
+			tablero_fantasma.setPieza(pieza_elegida, pos_coronacion);
 			break;
 		default:
 			cout << endl << "Pieza no valida. ";
 		}
 	} while (elegido > 6 || elegido < 3);
-}
-
-void Juego::setValores(bool t) {
-	if (t) {
-		AJUSTE_X = 86;
-		AJUSTE_Y = 813;
-		LIM_TABLERO = 728;
-		LIM_CASILLA = 91;
-		tablero.setValores(t);
-	}
-	else {
-		AJUSTE_X = 58;
-		AJUSTE_Y = 540;
-		LIM_TABLERO = 480;
-		LIM_CASILLA = 60;
-		tablero.setValores(t);
-	}
 }
 
 bool Juego::checkJaque(Tablero tab, bool color) {
