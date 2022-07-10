@@ -1,21 +1,23 @@
 #pragma once
 #include "Pos.h"
-//#include "Pieza.h"
 
-class Pieza;
+class Pieza; //forward declaration para evitar recursividad
 
 class Tablero {
-protected:
+private:
 	float lado;
-	unsigned char rojo, verde, azul;
-
-	int LIM_CASILLA, AJUSTE_X, AJUSTE_Y;
-
-	Pieza* piezas[8][8]; //nombre/tamaño provisionales
+	int LIM_TABLERO, LIM_CASILLA, AJUSTE_X, AJUSTE_Y;
+	Pieza* piezas[8][8];
 public:
-	Tablero(): lado(2.5f) {};
-	
-	void dibujoDamero();
+	//Constructores de tablero
+	Tablero();
+	Tablero(int, int, int, int);
+
+	//Funciones de dibujo del tablero
+	void dibujarDamero();
+	void dibujarPosibleCasilla(Pos);
+
+	//Getters y setters referidos a la gestión de piezas en el tablero
 	void borrarPiezas();
 	void quitarPieza(Pos);
 	void quitarPiezaTablero(Pos);
@@ -23,13 +25,10 @@ public:
 	void setPiezaTablero(Pieza*, Pos);
 	Pieza* getPieza(Pos);
 
-	void dibujarPosibleCasilla(Pos); //muy provisional, pero se va a implementar en esta clase. Hay que pensar forma de borrar posibles casillas
-
-	void setValores(bool);
-	void setLado(float);
-	float getLado();
-
-	int getLim() { return LIM_CASILLA; }
+	//Getters y setters de los parámetros referidos al tamaño de la ventana
+	int getLT() { return LIM_TABLERO; }
+	int getLC() { return LIM_CASILLA; }
 	int getAjusteX() { return AJUSTE_X; }
 	int getAjusteY() { return AJUSTE_Y; }
+	float getLado() { return lado; }
 };

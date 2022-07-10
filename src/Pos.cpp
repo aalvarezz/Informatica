@@ -1,9 +1,5 @@
 #include "Pos.h"
 
-Pos::~Pos() {
-
-}
-
 Pos Pos::operator+(Pos &pos2) {
 	Pos posaux;
 	posaux.fila = fila + pos2.fila;

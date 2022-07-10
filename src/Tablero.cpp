@@ -2,10 +2,38 @@
 #include "freeglut.h"
 #include "ETSIDI.h"
 
-#include <iostream>
-using namespace std;
+Tablero::Tablero() {
+	lado = 2.5f;
+	LIM_TABLERO = 728;
+	LIM_CASILLA = 91;
+	AJUSTE_X = 86;
+	AJUSTE_Y = 813;
 
-void Tablero::dibujoDamero() {
+	for (int i = 0; i < 8; i++) {
+		for (int j = 0; j < 8; j++) {
+			piezas[i][j] = nullptr;
+		}
+	}
+}
+
+Tablero::Tablero(int LT, int LC, int AX, int AY) {
+	lado = 2.5f;
+	LIM_TABLERO = LT;
+	LIM_CASILLA = LC;
+	AJUSTE_X = AX;
+	AJUSTE_Y = AY;
+
+	for (int i = 0; i < 8; i++) {
+		for (int j = 0; j < 8; j++) {
+			piezas[i][j] = nullptr;
+		}
+	}
+}
+
+void Tablero::dibujarDamero() {
+	//Variables usadas para darle color a las casillas al dibujarlas
+	unsigned char rojo = 0, verde = 0, azul = 0;
+
 	//CASILLAS DEL TABLERO
 	for (int i = 0; i < 8; i++) {
 		for (int j = 0; j < 8; j++) {
@@ -70,6 +98,21 @@ void Tablero::dibujoDamero() {
 	glDisable(GL_TEXTURE_2D);
 }
 
+void Tablero::dibujarPosibleCasilla(Pos posicion) { //se le da la posicion de los posibles movimientos para que sean graficados
+	int n = 20; //Resolución
+	float PI = 3.1415926f;
+	float R = lado / 3; //Radio
+	glColor3ub(255, 0, 0);
+	glBegin(GL_POLYGON);
+	for (int i = 0; i < n; i++) {
+		float theta = 2.0f * PI * i / n; //Obtencion del angulo
+		float a = R * cos(theta); //Obtencion de la componente x
+		float b = R * sin(theta); //Obtencion de la componente y
+		glVertex3f(a + posicion.columna * lado, b + posicion.fila * lado, 0.05f);
+	}
+	glEnd();
+}
+
 void Tablero::borrarPiezas() {
 	for (int i = 0; i < 8; i++) {
 		for (int j = 0; i < 8; i++) {
@@ -105,43 +148,4 @@ void Tablero::setPiezaTablero(Pieza* p, Pos posicion) { //otorga a una pieza una
 
 Pieza* Tablero::getPieza(Pos posicion) {
 	return piezas[posicion.fila][posicion.columna];
-}
-
-void Tablero::dibujarPosibleCasilla(Pos posicion) { //se le da la posicion de los posibles movimientos para que sean graficados
-	int n = 20; //Resolución
-	float PI = 3.1415926f;
-	float R = lado / 3; //Radio
-	glColor3ub(255, 0, 0);
-	glBegin(GL_POLYGON);
-	for (int i = 0; i < n; i++) {
-		float theta = 2.0f * PI * i / n; //Obtencion del angulo
-		float a = R * cos(theta); //Obtencion de la componente x
-		float b = R * sin(theta); //Obtencion de la componente y
-		glVertex3f(a + posicion.columna * lado, b + posicion.fila * lado, 0.05f);
-	}
-	glEnd();
-}
-
-//GETTERS y SETTERS PROVISIONALES
-void Tablero::setLado(float l) {
-	lado = l;
-}
-
-float Tablero::getLado() {
-	return lado;
-}
-
-void Tablero::setValores(bool t) {
-	if (t) {
-		AJUSTE_X = 86;
-		AJUSTE_Y = 813;
-		LIM_CASILLA = 91;
-
-	}
-	else {
-		AJUSTE_X = 58;
-		AJUSTE_Y = 540;
-		LIM_CASILLA = 60;
-	}
-	LIM_CASILLA, AJUSTE_X, AJUSTE_Y;
 }
