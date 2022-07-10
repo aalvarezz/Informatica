@@ -92,10 +92,10 @@ void Menu::asigna()
 	tamano_grande = SDL_LoadBMP("imagenes_ajustes/imagenes_tamano/menu_tamano_grande.bmp");
 	tamano_pequeno = SDL_LoadBMP("imagenes_ajustes/imagenes_tamano/menu_tamano_pequeno.bmp");
 	tamano_volver = SDL_LoadBMP("imagenes_ajustes/imagenes_tamano/menu_tamano_volver.bmp");
-	
+
 }
 
-void Menu::asignaFin() 
+void Menu::asignaFin()
 {
 	currentimage = optimatedsurface("imagenes_fin_partida/fin_blancas_inicial.bmp", windowsurface);
 
@@ -111,7 +111,7 @@ void Menu::asignaFin()
 
 	empate_inicial = SDL_LoadBMP("imagenes_fin_partida/fin_empate_inicial.bmp");
 	empate_jugar = SDL_LoadBMP("imagenes_fin_partida/fin_empate_jugar.bmp");
-	empate_menu= SDL_LoadBMP("imagenes_fin_partida/fin_empate_menu.bmp");
+	empate_menu = SDL_LoadBMP("imagenes_fin_partida/fin_empate_menu.bmp");
 	empate_salir = SDL_LoadBMP("imagenes_fin_partida/fin_empate_salir.bmp");
 
 }
@@ -158,7 +158,7 @@ void Menu::liberar()
 }
 
 
-void Menu::liberarFin() 
+void Menu::liberarFin()
 {
 	currentimage = nullptr;
 	SDL_DestroyWindow(window);
@@ -310,12 +310,12 @@ void Menu::evento()
 					menu_running = false;
 					clasico = false;
 					menu_modo_activo = false;
-					
+
 				}
 
 				if (e.button.clicks == 2 && currentimage == modo_salir)
 				{
-					currentimage = menu_inicial;					
+					currentimage = menu_inicial;
 					menu_modo_activo = false;
 					menu_inicial_activo = true;
 				}
@@ -422,7 +422,7 @@ void Menu::evento()
 						currentimage = modo_inicial;
 				}
 
-			   //menu ajustes
+				//menu ajustes
 
 				else if (menu_ajustes_activo == true)
 				{
@@ -482,7 +482,7 @@ void Menu::evento()
 	}
 }
 
-void Menu::eventoFin() 
+void Menu::eventoFin()
 {
 	//bool running = true;
 	SDL_Event e;
@@ -504,7 +504,7 @@ void Menu::eventoFin()
 				menu_fin_blancas_activo = false;
 				menu_fin_negras_activo = false;
 			}
-				
+
 
 
 			//eventos con teclas
@@ -520,7 +520,7 @@ void Menu::eventoFin()
 				if (menu_fin_negras_activo == true && e.key.keysym.sym == SDLK_ESCAPE)
 				{
 					//menu_fin_blancas_activo = false;
-					
+
 				}
 			}
 
@@ -530,14 +530,14 @@ void Menu::eventoFin()
 				//volver a jugar
 				if (e.button.clicks == 2 && currentimage == blancas_jugar)
 				{
-					
+
 					menu_fin_blancas_activo = false;
 					tablero_running = true;
 				}
 
-				if (e.button.clicks == 2 && currentimage ==negras_jugar)
+				if (e.button.clicks == 2 && currentimage == negras_jugar)
 				{
-					
+
 					menu_fin_negras_activo = false;
 					tablero_running = true;
 				}
@@ -550,7 +550,7 @@ void Menu::eventoFin()
 
 				//volver al menu
 				if (e.button.clicks == 2 && currentimage == blancas_menu)
-				{				
+				{
 					menu_fin_blancas_activo = false;
 					menu_running = true;
 				}

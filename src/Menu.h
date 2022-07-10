@@ -82,7 +82,7 @@ public:
 
 	SDL_Surface* optimatedsurface(std::string filepath, SDL_Surface* windowsurface);
 
-	void evento(); 
+	void evento();
 	void eventoFin();
 
 	bool getTableroRunning();

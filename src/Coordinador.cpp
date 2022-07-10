@@ -1,13 +1,15 @@
 #include "Coordinador.h"
 #include "freeglut.h"
 #include "math.h"
+#include "JuegoAciegas.h"
 #include <iostream>
 using namespace std;
 
 /////////////////////////////////////////////////////////
 //Prototipos de los callbacks
 
-Juego juego;
+//Juego juego;
+JuegoAciegas juego; //AHora está puesto el modo extra, hay que hacer que se pueda seleccionar uno u otro
 
 void OnDraw(void); //esta funcion sera llamada para dibujar
 void OnMouseClick(int, int, int, int);
@@ -26,7 +28,7 @@ void Coordinador::Inicializa(int argc, char* argv[]) {
 		menu.ventana();
 		menu.asigna();
 		if (menu.getSonido()) {
-			//ETSIDI::playMusica("Musica/WiiTheme.mp3", true);
+			ETSIDI::playMusica("Musica/WiiTheme.mp3", true);
 		}
 		menu.evento();
 		SDL_StopTextInput();
@@ -34,7 +36,7 @@ void Coordinador::Inicializa(int argc, char* argv[]) {
 
 		cambioEstado();
 	}
-	
+
 	else if (estado == PARTIDA) {
 		//glutInit(&argc, argv);
 		glutInitWindowSize(menu.getAnchura(), menu.getAltura());
@@ -56,6 +58,7 @@ void Coordinador::Inicializa(int argc, char* argv[]) {
 		asignarTamano(menu.getTamano());
 		// Inicializacion
 		juego.inicializar();
+		//aCiegas.inicializar();
 		cambioEstado();
 
 		//Registrar los callbacks
@@ -90,6 +93,7 @@ void Coordinador::cambioEstado() {
 			//juego.setTamano(menu.getMenuTamano());
 			estado = FIN_DE_PARTIDA;
 			asignarTamano(menu.getTamano());
+			ETSIDI::stopMusica();
 			cout << "cambio estado" << endl;
 		}
 		if (!menu.getMenuRunning() && !menu.getTableroRunning()) {
@@ -123,9 +127,9 @@ Juego Coordinador::getJuego() {
 */
 
 void Coordinador::asignarTamano(bool t) {
-	
+
 	juego.setValores(t);
-	
+
 }
 
 void OnDraw(void) {
@@ -137,17 +141,17 @@ void OnDraw(void) {
 	glLoadIdentity();
 
 	gluLookAt(8.75, 8.75, 34,  // posicion del ojo
-		8.75, 8.75, 0,      // hacia qué punto mira  (8.75, 8.75, 0) 
+		8.75, 8.75, 0,      // hacia qu� punto mira  (8.75, 8.75, 0) 
 		0.0, 1.0, 0.0);      // definimos hacia arriba (eje Z)                          SEGURO??  
 
-	//Código de dibujo
+	//C�digo de dibujo
 	//coordinador.Dibuja();
 
 	juego.dibujar();
 	juego.dibujarArrastrar();
 
 
-	//glutPostRedisplay();
+	glutPostRedisplay();
 
 	//Promueve el contenido del back buffer para poder realizar todos los cambios necesarios en la pantalla
 	glutSwapBuffers();
@@ -161,14 +165,12 @@ void OnMouseClick(int button, int state, int x, int y) {
 		bool released = (state == GLUT_UP);
 		juego.clicRaton(pressed, released, x, y); //damero.colorear = damero.Raton(button, state, x, y);
 	}
-	
+
 }
 
 void OnMotion(int x, int y) {
-	//Llamada a función clicar/dejar de clicar de Juego/Coordinador
+	//Llamada a funci�n clicar/dejar de clicar de Juego/Coordinador
 	juego.movimientoRaton(x, y);
-	//glutPostRedisplay();
-	
-	glutPostRedisplay();
-}
 
+	//glutPostRedisplay();
+}
