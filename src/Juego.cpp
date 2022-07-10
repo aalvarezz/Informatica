@@ -5,8 +5,9 @@
 #include "Alfil.h"
 #include "Caballo.h"
 #include "Torre.h"
-
 #include <iostream>
+#include "ETSIDI.h"
+
 using namespace std; //cuidado
 
 Juego::Juego() {
@@ -209,7 +210,8 @@ void Juego::clicRaton(bool mouseP, bool mouseR, int x, int y) {
 				&& !checkJaque(tablero_fantasma, pieza_elegida->getColor())) {
 
 				//Se actualiza el tablero
-				tablero.setPieza(pieza_elegida, pos_final);
+				tablero.setPiezaTablero(pieza_elegida, pos_final);
+				ETSIDI::play("Musica/SoltarPieza.mp3");
 
 				if (finDeJuego(true)) {
 					cout << "GG" << endl;
@@ -235,7 +237,7 @@ void Juego::clicRaton(bool mouseP, bool mouseR, int x, int y) {
 				turno_negras = true;
 			}
 			//Si estás moviendo una pieza y el movimiento no es correcto o este provoca que el color pase a estar en jaque, se devuelve a su casilla original
-			if (mouse_released && (pieza_elegida != nullptr) && (!movimientoValido(pieza_elegida, pos_inicial, pos_final, &tablero) 
+			if (mouse_released && (pieza_elegida != nullptr) && (!movimientoValido(pieza_elegida, pos_inicial, pos_final, &tablero)
 				|| checkJaque(tablero_fantasma, pieza_elegida->getColor()))) {
 
 				//Se devuelve a la casilla original
@@ -259,7 +261,8 @@ void Juego::clicRaton(bool mouseP, bool mouseR, int x, int y) {
 				&& !checkJaque(tablero_fantasma, pieza_elegida->getColor())) {
 
 				//Se actualiza el tablero
-				tablero.setPieza(pieza_elegida, pos_final);
+				tablero.setPiezaTablero(pieza_elegida, pos_final);
+				ETSIDI::play("Musica/SoltarPieza.mp3");
 
 				if (finDeJuego(false)) {
 					cout << "GG" << endl;
@@ -446,7 +449,8 @@ bool Juego::enroque(Tablero* tab, bool color, bool enroque_corto) {
 				//Declaración de variables auxiliares para la comprobación de las dos últimas condiciones
 				Pos pos_rey_original = Pos(0, 4);
 				Tablero tablero_aux = *tab;
-				tablero_aux.setPieza(new Rey(color), pos_rey_original);
+				Pieza* rey_aux = new Rey(color);
+				tablero_aux.setPieza(rey_aux, pos_rey_original);
 
 				//Si las casillas entre rey y torre se encuentran vacías se realiza el enroque
 				if (tab->getPieza(aux1) == nullptr && tab->getPieza(aux2) == nullptr) {
@@ -474,6 +478,7 @@ bool Juego::enroque(Tablero* tab, bool color, bool enroque_corto) {
 						return true;
 					}
 				}
+				delete rey_aux;
 			}
 		}
 
@@ -491,7 +496,8 @@ bool Juego::enroque(Tablero* tab, bool color, bool enroque_corto) {
 				//Declaración de variables auxiliares para la comprobación de las dos últimas condiciones
 				Pos pos_rey_original = Pos(0, 4);
 				Tablero tablero_aux = *tab;
-				tablero_aux.setPieza(new Rey(color), pos_rey_original);
+				Pieza* rey_aux = new Rey(color);
+				tablero_aux.setPieza(rey_aux, pos_rey_original);
 
 				//Si las casillas entre rey y torre se encuentran vacías se realiza el enroque
 				if (tab->getPieza(aux1) == nullptr && tab->getPieza(aux2) == nullptr && tab->getPieza(aux3) == nullptr) {
@@ -524,6 +530,7 @@ bool Juego::enroque(Tablero* tab, bool color, bool enroque_corto) {
 						return true;
 					}
 				}
+				delete rey_aux;
 			}
 		}
 	}
@@ -548,7 +555,8 @@ bool Juego::enroque(Tablero* tab, bool color, bool enroque_corto) {
 				//Declaración de variables auxiliares para la comprobación de las dos últimas condiciones
 				Pos pos_rey_original = Pos(7, 4);
 				Tablero tablero_aux = *tab;
-				tablero_aux.setPieza(new Rey(color), pos_rey_original);
+				Pieza* rey_aux = new Rey(color);
+				tablero_aux.setPieza(rey_aux, pos_rey_original);
 
 				//Si las casillas entre rey y torre se encuentran vacías se realiza el enroque
 				if (tab->getPieza(aux1) == nullptr && tab->getPieza(aux2) == nullptr) {
@@ -576,6 +584,7 @@ bool Juego::enroque(Tablero* tab, bool color, bool enroque_corto) {
 						return true;
 					}
 				}
+				delete rey_aux;
 			}
 		}
 
@@ -593,7 +602,8 @@ bool Juego::enroque(Tablero* tab, bool color, bool enroque_corto) {
 				//Declaración de variables auxiliares para la comprobación de las dos últimas condiciones
 				Pos pos_rey_original = Pos(7, 4);
 				Tablero tablero_aux = *tab;
-				tablero_aux.setPieza(new Rey(color), pos_rey_original);
+				Pieza* rey_aux = new Rey(color);
+				tablero_aux.setPieza(rey_aux, pos_rey_original);
 
 				//Si las casillas entre rey y torre se encuentran vacías se realiza el enroque
 				if (tab->getPieza(aux1) == nullptr && tab->getPieza(aux2) == nullptr && tab->getPieza(aux3) == nullptr) {
@@ -626,6 +636,7 @@ bool Juego::enroque(Tablero* tab, bool color, bool enroque_corto) {
 						return true;
 					}
 				}
+				delete rey_aux;
 			}
 		}
 	}

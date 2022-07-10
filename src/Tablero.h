@@ -18,8 +18,11 @@ public:
 	void dibujarPosibleCasilla(Pos);
 
 	//Getters y setters referidos a la gestión de piezas en el tablero
-	void setPieza(Pieza*, Pos);
+	void borrarPiezas();
 	void quitarPieza(Pos);
+	void quitarPiezaTablero(Pos);
+	void setPieza(Pieza*, Pos); 
+	void setPiezaTablero(Pieza*, Pos);
 	Pieza* getPieza(Pos);
 
 	//Getters y setters de los parámetros referidos al tamaño de la ventana

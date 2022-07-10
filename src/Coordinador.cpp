@@ -27,7 +27,7 @@ void Coordinador::Inicializa(int argc, char* argv[]) {
 		menu.ventana();
 		menu.asigna();
 		if (menu.getSonido()) {
-			//ETSIDI::playMusica("Musica/WiiTheme.mp3", true);
+			ETSIDI::playMusica("Musica/WiiTheme.mp3", true);
 		}
 		menu.evento();
 		SDL_StopTextInput();
@@ -88,15 +88,13 @@ void Coordinador::Inicializa(int argc, char* argv[]) {
 	}
 }
 
-
-
-
 void Coordinador::cambioEstado() {
 
 	if (estado == MENU) {
 		if (menu.getTableroRunning()) {
 			estado = PARTIDA;
 			//asignarTamano(menu.getTamano());
+      ETSIDI::stopMusica();
 			cout << "cambio estado" << endl;
 		}
 		if (!menu.getMenuRunning() && !menu.getTableroRunning()) {
@@ -130,10 +128,10 @@ void OnDraw(void) {
 	glLoadIdentity();
 
 	gluLookAt(8.75, 8.75, 34,  // posicion del ojo
-		8.75, 8.75, 0,      // hacia qué punto mira  (8.75, 8.75, 0) 
+		8.75, 8.75, 0,      // hacia quÃ© punto mira  (8.75, 8.75, 0) 
 		0.0, 1.0, 0.0);      // definimos hacia arriba (eje Z)                          SEGURO??  
 
-	//Código de dibujo
+	//CÃ³digo de dibujo
 	//coordinador.Dibuja();
 
 	juego.dibujar();

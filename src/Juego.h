@@ -2,7 +2,7 @@
 #include "Pieza.h"
 
 class Juego {
-private:
+protected:
 	Tablero tablero, tablero_fantasma;
 	Pos pos_inicial, pos_final, mouse_pos, salida_doble;
 	Pieza* pieza_elegida;
