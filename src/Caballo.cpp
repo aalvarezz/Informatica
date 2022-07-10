@@ -10,7 +10,7 @@ bool Caballo::comprueba(Tablero* tablero, Pos inicio, Pos fin) {
 				posaux = posaux + inicio;
 
 				//la casilla fin entra en las reglas
-				if ((posaux.fila == fin.fila) && (posaux.columna == fin.columna)) {
+				if (posaux == fin) {
 					//Está vacía
 					if (tablero->getPieza(fin) == nullptr) {
 						return true;
@@ -24,4 +24,27 @@ bool Caballo::comprueba(Tablero* tablero, Pos inicio, Pos fin) {
 		}
 	}
 	return false;
+}
+
+void Caballo::draw(float x, float y) {
+	//en funcion del color de la pieza la dibuja en su posicion correspondiente
+
+	switch (color) {
+	case 0:
+		CaballoB.setCenter(2.5f / 2, 2.5f / 2);
+		CaballoB.setSize(2.5f, 2.5f);
+		glTranslatef(x, y, 0.1f);
+		glColor3f(1.0f, 0.0f, 0.0f);
+		CaballoB.draw();
+		glTranslatef(-x, -y, -0.1f);
+		break;
+	case 1:
+		CaballoN.setCenter(2.5f / 2, 2.5f / 2);
+		CaballoN.setSize(2.5f, 2.5f);
+		glTranslatef(x, y, 0.1f);
+		glColor3f(1.0f, 0.0f, 0.0f);
+		CaballoN.draw();
+		glTranslatef(-x, -y, -0.1f);
+		break;
+	}
 }

@@ -11,6 +11,8 @@ private:
 	float lado;
 	unsigned char rojo, verde, azul;
 
+	int LIM_CASILLA, AJUSTE_X, AJUSTE_Y;
+
 	Pieza* piezas[8][8]; //nombre/tamaño provisionales
 
 	//REVISAR
@@ -28,4 +30,8 @@ public:
 
 	void setLado(float);
 	float getLado();
+	void setValores(bool);
+	int getLim() { return LIM_CASILLA; }
+	int getAjusteX() { return AJUSTE_X; }
+	int getAjusteY() { return AJUSTE_Y; }
 };

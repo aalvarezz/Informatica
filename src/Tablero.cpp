@@ -112,3 +112,18 @@ void Tablero::setLado(float l) {
 float Tablero::getLado() {
 	return lado;
 }
+
+void Tablero::setValores(bool t) {
+	if (t) {
+		AJUSTE_X = 86;
+		AJUSTE_Y = 813;
+		LIM_CASILLA = 91;
+
+	}
+	else {
+		AJUSTE_X = 58;
+		AJUSTE_Y = 540;
+		LIM_CASILLA = 60;
+	}
+	LIM_CASILLA, AJUSTE_X, AJUSTE_Y;
+}

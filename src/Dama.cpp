@@ -14,21 +14,21 @@ bool Dama::comprueba(Tablero* tablero, Pos inicio, Pos fin) {
 		aux7 = aux7 + inicio;
 		aux8 = aux8 + inicio;
 
-		if (aux1.fila == fin.fila && aux1.columna == fin.columna)
+		if (aux1 == fin)
 			sentido = 1;
-		if (aux2.fila == fin.fila && aux2.columna == fin.columna)
+		if (aux2 == fin)
 			sentido = 2;
-		if (aux3.fila == fin.fila && aux3.columna == fin.columna)
+		if (aux3 == fin)
 			sentido = 3;
-		if (aux4.fila == fin.fila && aux4.columna == fin.columna)
+		if (aux4 == fin)
 			sentido = 4;
-		if (aux5.fila == fin.fila && aux5.columna == fin.columna)
+		if (aux5 == fin)
 			sentido = 5;
-		if (aux6.fila == fin.fila && aux6.columna == fin.columna)
+		if (aux6 == fin)
 			sentido = 6;
-		if (aux7.fila == fin.fila && aux7.columna == fin.columna)
+		if (aux7 == fin)
 			sentido = 7;
-		if (aux8.fila == fin.fila && aux8.columna == fin.columna)
+		if (aux8 == fin)
 			sentido = 8;
 	}
 
@@ -42,7 +42,7 @@ bool Dama::comprueba(Tablero* tablero, Pos inicio, Pos fin) {
 			Pos posaux1(j, 0);
 			posaux1 = posaux1 + inicio;
 
-			if (posaux1.fila == fin.fila && posaux1.columna == fin.columna) {
+			if (posaux1 == fin) {
 				if (tablero->getPieza(fin) == nullptr) {
 					return true;
 				}
@@ -61,7 +61,7 @@ bool Dama::comprueba(Tablero* tablero, Pos inicio, Pos fin) {
 			Pos posaux2(-j, 0);
 			posaux2 = posaux2 + inicio;
 
-			if (posaux2.fila == fin.fila && posaux2.columna == fin.columna) {
+			if (posaux2 == fin) {
 				if (tablero->getPieza(fin) == nullptr) {
 					return true;
 				}
@@ -80,7 +80,7 @@ bool Dama::comprueba(Tablero* tablero, Pos inicio, Pos fin) {
 			Pos posaux3(0, j);
 			posaux3 = posaux3 + inicio;
 
-			if (posaux3.fila == fin.fila && posaux3.columna == fin.columna) {
+			if (posaux3 == fin) {
 				if (tablero->getPieza(fin) == nullptr) {
 					return true;
 				}
@@ -99,7 +99,7 @@ bool Dama::comprueba(Tablero* tablero, Pos inicio, Pos fin) {
 			Pos posaux4(0, -j);
 			posaux4 = posaux4 + inicio;
 
-			if (posaux4.fila == fin.fila && posaux4.columna == fin.columna) {
+			if (posaux4 == fin) {
 				if (tablero->getPieza(fin) == nullptr) {
 					return true;
 				}
@@ -118,7 +118,7 @@ bool Dama::comprueba(Tablero* tablero, Pos inicio, Pos fin) {
 			Pos posaux5(j, j);
 			posaux5 = posaux5 + inicio;
 
-			if (posaux5.fila == fin.fila && posaux5.columna == fin.columna) {
+			if (posaux5 == fin) {
 				if (tablero->getPieza(fin) == nullptr) {
 					return true;
 				}
@@ -137,7 +137,7 @@ bool Dama::comprueba(Tablero* tablero, Pos inicio, Pos fin) {
 			Pos posaux6(-j, j);
 			posaux6 = posaux6 + inicio;
 
-			if (posaux6.fila == fin.fila && posaux6.columna == fin.columna) {
+			if (posaux6 == fin) {
 				if (tablero->getPieza(fin) == nullptr) {
 					return true;
 				}
@@ -156,7 +156,7 @@ bool Dama::comprueba(Tablero* tablero, Pos inicio, Pos fin) {
 			Pos posaux7(-j, -j);
 			posaux7 = posaux7 + inicio;
 
-			if (posaux7.fila == fin.fila && posaux7.columna == fin.columna) {
+			if (posaux7 == fin) {
 				if (tablero->getPieza(fin) == nullptr) {
 					return true;
 				}
@@ -175,7 +175,7 @@ bool Dama::comprueba(Tablero* tablero, Pos inicio, Pos fin) {
 			Pos posaux8(j, -j);
 			posaux8 = posaux8 + inicio;
 
-			if (posaux8.fila == fin.fila && posaux8.columna == fin.columna) {
+			if (posaux8 == fin) {
 				if (tablero->getPieza(fin) == nullptr) {
 					return true;
 				}
@@ -191,4 +191,27 @@ bool Dama::comprueba(Tablero* tablero, Pos inicio, Pos fin) {
 
 	}
 	return false;
+}
+
+void Dama::draw(float x, float y) {
+	//en funcion del color de la pieza la dibuja en su posicion correspondiente
+
+	switch (color) {
+	case 0:
+		DamaB.setCenter(2.5f / 2, 2.5f / 2);
+		DamaB.setSize(2.5f, 2.5f);
+		glTranslatef(x, y, 0.1f);
+		glColor3f(1.0f, 0.0f, 0.0f);
+		DamaB.draw();
+		glTranslatef(-x, -y, -0.1f);
+		break;
+	case 1:
+		DamaN.setCenter(2.5f / 2, 2.5f / 2);
+		DamaN.setSize(2.5f, 2.5f);
+		glTranslatef(x, y, 0.1f);
+		glColor3f(1.0f, 0.0f, 0.0f);
+		DamaN.draw();
+		glTranslatef(-x, -y, -0.1f);
+		break;
+	}
 }
