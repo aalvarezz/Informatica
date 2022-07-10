@@ -25,6 +25,7 @@ public:
 	void setValores(bool);
 	void setLado(float);
 	float getLado();
+
 	int getLim() { return LIM_CASILLA; }
 	int getAjusteX() { return AJUSTE_X; }
 	int getAjusteY() { return AJUSTE_Y; }
