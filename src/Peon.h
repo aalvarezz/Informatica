@@ -2,9 +2,10 @@
 #include "Pieza.h"
 
 class Peon : public Pieza {
-private:
-
 public:
-	Peon(bool _color) : Pieza(_color, 1) {};
+	Peon(bool _color) : Pieza(_color, 1) {
+		if (color) { sprite.setState(0); }
+		else { sprite.setState(6); }
+	};
 	bool comprueba(Tablero*, Pos, Pos);
 };

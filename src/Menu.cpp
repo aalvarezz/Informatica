@@ -47,12 +47,14 @@ void Menu::inicializa()
 
 }
 
-void Menu::inicializaFin()
+void Menu::inicializaFin(bool a, bool b, bool c, bool d)
 {
 	// luego asignaremos true al que este activo en funcion del resulltado de la partida
 	tablero_running = false;
-	menu_fin_blancas_activo = true;
-	menu_fin_negras_activo = false;
+	menu_fin_blancas_activo = a;
+	menu_fin_negras_activo = b;
+	menu_fin_empate_blancas_activo = c;
+	menu_fin_empate_negras_activo = d;
 	blancas_inicial = nullptr;
 	blancas_jugar = nullptr;
 	blancas_menu = nullptr;
@@ -97,8 +99,14 @@ void Menu::asigna()
 
 void Menu::asignaFin() 
 {
-	currentimage = optimatedsurface("imagenes_fin_partida/fin_blancas_inicial.bmp", windowsurface);
-
+	if(menu_fin_blancas_activo)
+		currentimage = optimatedsurface("imagenes_fin_partida/fin_blancas_inicial.bmp", windowsurface);
+	if (menu_fin_negras_activo)
+		currentimage = optimatedsurface("imagenes_fin_partida/fin_negras_inicial.bmp", windowsurface);
+	if(menu_fin_empate_blancas_activo)
+		currentimage = optimatedsurface("imagenes_fin_partida/tablas_blancas_inicial.bmp", windowsurface);
+	if(menu_fin_empate_negras_activo)
+		currentimage = optimatedsurface("imagenes_fin_partida/tablas_negras_inicial.bmp", windowsurface);
 	blancas_inicial = SDL_LoadBMP("imagenes_fin_partida/fin_blancas_inicial.bmp");
 	blancas_jugar = SDL_LoadBMP("imagenes_fin_partida/fin_blancas_jugar.bmp");
 	blancas_menu = SDL_LoadBMP("imagenes_fin_partida/fin_blancas_menu.bmp");
@@ -109,10 +117,15 @@ void Menu::asignaFin()
 	negras_menu = SDL_LoadBMP("imagenes_fin_partida/fin_negras_menu.bmp");
 	negras_salir = SDL_LoadBMP("imagenes_fin_partida/fin_negras_salir.bmp");
 
-	empate_inicial = SDL_LoadBMP("imagenes_fin_partida/fin_empate_inicial.bmp");
-	empate_jugar = SDL_LoadBMP("imagenes_fin_partida/fin_empate_jugar.bmp");
-	empate_menu= SDL_LoadBMP("imagenes_fin_partida/fin_empate_menu.bmp");
-	empate_salir = SDL_LoadBMP("imagenes_fin_partida/fin_empate_salir.bmp");
+	empate_negras_inicial = SDL_LoadBMP("imagenes_fin_partida/tablas_negras_inicial.bmp");
+	empate_negras_jugar = SDL_LoadBMP("imagenes_fin_partida/tablas_negras_jugar.bmp");
+	empate_negras_menu= SDL_LoadBMP("imagenes_fin_partida/tablas_negras_menu.bmp");
+	empate_negras_salir = SDL_LoadBMP("imagenes_fin_partida/tablas_negras_salir.bmp");
+
+	empate_blancas_inicial = SDL_LoadBMP("imagenes_fin_partida/tablas_blancas_inicial.bmp");
+	empate_blancas_jugar = SDL_LoadBMP("imagenes_fin_partida/tablas_blancas_jugar.bmp");
+	empate_blancas_menu = SDL_LoadBMP("imagenes_fin_partida/tablas_blancas_menu.bmp");
+	empate_blancas_salir = SDL_LoadBMP("imagenes_fin_partida/tablas_blancas_salir.bmp");
 
 }
 
@@ -173,15 +186,20 @@ void Menu::liberarFin()
 	SDL_FreeSurface(negras_jugar);
 	SDL_FreeSurface(negras_menu);
 	SDL_FreeSurface(negras_salir);
-	SDL_FreeSurface(empate_inicial);
-	SDL_FreeSurface(empate_jugar);
-	SDL_FreeSurface(empate_menu);
-	SDL_FreeSurface(empate_salir);
+	SDL_FreeSurface(empate_blancas_inicial);
+	SDL_FreeSurface(empate_blancas_jugar);
+	SDL_FreeSurface(empate_blancas_menu);
+	SDL_FreeSurface(empate_blancas_salir);
+	SDL_FreeSurface(empate_negras_inicial);
+	SDL_FreeSurface(empate_negras_jugar);
+	SDL_FreeSurface(empate_negras_menu);
+	SDL_FreeSurface(empate_negras_salir);
 
 
 	blancas_inicial = blancas_jugar = blancas_menu = blancas_salir = nullptr;
 	negras_inicial = negras_jugar = negras_menu = negras_salir = nullptr;
-	empate_inicial = empate_jugar = empate_menu = empate_salir = nullptr;
+	empate_blancas_inicial = empate_blancas_jugar = empate_blancas_menu = empate_blancas_salir = nullptr;
+	empate_negras_inicial = empate_negras_jugar = empate_negras_menu = empate_negras_salir = nullptr;
 
 }
 
@@ -228,8 +246,11 @@ void Menu::evento()
 	{
 		while (SDL_PollEvent(&e) != 0)
 		{
-			if (e.type == SDL_QUIT)
+			if (e.type == SDL_QUIT) {
 				menu_running = false;
+				exit(0);
+			}
+				
 			//eventos con teclas
 
 			else if (e.type == SDL_KEYDOWN)
@@ -237,6 +258,7 @@ void Menu::evento()
 				if (menu_inicial_activo == true && e.key.keysym.sym == SDLK_ESCAPE)
 				{
 					menu_running = false;
+					exit(0);
 				}
 
 				if (menu_modo_activo == true && e.key.keysym.sym == SDLK_ESCAPE)
@@ -244,6 +266,7 @@ void Menu::evento()
 					currentimage = menu_inicial;
 					menu_inicial_activo = true;
 					menu_modo_activo = false;
+					exit(0);
 				}
 
 
@@ -286,6 +309,7 @@ void Menu::evento()
 				if (e.button.clicks == 2 && currentimage == menu_salir)
 				{
 					menu_running = false;
+					exit(0);
 				}
 
 				if (e.button.clicks == 2 && currentimage == menu_ajustes)
@@ -300,7 +324,7 @@ void Menu::evento()
 				{
 					tablero_running = true;
 					menu_running = false;
-					clasico = true;
+					partida_normal = true;
 					menu_modo_activo = false;
 				}
 
@@ -308,7 +332,7 @@ void Menu::evento()
 				{
 					tablero_running = true;
 					menu_running = false;
-					clasico = false;
+					partida_normal = false;
 					menu_modo_activo = false;
 					
 				}
@@ -482,11 +506,11 @@ void Menu::evento()
 	}
 }
 
-void Menu::eventoFin() 
+int Menu::eventoFin() 
 {
 	//bool running = true;
 	SDL_Event e;
-	menu_fin_blancas_activo = true;
+	//menu_fin_blancas_activo = true;
 
 	SDL_Rect drawingrect;
 	drawingrect.x = drawingrect.y = 0;
@@ -496,13 +520,16 @@ void Menu::eventoFin()
 	std::string text = "";
 	SDL_StartTextInput();
 
-	while (menu_fin_blancas_activo || menu_fin_negras_activo)
+	while (menu_fin_blancas_activo || menu_fin_negras_activo || menu_fin_empate_blancas_activo || menu_fin_empate_negras_activo)
 	{
 		while (SDL_PollEvent(&e) != 0)
 		{
 			if (e.type == SDL_QUIT) {
 				menu_fin_blancas_activo = false;
 				menu_fin_negras_activo = false;
+				menu_fin_empate_blancas_activo = false;
+				menu_fin_empate_negras_activo = false;
+				return 0;
 			}
 				
 
@@ -514,14 +541,21 @@ void Menu::eventoFin()
 				if (menu_fin_blancas_activo == true && e.key.keysym.sym == SDLK_ESCAPE)
 				{
 					menu_fin_blancas_activo = false;
-					//menu_fin_negras_activo = false;
 				}
 
 				if (menu_fin_negras_activo == true && e.key.keysym.sym == SDLK_ESCAPE)
 				{
-					//menu_fin_blancas_activo = false;
-					
+					menu_fin_negras_activo = false;
 				}
+				if (menu_fin_empate_blancas_activo == true && e.key.keysym.sym == SDLK_ESCAPE)
+				{
+					menu_fin_empate_blancas_activo = false;
+				}
+				if (menu_fin_empate_negras_activo == true && e.key.keysym.sym == SDLK_ESCAPE)
+				{
+					menu_fin_empate_negras_activo = false;
+				}
+				return 0;
 			}
 
 			//eventos botones raton
@@ -529,10 +563,10 @@ void Menu::eventoFin()
 			{
 				//volver a jugar
 				if (e.button.clicks == 2 && currentimage == blancas_jugar)
-				{
-					
+				{				
 					menu_fin_blancas_activo = false;
 					tablero_running = true;
+					return 1;
 				}
 
 				if (e.button.clicks == 2 && currentimage ==negras_jugar)
@@ -540,12 +574,21 @@ void Menu::eventoFin()
 					
 					menu_fin_negras_activo = false;
 					tablero_running = true;
+					return 1;
 				}
 				///////////////////////////////
-				if (e.button.clicks == 2 && currentimage == empate_jugar)
+				if (e.button.clicks == 2 && currentimage == empate_blancas_jugar)
 				{
-					menu_fin_empate_activo = false;
+					menu_fin_empate_blancas_activo = false;
 					tablero_running = true;
+					return 1;
+				}
+
+				if (e.button.clicks == 2 && currentimage == empate_negras_jugar)
+				{
+					menu_fin_empate_negras_activo = false;
+					tablero_running = true;
+					return 1;
 				}
 
 				//volver al menu
@@ -553,34 +596,53 @@ void Menu::eventoFin()
 				{				
 					menu_fin_blancas_activo = false;
 					menu_running = true;
+					return 2;
 				}
 
 				if (e.button.clicks == 2 && currentimage == negras_menu)
 				{
 					menu_fin_negras_activo = false;
 					menu_running = true;
+					return 2;
 				}
 
-				if (e.button.clicks == 2 && currentimage == empate_menu)
+				if (e.button.clicks == 2 && currentimage == empate_blancas_menu)
 				{
-					menu_fin_empate_activo = false;
+					menu_fin_empate_blancas_activo = false;
 					menu_running = true;
+					return 2;
+				}
+
+				if (e.button.clicks == 2 && currentimage == empate_negras_menu)
+				{
+					menu_fin_empate_negras_activo = false;
+					menu_running = true;
+					return 2;
 				}
 
 				//salir
 				if (e.button.clicks == 2 && currentimage == blancas_salir)
 				{
 					menu_fin_blancas_activo = false;
+					return 0;
 				}
 
 				if (e.button.clicks == 2 && currentimage == negras_salir)
 				{
 					menu_fin_negras_activo = false;
+					return 0;
 				}
 
-				if (e.button.clicks == 2 && currentimage == empate_salir)
+				if (e.button.clicks == 2 && currentimage == empate_blancas_salir)
 				{
-					menu_fin_empate_activo = false;
+					menu_fin_empate_blancas_activo = false;
+					return 0;
+				}
+
+				if (e.button.clicks == 2 && currentimage == empate_negras_salir)
+				{
+					menu_fin_empate_negras_activo = false;
+					return 0;
 				}
 
 			}
@@ -615,16 +677,28 @@ void Menu::eventoFin()
 				}
 
 				//menu empate activo
-				if (menu_fin_empate_activo == true)
+				if (menu_fin_empate_blancas_activo == true)
 				{
 					if (e.button.y > 180 && e.button.y < 220)
-						currentimage = empate_jugar;
+						currentimage = empate_blancas_jugar;
 					else if (e.button.y > 240 && e.button.y < 300)
-						currentimage = empate_menu;
+						currentimage = empate_blancas_menu;
 					else if (e.button.y > 300 && e.button.y < 360)
-						currentimage = empate_salir;
+						currentimage = empate_blancas_salir;
 					else
-						currentimage = empate_inicial;
+						currentimage = empate_blancas_inicial;
+				}
+
+				if (menu_fin_empate_negras_activo == true)
+				{
+					if (e.button.y > 180 && e.button.y < 220)
+						currentimage = empate_negras_jugar;
+					else if (e.button.y > 240 && e.button.y < 300)
+						currentimage = empate_negras_menu;
+					else if (e.button.y > 300 && e.button.y < 360)
+						currentimage = empate_negras_salir;
+					else
+						currentimage = empate_negras_inicial;
 				}
 
 			}

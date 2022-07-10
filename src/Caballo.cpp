@@ -19,9 +19,10 @@ bool Caballo::comprueba(Tablero* tablero, Pos inicio, Pos fin) {
 					else if (tablero->getPieza(fin)->getColor() != color) {
 						return true;
 					}
-				}				
+				}
 			}
 		}
 	}
 	return false;
 }
+

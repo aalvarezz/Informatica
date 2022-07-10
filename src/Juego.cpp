@@ -5,11 +5,14 @@
 #include "Alfil.h"
 #include "Caballo.h"
 #include "Torre.h"
+#include "freeglut.h"
 
 #include <iostream>
 using namespace std; //cuidado
 
 Juego::Juego() {
+
+	juego_terminado = 0;
 
 	pieza_elegida = nullptr;
 	within_board = false;
@@ -33,6 +36,7 @@ Juego::Juego() {
 }
 
 void Juego::inicializar() {
+	
 	Pieza* pieza_ini;
 	Pos pos_aux;
 	for (int i = 0; i < 8; i++) {
@@ -102,6 +106,8 @@ void Juego::inicializar() {
 		}
 	}
 	tablero_fantasma = tablero;
+	
+	
 }
 
 void Juego::dibujar() { //PROVISIONAL
@@ -111,7 +117,7 @@ void Juego::dibujar() { //PROVISIONAL
 
 void Juego::dibujarArrastrar() {
 	if (mouse_pressed && pieza_elegida != nullptr) {
-		pieza_elegida->dibujarArrastrar(mouse_pos);
+		pieza_elegida->dibujarArrastrar(mouse_pos,&tablero);
 
 		miraryactuar = 0;
 		dibujarPosiblesCasillas();
@@ -147,7 +153,7 @@ void Juego::dibujarPiezas() {
 	}
 }
 
-void Juego::clicRaton(bool mouseP, bool mouseR, int x, int y) {
+int Juego::clicRaton(bool mouseP, bool mouseR, int x, int y) {
 	//Actualización de los atributos de Juego referidos al estado de los clics
 	mouse_pressed = mouseP;
 	mouse_released = mouseR;
@@ -213,9 +219,27 @@ void Juego::clicRaton(bool mouseP, bool mouseR, int x, int y) {
 					cout << "GG" << endl;
 					if (checkJaque(tablero, true)) {
 						cout << "Victoria de las blancas por jaque mate!" << endl;
+						//glutDestroyWindow(glutGetWindow());
+						//glutHideWindow();
+						juego_terminado = 1;
+						return 1;
+						//NuevaPartida(seguirJugando(juego_terminado,menu),menu);
+						/*
+						menu.setMenuBlanco(true);
+						menu.inicializaFin();
+						SDL_Init(SDL_INIT_VIDEO);
+						menu.ventana();
+						menu.asignaFin();
+						menu.eventoFin();
+						menu.liberarFin();
+						*/
+						
 					}
 					else {
 						cout << "Victoria de las blancas por rey ahogado!" << endl;
+						juego_terminado = 3;
+						//return 3;
+						
 					}
 				}
 
@@ -267,9 +291,14 @@ void Juego::clicRaton(bool mouseP, bool mouseR, int x, int y) {
 					cout << "GG" << endl;
 					if (checkJaque(tablero, false)) {
 						cout << "Victoria de las negras por jaque mate!" << endl;
+						//glutHideWindow();
+						juego_terminado = 2;
+						return 2;
 					}
 					else {
 						cout << "Victoria de las negras por rey ahogado!" << endl;
+						juego_terminado = 4;
+						//return 4;
 					}
 				}
 
@@ -304,6 +333,7 @@ void Juego::clicRaton(bool mouseP, bool mouseR, int x, int y) {
 			}
 		}
 	}
+	
 
 	//Si se suelta el clic fuera del tablero llevando una pieza no se confirma el movimiento y devuelve la pieza a la casilla inicial previa al movimiento.
 	if (!within_board && mouse_released && (pieza_elegida != nullptr)) {
@@ -315,6 +345,7 @@ void Juego::clicRaton(bool mouseP, bool mouseR, int x, int y) {
 		pieza_elegida = nullptr;
 		tablero_fantasma = tablero;
 	}
+	return 0;
 }
 
 void Juego::movimientoRaton(int x, int y) {
@@ -421,6 +452,7 @@ bool Juego::movimientoValido(Pieza* pieza, Pos pos_inicio, Pos pos_fin, Tablero*
 		return true;
 	}
 	else return false;
+	return 0;
 }
 
 bool Juego::enroque(Tablero* tab, bool color, bool enroque_corto) {
@@ -573,7 +605,6 @@ void Juego::coronacion() {
 }
 
 void Juego::setValores(bool t) {
-	grande = t;
 	if (t) {
 		AJUSTE_X = 86;
 		AJUSTE_Y = 813;
@@ -680,4 +711,28 @@ bool Juego::finDeJuego(bool color) {
 		}
 	}
 	return true;
+}
+
+
+void Juego::volverAJugar() {
+		juego_terminado = 0;
+
+		pieza_elegida = nullptr;
+		within_board = false;
+
+		turno_blancas = true;
+		turno_negras = false;
+		mouse_pressed = false;
+		mouse_released = true;
+		color_elegido = false;
+
+		miraryactuar = true;
+
+		coronegra = 0;
+		coroblanca = 0;
+
+		pasonegro = 0;
+		pasoblanco = 0;
+
+		miraryactuar = 1;
 }

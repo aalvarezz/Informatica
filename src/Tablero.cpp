@@ -82,7 +82,7 @@ void Tablero::quitarPieza(Pos posicion) { //hacer null el puntero a la pieza des
 void Tablero::setPieza(Pieza* p, Pos posicion) { //otorga a una pieza una posicion
 	piezas[posicion.fila][posicion.columna] = p;
 }
-  
+
 Pieza* Tablero::getPieza(Pos posicion) {
 	return piezas[posicion.fila][posicion.columna];
 }

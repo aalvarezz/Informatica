@@ -10,11 +10,11 @@ bool Alfil::comprueba(Tablero* tablero, Pos inicio, Pos fin) {
 		aux3 = aux3 + inicio;
 		aux4 = aux4 + inicio;
 
-		if (aux1.fila == fin.fila && aux1.columna==fin.columna)
+		if (aux1.fila == fin.fila && aux1.columna == fin.columna)
 			sentido = 1;
-		if (aux2.fila == fin.fila && aux2.columna==fin.columna)
+		if (aux2.fila == fin.fila && aux2.columna == fin.columna)
 			sentido = 2;
-		if (aux3.fila == fin.fila && aux3.columna==fin.columna)
+		if (aux3.fila == fin.fila && aux3.columna == fin.columna)
 			sentido = 3;
 		if (aux4.fila == fin.fila && aux4.columna == fin.columna)
 			sentido = 4;
@@ -30,11 +30,11 @@ bool Alfil::comprueba(Tablero* tablero, Pos inicio, Pos fin) {
 			Pos posaux1(j, j);
 			posaux1 = posaux1 + inicio;
 
-			if (posaux1.fila == fin.fila && posaux1.columna==fin.columna) {
-				if(tablero->getPieza(fin) == nullptr) {
+			if (posaux1.fila == fin.fila && posaux1.columna == fin.columna) {
+				if (tablero->getPieza(fin) == nullptr) {
 					return true;
 				}
-				else if(tablero->getPieza(fin)->getColor() != color) {
+				else if (tablero->getPieza(fin)->getColor() != color) {
 					return true;
 				}
 				return false;
@@ -49,11 +49,11 @@ bool Alfil::comprueba(Tablero* tablero, Pos inicio, Pos fin) {
 			Pos posaux2(-j, j);
 			posaux2 = posaux2 + inicio;
 
-			if (posaux2.fila == fin.fila && posaux2.columna==fin.columna) {
-				if(tablero->getPieza(fin) == nullptr) {
+			if (posaux2.fila == fin.fila && posaux2.columna == fin.columna) {
+				if (tablero->getPieza(fin) == nullptr) {
 					return true;
 				}
-				else if(tablero->getPieza(fin)->getColor() != color) {
+				else if (tablero->getPieza(fin)->getColor() != color) {
 					return true;
 				}
 				return false;
