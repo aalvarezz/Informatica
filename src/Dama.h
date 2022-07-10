@@ -8,5 +8,4 @@ public:
 		else { sprite.setState(8); }
 	};
 	bool comprueba(Tablero*, Pos, Pos);
-	void draw(float, float);
 };

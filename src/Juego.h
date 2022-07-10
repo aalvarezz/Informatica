@@ -32,6 +32,4 @@ public:
 
 	bool checkJaque(Tablero, bool);
 	bool finDeJuego(bool); //condición de máxima prioridad para terminar el juego (pensar en rey ahogado). Importante su relación con Coordinador
-
-	void setValores(bool);
 };

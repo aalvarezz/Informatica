@@ -1,7 +1,7 @@
 #pragma once
 #include "Dama.h"
 
-bool Dama::comprueba(Tablero* tablero, Pos inicio, Pos fin) {
+bool Dama::comprueba(Tablero* tablero, Pos inicio, Pos fin) { //comprueba los movimientos validos de la pieza, sin tener en cuenta posibles excepciones
 	int sentido = 0;
 	for (int j = 1; j <= 7; j++) {
 		Pos aux1(j, 0), aux2(-j, 0), aux3(0, j), aux4(0, -j), aux5(j, j), aux6(-j, j), aux7(-j, -j), aux8(j, -j);
@@ -38,15 +38,15 @@ bool Dama::comprueba(Tablero* tablero, Pos inicio, Pos fin) {
 		break;
 
 	case 1:	// 1. Hacia arriba
-		for (int j = 1; j <= 7; j++) {
-			Pos posaux1(j, 0);
-			posaux1 = posaux1 + inicio;
+		for (int j = 1; j <= 7; j++) {//se itera para obtener el avance de la torre cuando se desplaza hacia arriba
+			Pos posaux1(j, 0);//crea el avance en base a la iteracion
+			posaux1 = posaux1 + inicio;//actualiza la posicion para que tenga en cuenta la posicion inicial y el desplazamiento del movimiento
 
-			if (posaux1 == fin) {
-				if (tablero->getPieza(fin) == nullptr) {
+			if (posaux1 == fin) {//se compueba si la posicion auxiliar coincide con la posicion final de la torre
+				if (tablero->getPieza(fin) == nullptr) {//comprueba si la posicion final esta vacia
 					return true;
 				}
-				else if (tablero->getPieza(fin)->getColor() != color) {
+				else if (tablero->getPieza(fin)->getColor() != color) {//comprueba si la posicion final la ocupa una pieza de otro color
 					return true;
 				}
 				return false;
@@ -57,15 +57,15 @@ bool Dama::comprueba(Tablero* tablero, Pos inicio, Pos fin) {
 		break;
 
 	case 2:	// 2. Hacia abajo
-		for (int j = 1; j <= 7; j++) {
-			Pos posaux2(-j, 0);
-			posaux2 = posaux2 + inicio;
+		for (int j = 1; j <= 7; j++) {//se itera para obtener el avance de la torre cuando se desplaza hacia abajo
+			Pos posaux2(-j, 0);//crea el avance en base a la iteracion
+			posaux2 = posaux2 + inicio;//actualiza la posicion para que tenga en cuenta la posicion inicial y el desplazamiento del movimiento
 
-			if (posaux2 == fin) {
-				if (tablero->getPieza(fin) == nullptr) {
+			if (posaux2 == fin) {//se compueba si la posicion auxiliar coincide con la posicion final de la torre
+				if (tablero->getPieza(fin) == nullptr) {//comprueba si la posicion final esta vacia
 					return true;
 				}
-				else if (tablero->getPieza(fin)->getColor() != color) {
+				else if (tablero->getPieza(fin)->getColor() != color) {//comprueba si la posicion final la ocupa una pieza de otro color
 					return true;
 				}
 				return false;
@@ -76,15 +76,15 @@ bool Dama::comprueba(Tablero* tablero, Pos inicio, Pos fin) {
 		break;
 
 	case 3:	// 3. Derecha
-		for (int j = 1; j <= 7; j++) {
-			Pos posaux3(0, j);
-			posaux3 = posaux3 + inicio;
+		for (int j = 1; j <= 7; j++) {//se itera para obtener el avance de la torre cuando se desplaza hacia la derecha
+			Pos posaux3(0, j);//crea el avance en base a la iteracion
+			posaux3 = posaux3 + inicio;//actualiza la posicion para que tenga en cuenta la posicion inicial y el desplazamiento del movimiento
 
-			if (posaux3 == fin) {
-				if (tablero->getPieza(fin) == nullptr) {
+			if (posaux3 == fin) {//se compueba si la posicion auxiliar coincide con la posicion final de la torre
+				if (tablero->getPieza(fin) == nullptr) {//comprueba si la posicion final esta vacia
 					return true;
 				}
-				else if (tablero->getPieza(fin)->getColor() != color) {
+				else if (tablero->getPieza(fin)->getColor() != color) {//comprueba si la posicion final la ocupa una pieza de otro color
 					return true;
 				}
 				return false;
@@ -95,15 +95,15 @@ bool Dama::comprueba(Tablero* tablero, Pos inicio, Pos fin) {
 		break;
 
 	case 4:	//4. Izquierda
-		for (int j = 1; j <= 7; j++) {
-			Pos posaux4(0, -j);
-			posaux4 = posaux4 + inicio;
+		for (int j = 1; j <= 7; j++) {//se itera para obtener el avance de la torre cuando se desplaza hacia la izquierda
+			Pos posaux4(0, -j);//crea el avance en base a la iteracion
+			posaux4 = posaux4 + inicio;//actualiza la posicion para que tenga en cuenta la posicion inicial y el desplazamiento del movimiento
 
-			if (posaux4 == fin) {
-				if (tablero->getPieza(fin) == nullptr) {
+			if (posaux4 == fin) {//se compueba si la posicion auxiliar coincide con la posicion final de la torre
+				if (tablero->getPieza(fin) == nullptr) {//comprueba si la posicion final esta vacia
 					return true;
 				}
-				else if (tablero->getPieza(fin)->getColor() != color) {
+				else if (tablero->getPieza(fin)->getColor() != color) {//comprueba si la posicion final la ocupa una pieza de otro color
 					return true;
 				}
 				return false;
@@ -114,104 +114,81 @@ bool Dama::comprueba(Tablero* tablero, Pos inicio, Pos fin) {
 		break;
 
 	case 5:	//5. Arriba derecha
-		for (int j = 1; j <= 7; j++) {
-			Pos posaux5(j, j);
-			posaux5 = posaux5 + inicio;
-
-			if (posaux5 == fin) {
-				if (tablero->getPieza(fin) == nullptr) {
+		for (int j = 1; j <= 7; j++) {//se itera para obtener el avance de la alfil cuando se desplaza hacia arriba a la derecha
+			Pos posaux1(j, j);//crea el avance en base a la iteracion
+			posaux1 = posaux1 + inicio;//actualiza la posicion para que tenga en cuenta la posicion inicial y el desplazamiento del movimiento
+			//se compueba si la posicion auxiliar coincide con la posicion final de la alfil
+			if (posaux1 == fin) {
+				if (tablero->getPieza(fin) == nullptr) {//comprueba si la posicion final esta vacia
 					return true;
 				}
-				else if (tablero->getPieza(fin)->getColor() != color) {
+				else if (tablero->getPieza(fin)->getColor() != color) {//comprueba si la posicion final coincide con la posicion de una pieza de otro color
 					return true;
 				}
 				return false;
 			}
-			else if (tablero->getPieza(posaux5) != nullptr)
+			else if (tablero->getPieza(posaux1) != nullptr)
 				return false;
 		}
 		break;
 
 	case 6:	//6. Abajo derecha
-		for (int j = 1; j <= 7; j++) {
-			Pos posaux6(-j, j);
-			posaux6 = posaux6 + inicio;
-
-			if (posaux6 == fin) {
-				if (tablero->getPieza(fin) == nullptr) {
+		for (int j = 1; j <= 7; j++) {//se itera para obtener el avance de la alfil cuando se desplaza hacia abajo a la derecha
+			Pos posaux2(-j, j);//crea el avance en base a la iteracion
+			posaux2 = posaux2 + inicio;//actualiza la posicion para que tenga en cuenta la posicion inicial y el desplazamiento del movimiento
+			//se compueba si la posicion auxiliar coincide con la posicion final de la alfil
+			if (posaux2 == fin) {
+				if (tablero->getPieza(fin) == nullptr) {//comprueba si la posicion final esta vacia
 					return true;
 				}
-				else if (tablero->getPieza(fin)->getColor() != color) {
+				else if (tablero->getPieza(fin)->getColor() != color) {//comprueba si la posicion final coincide con la posicion de una pieza de otro color
 					return true;
 				}
 				return false;
 			}
-			else if (tablero->getPieza(posaux6) != nullptr)
+			else if (tablero->getPieza(posaux2) != nullptr)
 				return false;
 		}
 		break;
 
 	case 7:	//7. Abajo izquierda
-		for (int j = 1; j <= 7; j++) {
-			Pos posaux7(-j, -j);
-			posaux7 = posaux7 + inicio;
-
-			if (posaux7 == fin) {
-				if (tablero->getPieza(fin) == nullptr) {
+		for (int j = 1; j <= 7; j++) {//se itera para obtener el avance de la alfil cuando se desplaza hacia abajo a la izquierda
+			Pos posaux3(-j, -j);//crea el avance en base a la iteracion
+			posaux3 = posaux3 + inicio;//actualiza la posicion para que tenga en cuenta la posicion inicial y el desplazamiento del movimiento
+			//se compueba si la posicion auxiliar coincide con la posicion final de la alfil
+			if (posaux3 == fin) {
+				if (tablero->getPieza(fin) == nullptr) {//comprueba si la posicion final esta vacia
 					return true;
 				}
-				else if (tablero->getPieza(fin)->getColor() != color) {
+				else if (tablero->getPieza(fin)->getColor() != color) {//comprueba si la posicion final coincide con la posicion de una pieza de otro color
 					return true;
 				}
 				return false;
 			}
-			else if (tablero->getPieza(posaux7) != nullptr)
+			else if (tablero->getPieza(posaux3) != nullptr)
 				return false;
 		}
 		break;
 
 	case 8: //8. Arriba izquierda
-		for (int j = 1; j <= 7; j++) {
-			Pos posaux8(j, -j);
-			posaux8 = posaux8 + inicio;
-
-			if (posaux8 == fin) {
-				if (tablero->getPieza(fin) == nullptr) {
+		for (int j = 1; j <= 7; j++) {//se itera para obtener el avance de la alfil cuando se desplaza hacia arriba a la izquierda
+			Pos posaux4(j, -j);//crea el avance en base a la iteracion
+			posaux4 = posaux4 + inicio;//actualiza la posicion para que tenga en cuenta la posicion inicial y el desplazamiento del movimiento
+			//se compueba si la posicion auxiliar coincide con la posicion final de la alfil
+			if (posaux4 == fin) {
+				if (tablero->getPieza(fin) == nullptr) {//comprueba si la posicion final esta vacia
 					return true;
 				}
-				else if (tablero->getPieza(fin)->getColor() != color) {
+				else if (tablero->getPieza(fin)->getColor() != color) {//comprueba si la posicion final coincide con la posicion de una pieza de otro color
 					return true;
 				}
 				return false;
 			}
-			else if (tablero->getPieza(posaux8) != nullptr)
+			else if (tablero->getPieza(posaux4) != nullptr)
 				return false;
 		}
 		break;
 
 	}
 	return false;
-}
-
-void Dama::draw(float x, float y) {
-	//en funcion del color de la pieza la dibuja en su posicion correspondiente
-
-	switch (color) {
-	case 0:
-		DamaB.setCenter(2.5f / 2, 2.5f / 2);
-		DamaB.setSize(2.5f, 2.5f);
-		glTranslatef(x, y, 0.1f);
-		glColor3f(1.0f, 0.0f, 0.0f);
-		DamaB.draw();
-		glTranslatef(-x, -y, -0.1f);
-		break;
-	case 1:
-		DamaN.setCenter(2.5f / 2, 2.5f / 2);
-		DamaN.setSize(2.5f, 2.5f);
-		glTranslatef(x, y, 0.1f);
-		glColor3f(1.0f, 0.0f, 0.0f);
-		DamaN.draw();
-		glTranslatef(-x, -y, -0.1f);
-		break;
-	}
 }
