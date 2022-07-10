@@ -11,6 +11,9 @@
 using namespace std; //cuidado
 
 Juego::Juego() {
+
+	juego_terminado = 0;
+
 	pieza_elegida = nullptr;
 	within_board = false;
 
@@ -23,6 +26,7 @@ Juego::Juego() {
 	alpaso_blancas = false;
 	alpaso_negras = false;
 }
+
 
 void Juego::inicializar(int LT, int LC, int AX, int AY) {
 	tablero = Tablero(LT, LC, AX, AY);
@@ -95,6 +99,8 @@ void Juego::inicializar(int LT, int LC, int AX, int AY) {
 		}
 	}
 	tablero_fantasma = tablero;
+	
+	
 }
 
 void Juego::dibujar() { //PROVISIONAL
@@ -150,7 +156,7 @@ void Juego::dibujarPosiblesCasillas() {
 	}
 }
 
-void Juego::clicRaton(bool mouseP, bool mouseR, int x, int y) {
+int Juego::clicRaton(bool mouseP, bool mouseR, int x, int y) {
 	//Actualización de los atributos de Juego referidos al estado de los clics
 	mouse_pressed = mouseP;
 	mouse_released = mouseR;
@@ -217,9 +223,13 @@ void Juego::clicRaton(bool mouseP, bool mouseR, int x, int y) {
 					cout << "GG" << endl;
 					if (checkJaque(tablero, true)) {
 						cout << "Victoria de las blancas por jaque mate!" << endl;
+						juego_terminado = 1;
+						return 1;					
 					}
 					else {
 						cout << "Tablas por rey ahogado! (provocado por las blancas)" << endl;
+						juego_terminado = 3;
+						return 3;
 					}
 				}
 
@@ -268,9 +278,14 @@ void Juego::clicRaton(bool mouseP, bool mouseR, int x, int y) {
 					cout << "GG" << endl;
 					if (checkJaque(tablero, false)) {
 						cout << "Victoria de las negras por jaque mate!" << endl;
+						//glutHideWindow();
+						juego_terminado = 2;
+						return 2;
 					}
 					else {
 						cout << "Tablas por rey ahogado! (provocado por las negras)" << endl;
+						juego_terminado = 4;
+						return 4;
 					}
 				}//Se reinician los indicadores de que la pieza se ha movido al movido al menos una vez y de que se puede comer al paso al completarse un movimiento válido
 
@@ -303,6 +318,7 @@ void Juego::clicRaton(bool mouseP, bool mouseR, int x, int y) {
 			}
 		}
 	}
+	
 
 	//Si se suelta el clic fuera del tablero llevando una pieza no se confirma el movimiento y devuelve la pieza a la casilla inicial previa al movimiento
 	if (!within_board && mouse_released && (pieza_elegida != nullptr)) {
@@ -314,6 +330,7 @@ void Juego::clicRaton(bool mouseP, bool mouseR, int x, int y) {
 		pieza_elegida = nullptr;
 		tablero_fantasma = tablero;
 	}
+	return 0;
 }
 
 void Juego::movimientoRaton(int x, int y) {
@@ -425,6 +442,7 @@ bool Juego::movimientoValido(Pieza* pieza, Pos pos_inicio, Pos pos_fin, Tablero*
 		return true;
 	}
 	else return false;
+	return 0;
 }
 
 bool Juego::enroque(Tablero* tab, bool color, bool enroque_corto) {
@@ -777,4 +795,28 @@ bool Juego::finDeJuego(bool color) {
 		}
 	}
 	return true;
+}
+
+
+void Juego::volverAJugar() {
+		juego_terminado = 0;
+
+		pieza_elegida = nullptr;
+		within_board = false;
+
+		turno_blancas = true;
+		turno_negras = false;
+		mouse_pressed = false;
+		mouse_released = true;
+		color_elegido = false;
+
+		miraryactuar = true;
+
+		coronegra = 0;
+		coroblanca = 0;
+
+		pasonegro = 0;
+		pasoblanco = 0;
+
+		miraryactuar = 1;
 }

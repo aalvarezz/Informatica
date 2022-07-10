@@ -1,6 +1,7 @@
 #pragma once
 #include "Peon.h"
 
+
 bool Peon::comprueba(Tablero* tablero, Pos inicio, Pos fin) { //comprueba los movimientos validos de la pieza, sin tener en cuenta posibles excepciones
 	//se registran las posiciones direcciones que pueden seguir los peones blancos y negros
 	Pos posaux1(1, 0), posaux2(1, -1), posaux3(1, 1), posaux4(-1, 0), posaux5(-1, -1), posaux6(-1, 1);

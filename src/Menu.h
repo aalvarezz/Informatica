@@ -22,7 +22,7 @@ private:
 
 
 	//menu jugar
-	bool menu_modo_activo;
+	bool menu_modo_activo,partida_normal;
 	SDL_Surface* modo_inicial;
 	SDL_Surface* modo_clasico;
 	SDL_Surface* modo_especial;
@@ -31,7 +31,6 @@ private:
 
 	//menu ajustes
 	bool menu_ajustes_activo;
-	bool clasico;
 	SDL_Surface* ajustes_inicial;
 	SDL_Surface* ajustes_tamano;
 	SDL_Surface* ajustes_sonido;
@@ -54,7 +53,8 @@ private:
 	SDL_Surface* tamano_volver;
 
 	//menu fin de la partida
-	bool menu_fin_blancas_activo, menu_fin_negras_activo, menu_fin_empate_activo;
+	bool menu_fin_blancas_activo, menu_fin_negras_activo;
+	bool menu_fin_empate_blancas_activo, menu_fin_empate_negras_activo;
 	SDL_Surface* blancas_inicial;
 	SDL_Surface* blancas_jugar;
 	SDL_Surface* blancas_menu;
@@ -63,16 +63,20 @@ private:
 	SDL_Surface* negras_jugar;
 	SDL_Surface* negras_menu;
 	SDL_Surface* negras_salir;
-	SDL_Surface* empate_inicial;
-	SDL_Surface* empate_jugar;
-	SDL_Surface* empate_menu;
-	SDL_Surface* empate_salir;
+	SDL_Surface* empate_blancas_inicial;
+	SDL_Surface* empate_blancas_jugar;
+	SDL_Surface* empate_blancas_menu;
+	SDL_Surface* empate_blancas_salir;
+	SDL_Surface* empate_negras_inicial;
+	SDL_Surface* empate_negras_jugar;
+	SDL_Surface* empate_negras_menu;
+	SDL_Surface* empate_negras_salir;
 
 public:
 	Menu();
 
 	void inicializa();
-	void inicializaFin();
+	void inicializaFin(bool,bool,bool,bool);
 	void asigna();
 	void asignaFin();
 	void liberar();
@@ -82,8 +86,8 @@ public:
 
 	SDL_Surface* optimatedsurface(std::string filepath, SDL_Surface* windowsurface);
 
-	void evento();
-	void eventoFin();
+	void evento(); 
+	int eventoFin();
 
 	bool getTableroRunning();
 	bool getTamano();
@@ -93,9 +97,24 @@ public:
 	bool getMenuRunning() { return menu_running; }
 	void setMenuBlanco(bool a) { menu_fin_blancas_activo = true; }
 	void setMenuNegro(bool a) { menu_fin_negras_activo = true; }
-	void setMenuEmpate(bool a) { menu_fin_empate_activo = true; }
+	void setMenuEmpateBlancas(bool a) { menu_fin_empate_blancas_activo = true; }
+	void setMenuEmpateNegras(bool a) { menu_fin_empate_negras_activo = true; }
 	bool getMenuBlanco() { return menu_fin_blancas_activo; }
 	bool getMenuNegro() { return menu_fin_negras_activo; }
-	bool getMenuEmpate() { return menu_fin_empate_activo; }
+	bool getMenuEmpateBlancas() { return menu_fin_empate_blancas_activo; }
+	bool getMenuEmpateNegras() { return menu_fin_empate_negras_activo; }
+	bool getPartidaNormal() { return partida_normal; }
 	//void setTableroRunning();
+	/*
+	void menuFin(int n) {
+		
+		setMenuBlanco(true);
+		inicializaFin(bool,bool,bool,bool);
+		SDL_Init(SDL_INIT_VIDEO);
+		ventana();
+		asignaFin();
+		eventoFin();
+		liberarFin();
+	}
+	*/
 };

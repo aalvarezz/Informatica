@@ -1,3 +1,4 @@
+
 #pragma once
 #include "Pos.h"
 
@@ -6,6 +7,7 @@ class Pieza; //forward declaration para evitar recursividad
 class Tablero {
 private:
 	float lado;
+
 	int LIM_TABLERO, LIM_CASILLA, AJUSTE_X, AJUSTE_Y;
 	Pieza* piezas[8][8];
 public:

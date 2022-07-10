@@ -25,7 +25,6 @@ void Pieza::dibujarArrastrar(Pos posicion, Tablero* tablero) {
 void Pieza::draw(float x, float y, float lado) {
 	sprite.setCenter(lado / 2, lado / 2);
 	sprite.setSize(lado, lado);
-
 	glTranslatef(x, y, 0.1f);
 	glColor3f(1.0f, 0.0f, 0.0f);
 	sprite.draw();

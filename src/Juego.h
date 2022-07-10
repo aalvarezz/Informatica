@@ -1,5 +1,7 @@
 ﻿#pragma once
 #include "Pieza.h"
+#include "Menu.h"
+#include "freeglut.h"
 
 class Juego {
 protected:
@@ -10,14 +12,17 @@ protected:
 public:
 	Juego();
 	void inicializar(int, int, int, int);
+  void volverAJugar(); //reinicia los valores iniciales de juego
+
 
 	void dibujar();
-	void dibujarPiezas(); //recorre todas las piezas de tablero y llama a su función de dibujo.
+	virtual void dibujarPiezas(); //recorre todas las piezas de tablero y llama a su función de dibujo.
 	void dibujarArrastrar(); //movimiento + arrastrar. Necesario pensar condicion nueva si no se incluye setmouse.
 	void dibujarPosiblesCasillas();
-
+  
 	void clicRaton(bool, bool, int, int); //raton (nombre y funcionalidad provisionales) + (probablemente) setMouse. Debe consultar de alguna forma si el movimiento es válido
 	void movimientoRaton(int, int);
+  
 	bool movimientoValido(Pieza*, Pos, Pos, Tablero*); //comprueba que el movimiento en proceso es correcto, tiene en cuenta el veredicto de Pieza::comprueba() además de considerar todas las excepciones y estado de jaque. Quizás necesite argumentos en un futuro.
 	bool enroque(Tablero*, bool, bool);
 	void coronacion(Tablero*, Pos);
