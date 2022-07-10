@@ -423,7 +423,6 @@ void Menu::evento()
 				}
 
 				//menu ajustes
-
 				else if (menu_ajustes_activo == true)
 				{
 					if (e.button.y > 180 && e.button.y < 240)
@@ -438,7 +437,6 @@ void Menu::evento()
 
 
 				//menu tamaño
-
 				else if (menu_tamano_activo == true)
 				{
 					if (e.button.y > 180 && e.button.y < 240)

@@ -34,7 +34,7 @@ bool Torre::comprueba(Tablero* tablero, Pos inicio, Pos fin) {
 				if(tablero->getPieza(fin) == nullptr) {
 					return true;
 				}
-				else if (tablero->getPieza(fin)->getColor() != color) {
+				else if(tablero->getPieza(fin)->getColor() != color) {
 					return true;
 				}
 				return false;
@@ -53,7 +53,7 @@ bool Torre::comprueba(Tablero* tablero, Pos inicio, Pos fin) {
 				if(tablero->getPieza(fin) == nullptr) {
 					return true;
 				}
-				else if (tablero->getPieza(fin)->getColor() != color) {
+				else if(tablero->getPieza(fin)->getColor() != color) {
 					return true;
 				}
 				return false;
@@ -72,7 +72,7 @@ bool Torre::comprueba(Tablero* tablero, Pos inicio, Pos fin) {
 				if(tablero->getPieza(fin) == nullptr) {
 					return true;
 				}
-				else if (tablero->getPieza(fin)->getColor() != color) {
+				else if(tablero->getPieza(fin)->getColor() != color) {
 					return true;
 				}
 				return false;
@@ -91,7 +91,7 @@ bool Torre::comprueba(Tablero* tablero, Pos inicio, Pos fin) {
 				if(tablero->getPieza(fin) == nullptr) {
 					return true;
 				}
-				else if (tablero->getPieza(fin)->getColor() != color) {
+				else if(tablero->getPieza(fin)->getColor() != color) {
 					return true;
 				}
 				return false;
@@ -103,27 +103,4 @@ bool Torre::comprueba(Tablero* tablero, Pos inicio, Pos fin) {
 
 	}
 	return false;
-}
-
-void Torre::draw(float x, float y) {
-	//en funcion del color de la pieza la dibuja en su posicion correspondiente
-
-	switch (color) {
-	case 0:
-		TorreB.setCenter(2.5f / 2, 2.5f / 2);
-		TorreB.setSize(2.5f, 2.5f);
-		glTranslatef(x, y, 0.1f);
-		glColor3f(1.0f, 0.0f, 0.0f);
-		TorreB.draw();
-		glTranslatef(-x, -y, -0.1f);
-		break;
-	case 1:
-		TorreN.setCenter(2.5f / 2, 2.5f / 2);
-		TorreN.setSize(2.5f, 2.5f);
-		glTranslatef(x, y, 0.1f);
-		glColor3f(1.0f, 0.0f, 0.0f);
-		TorreN.draw();
-		glTranslatef(-x, -y, -0.1f);
-		break;
-	}
 }

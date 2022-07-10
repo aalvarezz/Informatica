@@ -1,15 +1,14 @@
 #include "Coordinador.h"
 #include "freeglut.h"
 #include "math.h"
-#include "JuegoAciegas.h"
 #include <iostream>
-using namespace std;
+
+using namespace std; //revisar
 
 /////////////////////////////////////////////////////////
 //Prototipos de los callbacks
 
-//Juego juego;
-JuegoAciegas juego; //AHora est√° puesto el modo extra, hay que hacer que se pueda seleccionar uno u otro
+Juego juego;
 
 void OnDraw(void); //esta funcion sera llamada para dibujar
 void OnMouseClick(int, int, int, int);
@@ -28,7 +27,7 @@ void Coordinador::Inicializa(int argc, char* argv[]) {
 		menu.ventana();
 		menu.asigna();
 		if (menu.getSonido()) {
-			ETSIDI::playMusica("Musica/WiiTheme.mp3", true);
+			//ETSIDI::playMusica("Musica/WiiTheme.mp3", true);
 		}
 		menu.evento();
 		SDL_StopTextInput();
@@ -38,27 +37,35 @@ void Coordinador::Inicializa(int argc, char* argv[]) {
 	}
 
 	else if (estado == PARTIDA) {
-		//glutInit(&argc, argv);
 		glutInitWindowSize(menu.getAnchura(), menu.getAltura());
 		glutInitDisplayMode(GLUT_DOUBLE | GLUT_RGB | GLUT_DEPTH);
 		glutCreateWindow("Ajedrez");
 
+		//habilitar luces y definir perspectiva
 		glEnable(GL_LIGHT0);
 		glEnable(GL_LIGHTING);
 		glEnable(GL_DEPTH_TEST);
 		glEnable(GL_COLOR_MATERIAL);
 		glMatrixMode(GL_PROJECTION);
-		gluPerspective(40.0, menu.getAnchura() / menu.getAltura(), 0.1, 150); //cuidado con tam ventana
+		gluPerspective(40.0, menu.getAnchura() / menu.getAltura(), 0.1, 150);
 
 		cout << "hola5" << endl;
 
-		//habilitar luces y definir perspectiva
-
-
-		asignarTamano(menu.getTamano());
 		// Inicializacion
-		juego.inicializar();
-		//aCiegas.inicializar();
+		int LT, LC, AX, AY;
+		if (menu.getTamano()) {
+			LT = 728;
+			LC = 91;
+			AX = 86;
+			AY = 813;
+		}
+		else {
+			LT = 480;
+			LC = 60;
+			AX = 58;
+			AY = 540;
+		}
+		juego.inicializar(LT, LC, AX, AY);
 		cambioEstado();
 
 		//Registrar los callbacks
@@ -67,7 +74,6 @@ void Coordinador::Inicializa(int argc, char* argv[]) {
 		glutMotionFunc(OnMotion);
 
 		glutMainLoop();
-
 	}
 
 	else if (estado == FIN_DE_PARTIDA) {
@@ -80,7 +86,6 @@ void Coordinador::Inicializa(int argc, char* argv[]) {
 
 		cambioEstado();
 	}
-
 }
 
 
@@ -90,46 +95,30 @@ void Coordinador::cambioEstado() {
 
 	if (estado == MENU) {
 		if (menu.getTableroRunning()) {
-			//juego.setTamano(menu.getMenuTamano());
-			estado = FIN_DE_PARTIDA;
-			asignarTamano(menu.getTamano());
-			ETSIDI::stopMusica();
+			estado = PARTIDA;
+			//asignarTamano(menu.getTamano());
 			cout << "cambio estado" << endl;
 		}
 		if (!menu.getMenuRunning() && !menu.getTableroRunning()) {
 			running = false;
 		}
-
 	}
 
 	if (estado == FIN_DE_PARTIDA) {
 		if (menu.getTableroRunning()) {
 			estado = PARTIDA;
-			asignarTamano(menu.getTamano());
+			//asignarTamano(menu.getTamano());
 			cout << "cambio estado" << endl;
 		}
 		else if (menu.getMenuRunning()) {
 			estado = MENU;
 			cout << "cambio estado" << endl;
 		}
-		//else if(menu.getMenuRunning() && menu.getTableroRunning() && menu.getMenuBlancas() &&)
 	}
 }
 
 Estado Coordinador::getEstado() {
 	return estado;
-}
-
-/*
-Juego Coordinador::getJuego() {
-	return juego;
-}
-*/
-
-void Coordinador::asignarTamano(bool t) {
-
-	juego.setValores(t);
-
 }
 
 void OnDraw(void) {
@@ -141,15 +130,13 @@ void OnDraw(void) {
 	glLoadIdentity();
 
 	gluLookAt(8.75, 8.75, 34,  // posicion del ojo
-		8.75, 8.75, 0,      // hacia quÔøΩ punto mira  (8.75, 8.75, 0) 
+		8.75, 8.75, 0,      // hacia quÈ punto mira  (8.75, 8.75, 0) 
 		0.0, 1.0, 0.0);      // definimos hacia arriba (eje Z)                          SEGURO??  
 
-	//CÔøΩdigo de dibujo
+	//CÛdigo de dibujo
 	//coordinador.Dibuja();
 
 	juego.dibujar();
-	juego.dibujarArrastrar();
-
 
 	glutPostRedisplay();
 
@@ -159,18 +146,13 @@ void OnDraw(void) {
 
 
 void OnMouseClick(int button, int state, int x, int y) {
-
 	if (button == GLUT_LEFT_BUTTON) { //REVISAR CLICK DERECHO (MUY PELIGROSO) || button == GLUT_RIGHT_BUTTON
 		bool pressed = (state == GLUT_DOWN);
 		bool released = (state == GLUT_UP);
 		juego.clicRaton(pressed, released, x, y); //damero.colorear = damero.Raton(button, state, x, y);
 	}
-
 }
 
 void OnMotion(int x, int y) {
-	//Llamada a funciÔøΩn clicar/dejar de clicar de Juego/Coordinador
 	juego.movimientoRaton(x, y);
-
-	//glutPostRedisplay();
 }

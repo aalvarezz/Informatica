@@ -4,7 +4,6 @@ class Pos {
 public:
 	Pos() { fila = columna = 0; }
 	Pos(int f, int c) : fila(f), columna(c) {};
-	~Pos();
 
 	int fila, columna;
 

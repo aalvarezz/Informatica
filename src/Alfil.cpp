@@ -34,7 +34,7 @@ bool Alfil::comprueba(Tablero* tablero, Pos inicio, Pos fin) {
 				if(tablero->getPieza(fin) == nullptr) {
 					return true;
 				}
-				else if (tablero->getPieza(fin)->getColor() != color) {
+				else if(tablero->getPieza(fin)->getColor() != color) {
 					return true;
 				}
 				return false;
@@ -53,7 +53,7 @@ bool Alfil::comprueba(Tablero* tablero, Pos inicio, Pos fin) {
 				if(tablero->getPieza(fin) == nullptr) {
 					return true;
 				}
-				else if (tablero->getPieza(fin)->getColor() != color) {
+				else if(tablero->getPieza(fin)->getColor() != color) {
 					return true;
 				}
 				return false;

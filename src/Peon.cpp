@@ -2,7 +2,7 @@
 #include "Peon.h"
 
 bool Peon::comprueba(Tablero* tablero, Pos inicio, Pos fin) {
-	Pos posaux1(1, 0), posaux2(1, -1), posaux3(1, 1), posaux4(-1, 0), posaux5(-1, -1), posaux6(-1, 1);
+	Pos posaux1(1, 0), posaux2(1, -1),  posaux3(1, 1), posaux4(-1, 0), posaux5(-1, -1), posaux6(-1, 1);
 
 	switch (color) {
 	case 0:		//BLANCO
@@ -55,28 +55,4 @@ bool Peon::comprueba(Tablero* tablero, Pos inicio, Pos fin) {
 
 	}
 	return false;
-}
-
-void Peon::draw(float x, float y) {
-	//en funcion del color de la pieza la dibuja en su posicion correspondiente
-
-	switch (color) {
-	case 0:
-		PeonB.setCenter(2.5f / 2, 2.5f / 2);
-		PeonB.setSize(2.5f, 2.5f);
-
-		glTranslatef(x, y, 0.1f);
-		glColor3f(1.0f, 0.0f, 0.0f);
-		PeonB.draw();
-		glTranslatef(-x, -y, -0.1f);
-		break;
-	case 1:
-		PeonN.setCenter(2.5f / 2, 2.5f / 2);
-		PeonN.setSize(2.5f, 2.5f);
-		glTranslatef(x, y, 0.1f);
-		glColor3f(1.0f, 0.0f, 0.0f);
-		PeonN.draw();
-		glTranslatef(-x, -y, -0.1f);
-		break;
-	}
 }

@@ -192,26 +192,3 @@ bool Dama::comprueba(Tablero* tablero, Pos inicio, Pos fin) {
 	}
 	return false;
 }
-
-void Dama::draw(float x, float y) {
-	//en funcion del color de la pieza la dibuja en su posicion correspondiente
-
-	switch (color) {
-	case 0:
-		DamaB.setCenter(2.5f / 2, 2.5f / 2);
-		DamaB.setSize(2.5f, 2.5f);
-		glTranslatef(x, y, 0.1f);
-		glColor3f(1.0f, 0.0f, 0.0f);
-		DamaB.draw();
-		glTranslatef(-x, -y, -0.1f);
-		break;
-	case 1:
-		DamaN.setCenter(2.5f / 2, 2.5f / 2);
-		DamaN.setSize(2.5f, 2.5f);
-		glTranslatef(x, y, 0.1f);
-		glColor3f(1.0f, 0.0f, 0.0f);
-		DamaN.draw();
-		glTranslatef(-x, -y, -0.1f);
-		break;
-	}
-}
