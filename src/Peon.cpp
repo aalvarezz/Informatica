@@ -2,7 +2,7 @@
 #include "Peon.h"
 
 bool Peon::comprueba(Tablero* tablero, Pos inicio, Pos fin) {
-	Pos posaux1(1, 0), posaux2(1, -1),  posaux3(1, 1), posaux4(-1, 0), posaux5(-1, -1), posaux6(-1, 1);
+	Pos posaux1(1, 0), posaux2(1, -1), posaux3(1, 1), posaux4(-1, 0), posaux5(-1, -1), posaux6(-1, 1);
 
 	switch (color) {
 	case 0:		//BLANCO

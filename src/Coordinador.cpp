@@ -1,14 +1,15 @@
 #include "Coordinador.h"
 #include "freeglut.h"
 #include "math.h"
+#include "JuegoAciegas.h"
 #include <iostream>
-
-using namespace std; //revisar
+using namespace std;
 
 /////////////////////////////////////////////////////////
 //Prototipos de los callbacks
 
-Juego juego;
+//Juego juego;
+JuegoAciegas juego; //AHora est√° puesto el modo extra, hay que hacer que se pueda seleccionar uno u otro
 
 void OnDraw(void); //esta funcion sera llamada para dibujar
 void OnMouseClick(int, int, int, int);
@@ -27,7 +28,7 @@ void Coordinador::Inicializa(int argc, char* argv[]) {
 		menu.ventana();
 		menu.asigna();
 		if (menu.getSonido()) {
-			//ETSIDI::playMusica("Musica/WiiTheme.mp3", true);
+			ETSIDI::playMusica("Musica/WiiTheme.mp3", true);
 		}
 		menu.evento();
 		SDL_StopTextInput();
@@ -57,6 +58,7 @@ void Coordinador::Inicializa(int argc, char* argv[]) {
 		asignarTamano(menu.getTamano());
 		// Inicializacion
 		juego.inicializar();
+		//aCiegas.inicializar();
 		cambioEstado();
 
 		//Registrar los callbacks
@@ -91,6 +93,7 @@ void Coordinador::cambioEstado() {
 			//juego.setTamano(menu.getMenuTamano());
 			estado = FIN_DE_PARTIDA;
 			asignarTamano(menu.getTamano());
+			ETSIDI::stopMusica();
 			cout << "cambio estado" << endl;
 		}
 		if (!menu.getMenuRunning() && !menu.getTableroRunning()) {
@@ -138,10 +141,10 @@ void OnDraw(void) {
 	glLoadIdentity();
 
 	gluLookAt(8.75, 8.75, 34,  // posicion del ojo
-		8.75, 8.75, 0,      // hacia quÈ punto mira  (8.75, 8.75, 0) 
+		8.75, 8.75, 0,      // hacia quÔøΩ punto mira  (8.75, 8.75, 0) 
 		0.0, 1.0, 0.0);      // definimos hacia arriba (eje Z)                          SEGURO??  
 
-	//CÛdigo de dibujo
+	//CÔøΩdigo de dibujo
 	//coordinador.Dibuja();
 
 	juego.dibujar();
@@ -166,7 +169,7 @@ void OnMouseClick(int button, int state, int x, int y) {
 }
 
 void OnMotion(int x, int y) {
-	//Llamada a funciÛn clicar/dejar de clicar de Juego/Coordinador
+	//Llamada a funciÔøΩn clicar/dejar de clicar de Juego/Coordinador
 	juego.movimientoRaton(x, y);
 
 	//glutPostRedisplay();

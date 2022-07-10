@@ -15,8 +15,6 @@ private:
 	bool running;
 	Menu menu;
 	Estado estado;
-
-
 public:
 	Coordinador();
 	void Inicializa(int argc, char* argv[]);

@@ -1,11 +1,9 @@
-﻿#pragma once
+#pragma once
 #include "Tablero.h"
-
-//#include "Pos.h"
 #include "Pieza.h"
 
 class Juego {
-private:
+protected:
 	Tablero tablero, tablero_fantasma;
 
 	Pos pos_inicial, pos_final, mouse_pos, salida_doble;
@@ -18,11 +16,16 @@ public:
 
 	void dibujar(); //MUY PROVISIONAL
 	void dibujarArrastrar(); //movimiento + arrastrar. Necesario pensar condicion nueva si no se incluye setmouse.
+
 	void dibujarPosiblesCasillas();
 
-	void dibujarPiezas(); //recorre todas las piezas de tablero y llama a su función de dibujo.
+	virtual void dibujarPiezas(); //recorre todas las piezas de tablero y llama a su función de dibujo.
+
 	void clicRaton(bool, bool, int, int); //raton (nombre y funcionalidad provisionales) + (probablemente) setMouse. Debe consultar de alguna forma si el movimiento es válido
 	void movimientoRaton(int, int);
+
+	void setValores(bool);
+
 	bool movimientoValido(Pieza*, Pos, Pos, Tablero*); //comprueba que el movimiento en proceso es correcto, tiene en cuenta el veredicto de Pieza::comprueba() además de considerar todas las excepciones y estado de jaque. Quizás necesite argumentos en un futuro.
 	bool enroque(Tablero*, bool, bool);
 	void coronacion(Tablero*, Pos);

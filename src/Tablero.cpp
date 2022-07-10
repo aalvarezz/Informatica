@@ -1,20 +1,11 @@
-﻿#include "Tablero.h"
+#include "Tablero.h"
 #include "freeglut.h"
 #include "ETSIDI.h"
-
-Tablero::Tablero() { //Relleno el damero. Muy provisional sin piezas
-	lado = 2.5f;
-
-	//RELLENAR CONSTRUCTOR. FALTAN INICIALIZACIONES	
-
-}
 
 void Tablero::dibujoDamero() {
 	//CASILLAS DEL TABLERO
 	for (int i = 0; i < 8; i++) {
 		for (int j = 0; j < 8; j++) {
-
-
 			if (((j % 2) == 0) && ((i % 2) == 0) || ((j % 2) == 1) && ((i % 2) == 1)) {
 				rojo = 87;
 				verde = 70;
@@ -35,7 +26,6 @@ void Tablero::dibujoDamero() {
 			glEnd();
 		}
 	}
-
 	//BORDES DEL TABLERO
 	glEnable(GL_TEXTURE_2D);
 	glBindTexture(GL_TEXTURE_2D, ETSIDI::getTexture("imagenes/maderaV.png").id);
@@ -84,7 +74,6 @@ void Tablero::quitarPieza(Pos posicion) { //hacer null el puntero a la pieza des
 void Tablero::setPieza(Pieza* p, Pos posicion) { //otorga a una pieza una posicion
 	piezas[posicion.fila][posicion.columna] = p;
 }
-  
 Pieza* Tablero::getPieza(Pos posicion) {
 	return piezas[posicion.fila][posicion.columna];
 }

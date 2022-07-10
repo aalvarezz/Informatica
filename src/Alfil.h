@@ -1,15 +1,12 @@
 #pragma once
 #include "Pieza.h"
-#include "ETSIDI.h"
-
-using ETSIDI::Sprite;
 
 class Alfil : public Pieza {
-private:
-	Sprite AlfilB{ "imagenes/AlfilB.png" };
-	Sprite AlfilN{ "imagenes/AlfilN.png" };
 public:
-	Alfil(bool _color) : Pieza(_color, 4) {};
+	Alfil(bool _color) : Pieza(_color, 4) {
+		if (color) { sprite.setState(3); }
+		else { sprite.setState(9); }
+	};
 	bool comprueba(Tablero*, Pos, Pos);
 	void draw(float, float);
 };

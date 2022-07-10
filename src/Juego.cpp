@@ -5,15 +5,12 @@
 #include "Alfil.h"
 #include "Caballo.h"
 #include "Torre.h"
-
 #include <iostream>
+#include "ETSIDI.h"
+
 using namespace std; //cuidado
 
 Juego::Juego() {
-	AJUSTE_X = 86;
-	AJUSTE_Y = 813;
-	LIM_TABLERO = 728;
-	LIM_CASILLA = 91;
 
 	pieza_elegida = nullptr;
 	within_board = false;
@@ -160,7 +157,7 @@ void Juego::clicRaton(bool mouseP, bool mouseR, int x, int y) {
 	//ENCONTRAR EN QUÉ CASILLA ESTÁ EL CURSOR AL CLICAR/ SOLTAR EL CLIC
 	int fila_clic, columna_clic;
 	int x0 = x - AJUSTE_X;
-	int y0 = y - AJUSTE_Y; 
+	int y0 = y - AJUSTE_Y;
 	int f = 0;
 	int c = 0;
 
@@ -213,6 +210,7 @@ void Juego::clicRaton(bool mouseP, bool mouseR, int x, int y) {
 
 				//Se actualiza el tablero
 				tablero.setPieza(pieza_elegida, pos_final);
+				ETSIDI::play("Musica/SoltarPieza.mp3");
 
 				if (finDeJuego(true)) {
 					cout << "GG" << endl;
@@ -238,7 +236,7 @@ void Juego::clicRaton(bool mouseP, bool mouseR, int x, int y) {
 				turno_negras = true;
 			}
 			//Si estás moviendo una pieza y el movimiento no es correcto o este provoca que el color pase a estar en jaque, se devuelve a su casilla original
-			if (mouse_released && (pieza_elegida != nullptr) && (!movimientoValido(pieza_elegida, pos_inicial, pos_final, &tablero) 
+			if (mouse_released && (pieza_elegida != nullptr) && (!movimientoValido(pieza_elegida, pos_inicial, pos_final, &tablero)
 				|| checkJaque(tablero_fantasma, pieza_elegida->getColor()))) {
 
 				//Se devuelve a la casilla original
@@ -263,6 +261,7 @@ void Juego::clicRaton(bool mouseP, bool mouseR, int x, int y) {
 
 				//Se actualiza el tablero
 				tablero.setPieza(pieza_elegida, pos_final);
+				ETSIDI::play("Musica/SoltarPieza.mp3");
 
 				if (finDeJuego(false)) {
 					cout << "GG" << endl;
@@ -664,6 +663,23 @@ void Juego::coronacion(Tablero* tab, Pos pos_coronacion) {
 			cout << endl << "Pieza no valida. ";
 		}
 	} while (elegido > 6 || elegido < 3);
+}
+
+void Juego::setValores(bool t) {
+	if (t) {
+		AJUSTE_X = 86;
+		AJUSTE_Y = 813;
+		LIM_TABLERO = 728;
+		LIM_CASILLA = 91;
+		tablero.setValores(t);
+	}
+	else {
+		AJUSTE_X = 58;
+		AJUSTE_Y = 540;
+		LIM_TABLERO = 480;
+		LIM_CASILLA = 60;
+		tablero.setValores(t);
+	}
 }
 
 bool Juego::checkJaque(Tablero tab, bool color) {

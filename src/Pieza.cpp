@@ -1,7 +1,7 @@
 #include "Pieza.h"
- 
+
 void Pieza::dibujar(Pos posicion) {
-	//tras2.5f de la posición de la matriz a coordenadas de glut. x es la columna e y la fila porque las coordenadas de glut están invertidas.
+	//tras2.5f de la posiciï¿½n de la matriz a coordenadas de glut. x es la columna e y la fila porque las coordenadas de glut estï¿½n invertidas.
 	float x = posicion.columna * 2.5f;
 	float y = posicion.fila * 2.5f;
 
@@ -11,13 +11,24 @@ void Pieza::dibujar(Pos posicion) {
 void Pieza::dibujarArrastrar(Pos posicion, Tablero* tablero) {
 	float x = posicion.fila;
 	float y = posicion.columna;
-
+	//setTamano(grande);
 	//Trasladar 0
 	x -= tablero->getAjusteX();
 	y -= tablero->getAjusteY();
-	//tras2.5f de la posición del bitmap a coordenadas de glut.
+	//tras2.5f de la posiciï¿½n del bitmap a coordenadas de glut.
 	x = 2.5f / tablero->getLim() * x - (2.5f / 2);
 	y = -2.5f / tablero->getLim() * y - (2.5f / 2);
 
 	draw(x, y);
+}
+
+void Pieza::draw(float x, float y) {
+
+	sprite.setCenter(lado / 2, lado / 2);
+	sprite.setSize(lado, lado);
+
+	glTranslatef(x, y, 0.1f);
+	glColor3f(1.0f, 0.0f, 0.0f);
+	sprite.draw();
+	glTranslatef(-x, -y, -0.1f);
 }
