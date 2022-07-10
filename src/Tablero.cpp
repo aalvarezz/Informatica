@@ -57,6 +57,7 @@ void Tablero::dibujarDamero() {
 			glEnd();
 		}
 	}
+
 	//BORDES DEL TABLERO
 	glEnable(GL_TEXTURE_2D);
 	glBindTexture(GL_TEXTURE_2D, ETSIDI::getTexture("imagenes/maderaV.png").id);
@@ -98,7 +99,8 @@ void Tablero::dibujarDamero() {
 	glDisable(GL_TEXTURE_2D);
 }
 
-void Tablero::dibujarPosibleCasilla(Pos posicion) { //se le da la posicion de los posibles movimientos para que sean graficados
+void Tablero::dibujarPosibleCasilla(Pos posicion) { 
+	//Se le da la posicion de los posibles movimientos para que sean graficados
 	int n = 20; //Resolución
 	float PI = 3.1415926f;
 	float R = lado / 3; //Radio
@@ -113,6 +115,9 @@ void Tablero::dibujarPosibleCasilla(Pos posicion) { //se le da la posicion de lo
 	glEnd();
 }
 
+/*
+* Método utilizado para la destrucción de las piezas en memoria cuando se quiere construir de nuevo el tablero o salir del programa
+*/
 void Tablero::borrarPiezas() {
 	for (int i = 0; i < 8; i++) {
 		for (int j = 0; i < 8; i++) {
@@ -122,30 +127,33 @@ void Tablero::borrarPiezas() {
 	}
 }
 
-void Tablero::quitarPieza(Pos posicion) { //hacer null el puntero a la pieza deseada, hacer "0" la posición de esa pieza (suponiendo que la pieza tuviera un atributo pos). Parece prescindible
+void Tablero::quitarPieza(Pos posicion) {
+	//Se pone en null el puntero referido a una casilla del tablero. Es equivalente a vaciar una casillar
 	piezas[posicion.fila][posicion.columna] = nullptr;
 }
 
-void Tablero::quitarPiezaTablero(Pos posicion) { //hacer null el puntero a la pieza deseada, hacer "0" la posición de esa pieza (suponiendo que la pieza tuviera un atributo pos). Parece prescindible
+void Tablero::quitarPiezaTablero(Pos posicion) {
+	//En el caso de que se quiera destruir una pieza sin colocar una pieza en su posición es necesario usar delete
+	//Este método solo se usa para casos concretos de excepciones
 	delete piezas[posicion.fila][posicion.columna];
 	piezas[posicion.fila][posicion.columna] = nullptr;
 }
 
-void Tablero::setPieza(Pieza* p, Pos posicion) { //otorga a una pieza una posicion	
+void Tablero::setPieza(Pieza* p, Pos posicion) {
+	//Para cambiar la pieza a la que apunta la posición relativa a una casilla del tablero
 	piezas[posicion.fila][posicion.columna] = p;
 }
 
-void Tablero::setPiezaTablero(Pieza* p, Pos posicion) { //otorga a una pieza una posicion
-
-	//En el caso en el que haya una pieza que vaya a ser comida utilizamos el delete
+void Tablero::setPiezaTablero(Pieza* p, Pos posicion) {
+	//En el caso en el que haya una pieza que vaya a ser comida se borra antes de la memoria
 	if (piezas[posicion.fila][posicion.columna] != nullptr) {
 		delete piezas[posicion.fila][posicion.columna];
-		cout << "deleteada" << endl;
 	}
-
 	piezas[posicion.fila][posicion.columna] = p;
 }
 
 Pieza* Tablero::getPieza(Pos posicion) {
+	//Se obtiene el puntero que apunta a la pieza de una posición dada
+	//El resultado puede ser null, lo que sería equivalente a que la casilla consultada está vacía
 	return piezas[posicion.fila][posicion.columna];
 }

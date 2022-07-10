@@ -1,15 +1,10 @@
 #pragma once
-#include "tablero.h"
-#include "juego.h"
+#include "Tablero.h"
+#include "Juego.h"
 #include "JuegoAciegas.h"
-#include "Menu.h"
-#include "ETSIDI.h"
 #include "freeglut.h"
 
-
 enum Estado { MENU, PARTIDA_NORMAL, PARTIDA_ESPECIAL, FIN_DE_PARTIDA };
-
-// libreria para final de juego?
 
 class Coordinador {
 private:
@@ -17,19 +12,20 @@ private:
 	Menu menu;
 	Estado estado;
 public:
+	//Estos atributos deben ser públicos para que SDL pueda funcionar correctamente
 	Juego juego;
 	JuegoAciegas juegoACiegas;
-	Coordinador();
-	void Inicializa();
-	
-	void cambioEstado();
 
-	Estado getEstado();
+	//Constructor por defecto e inicialización
+	Coordinador();
+	void inicializar();
 	
-	//bool getRunningJuego();
-	bool getRunning() { return running; }
-  
+	//Métodos de cambio de estado
+	void cambioEstado();
+	void cambioEstadoDesdeJuego(int a);
+
+	//Getters y setters
 	Menu getMenu() { return menu; }
-	//Juego getJuego() { return juego; }
-	void CambioEstadoDesdeJuego(int a);
+	bool getRunning() { return running; }
+	Estado getEstado() { return estado; }
 };

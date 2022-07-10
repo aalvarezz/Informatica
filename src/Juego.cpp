@@ -5,15 +5,10 @@
 #include "Alfil.h"
 #include "Caballo.h"
 #include "Torre.h"
-#include <iostream>
-#include "ETSIDI.h"
 
-using namespace std; //cuidado
+using std::cout, std::cin, std::endl;
 
 Juego::Juego() {
-
-	juego_terminado = 0;
-
 	pieza_elegida = nullptr;
 	within_board = false;
 
@@ -27,6 +22,9 @@ Juego::Juego() {
 	alpaso_negras = false;
 }
 
+Juego::~Juego() {
+	tablero.borrarPiezas();
+}
 
 void Juego::inicializar(int LT, int LC, int AX, int AY) {
 	tablero = Tablero(LT, LC, AX, AY);
@@ -99,8 +97,22 @@ void Juego::inicializar(int LT, int LC, int AX, int AY) {
 		}
 	}
 	tablero_fantasma = tablero;
-	
-	
+}
+
+void Juego::volverAJugar() {
+	pieza_elegida = nullptr;
+	within_board = false;
+
+	turno_blancas = true;
+	turno_negras = false;
+	mouse_pressed = false;
+	mouse_released = true;
+	color_elegido = false;
+
+	alpaso_blancas = false;
+	alpaso_negras = false;
+
+	tablero.borrarPiezas();
 }
 
 void Juego::dibujar() { //PROVISIONAL
@@ -219,16 +231,14 @@ int Juego::clicRaton(bool mouseP, bool mouseR, int x, int y) {
 				tablero.setPiezaTablero(pieza_elegida, pos_final);
 				ETSIDI::play("Musica/SoltarPieza.mp3");
 
-				if (finDeJuego(true)) {
+				if (finDeJuego(true)) { //Si el movimiento ha provocado que las blancas no puedan realizar más movimientos legales
 					cout << "GG" << endl;
 					if (checkJaque(tablero, true)) {
 						cout << "Victoria de las blancas por jaque mate!" << endl;
-						juego_terminado = 1;
 						return 1;					
 					}
 					else {
 						cout << "Tablas por rey ahogado! (provocado por las blancas)" << endl;
-						juego_terminado = 3;
 						return 3;
 					}
 				}
@@ -274,20 +284,17 @@ int Juego::clicRaton(bool mouseP, bool mouseR, int x, int y) {
 				tablero.setPiezaTablero(pieza_elegida, pos_final);
 				ETSIDI::play("Musica/SoltarPieza.mp3");
 
-				if (finDeJuego(false)) {
+				if (finDeJuego(false)) { //Si el movimiento ha provocado que las blancas no puedan realizar más movimientos legales
 					cout << "GG" << endl;
 					if (checkJaque(tablero, false)) {
 						cout << "Victoria de las negras por jaque mate!" << endl;
-						//glutHideWindow();
-						juego_terminado = 2;
 						return 2;
 					}
 					else {
 						cout << "Tablas por rey ahogado! (provocado por las negras)" << endl;
-						juego_terminado = 4;
 						return 4;
 					}
-				}//Se reinician los indicadores de que la pieza se ha movido al movido al menos una vez y de que se puede comer al paso al completarse un movimiento válido
+				}
 
 				//Tanto el estado de origen de la pieza en movimiento como el indicador de que se 
 				//puede comer al paso se reinician cuando se completa un movimiento válido
@@ -297,9 +304,6 @@ int Juego::clicRaton(bool mouseP, bool mouseR, int x, int y) {
 				//Se finalizó el movimiento, por lo que se devuelve el puntero a null y se deshacen los cambios del tablero fantasma
 				pieza_elegida = nullptr;
 				tablero_fantasma = tablero;
-
-				//El indicador de que se puede comer al paso se reinicia cuando se completa un movimiento válido
-
 
 				//Gestión de turnos
 				turno_blancas = true;
@@ -319,7 +323,6 @@ int Juego::clicRaton(bool mouseP, bool mouseR, int x, int y) {
 		}
 	}
 	
-
 	//Si se suelta el clic fuera del tablero llevando una pieza no se confirma el movimiento y devuelve la pieza a la casilla inicial previa al movimiento
 	if (!within_board && mouse_released && (pieza_elegida != nullptr)) {
 
@@ -345,6 +348,12 @@ void Juego::movimientoRaton(int x, int y) {
 	}
 }
 
+
+/*
+* Comprueba que el movimiento en proceso es correcto. Tiene en cuenta el veredicto de Pieza::comprueba()
+* además de considerar todas las excepciones y estado de jaque.
+* Este método se utiliza para calcular las casillas posibles de una pieza y para el jaque y los eventos de fin de partida.
+*/
 bool Juego::movimientoValido(Pieza* pieza, Pos pos_inicio, Pos pos_fin, Tablero* tab) {
 
 	//EXCEPCIONES
@@ -356,7 +365,7 @@ bool Juego::movimientoValido(Pieza* pieza, Pos pos_inicio, Pos pos_fin, Tablero*
 			&& (pos_inicio.columna == (salida_doble.columna + 1) || pos_inicio.columna == (salida_doble.columna - 1))) {
 			//se confirma si se realiza un movimiento valido de comer al paso comprobando la posicion final del peon blanco con la posicion del peon negro
 			if (pos_fin.fila == salida_doble.fila + 1 && pos_fin.columna == salida_doble.columna) {
-				if (mouse_released) {//comprueba si se ha soltado el raton
+				if (mouse_released) { //comprueba si se ha soltado el raton
 					tab->quitarPieza(salida_doble); //eliminamos del tablero el peon comido al paso
 				}
 				return true;
@@ -371,8 +380,8 @@ bool Juego::movimientoValido(Pieza* pieza, Pos pos_inicio, Pos pos_fin, Tablero*
 			&& (pos_inicio.columna == (salida_doble.columna + 1) || pos_inicio.columna == (salida_doble.columna - 1))) {
 			//se confirma si se realiza un movimiento valido de comer al paso comprobando la posicion final del peon negro con la posicion del peon blanco
 			if (pos_fin.fila == salida_doble.fila - 1 && pos_fin.columna == salida_doble.columna) {
-				if (mouse_released) {//comprueba si se ha soltado el raton
-					tab->quitarPieza(salida_doble);//eliminamos del tablero el peon comido al paso
+				if (mouse_released) { //comprueba si se ha soltado el raton
+					tab->quitarPieza(salida_doble); //eliminamos del tablero el peon comido al paso
 				}
 				return true;
 			}
@@ -433,7 +442,7 @@ bool Juego::movimientoValido(Pieza* pieza, Pos pos_inicio, Pos pos_fin, Tablero*
 	//REGLAS NORMALES DE MOVIMIENTO (GESTIONADAS POR LA PIEZA QUE SE INTENTA MOVER)
 	if (pieza->comprueba(tab, pos_inicio, pos_fin)) {
 		//CONDICION DE CORONACION
-		if (mouse_released) {//si se ha soltado el click y el peon ha llegado a la fila en la que este realiza el enroque, se corona
+		if (mouse_released && (pos_final.fila == 0 || pos_final.fila == 7)) { //si se ha soltado el click y el peon ha llegado a la fila en la que este realiza el enroque, se corona
 			if (pieza->getTipo() == 1 && !pieza->getColor() && pos_fin.fila == 7)
 				coronacion(tab, pos_fin);
 			if (pieza->getTipo() == 1 && pieza->getColor() && pos_fin.fila == 0)
@@ -663,47 +672,46 @@ bool Juego::enroque(Tablero* tab, bool color, bool enroque_corto) {
 
 //la funcion pide al usuario elegir la pieza que desea por haber coronado un peon, siendo representada en el tablero, quedando este acualizado
 void Juego::coronacion(Tablero* tab, Pos pos_coronacion) {
-	int elegido = 0;
+
+	//Se utiliza una ventana de SDL para que el usuario eliga a que tipo de pieza quiere coronar
+	int evento = 0;
+	menu_coronacion.inicializarCoronacion();
+	SDL_Init(SDL_INIT_VIDEO);
+	menu_coronacion.ventana();
+	menu_coronacion.asignarCoronacion();
+	evento = menu_coronacion.eventoCoronacion();
+	SDL_StopTextInput();
+	menu_coronacion.liberarCoronacion();
+
 	bool color_aux = pieza_elegida->getColor();
-
-	//Piezas que puede elegir el jugador en la coronacion
-	cout << endl << "Dama: 3" << endl;
-	cout << "Alfil: 4" << endl;
-	cout << "Caballo: 5" << endl;
-	cout << "Torre: 6" << endl;
-
-	do { //mientras no se elija una pieza valida no se sale del bucle
-		cout << "Elige que pieza quieres: ";
-		cin >> elegido;
-		switch (elegido) {
-		case 3:
-			delete pieza_elegida;
-			pieza_elegida = nullptr;
-			pieza_elegida = new Dama(color_aux);
-			tablero_fantasma.setPieza(pieza_elegida, pos_coronacion);
-			break;
-		case 4:
-			delete pieza_elegida;
-			pieza_elegida = nullptr;
-			pieza_elegida = new Alfil(color_aux);
-			tablero_fantasma.setPieza(pieza_elegida, pos_coronacion);
-			break;
-		case 5:
-			delete pieza_elegida;
-			pieza_elegida = nullptr;
-			pieza_elegida = new Caballo(color_aux);
-			tablero_fantasma.setPieza(pieza_elegida, pos_coronacion);
-			break;
-		case 6:
-			delete pieza_elegida;
-			pieza_elegida = nullptr;
-			pieza_elegida = new Torre(color_aux);
-			tablero_fantasma.setPieza(pieza_elegida, pos_coronacion);
-			break;
-		default:
-			cout << endl << "Pieza no valida. ";
-		}
-	} while (elegido > 6 || elegido < 3);
+	switch (evento) {
+	case 3:
+		delete pieza_elegida;
+		pieza_elegida = nullptr;
+		pieza_elegida = new Dama(color_aux);
+		tablero_fantasma.setPieza(pieza_elegida, pos_coronacion);
+		break;
+	case 4:
+		delete pieza_elegida;
+		pieza_elegida = nullptr;
+		pieza_elegida = new Alfil(color_aux);
+		tablero_fantasma.setPieza(pieza_elegida, pos_coronacion);
+		break;
+	case 5:
+		delete pieza_elegida;
+		pieza_elegida = nullptr;
+		pieza_elegida = new Caballo(color_aux);
+		tablero_fantasma.setPieza(pieza_elegida, pos_coronacion);
+		break;
+	case 6:
+		delete pieza_elegida;
+		pieza_elegida = nullptr;
+		pieza_elegida = new Torre(color_aux);
+		tablero_fantasma.setPieza(pieza_elegida, pos_coronacion);
+		break;
+	default:
+		break;
+	}
 }
 
 bool Juego::checkJaque(Tablero tab, bool color) {
@@ -766,6 +774,7 @@ bool Juego::checkJaque(Tablero tab, bool color) {
 //si un movimiento provoca que el color contrario no pueda realizar ningún movimiento legal, directamente salta el menú antes de que se pase al siguiente movimiento.
 bool Juego::finDeJuego(bool color) {
 
+	mouse_released = false;
 	Pos pos_iteracion, pos_posible;
 	Pieza* pieza_iteracion;
 	Tablero tab_aux = tablero;
@@ -794,29 +803,6 @@ bool Juego::finDeJuego(bool color) {
 			}
 		}
 	}
+	mouse_released = true;
 	return true;
-}
-
-
-void Juego::volverAJugar() {
-		juego_terminado = 0;
-
-		pieza_elegida = nullptr;
-		within_board = false;
-
-		turno_blancas = true;
-		turno_negras = false;
-		mouse_pressed = false;
-		mouse_released = true;
-		color_elegido = false;
-
-		miraryactuar = true;
-
-		coronegra = 0;
-		coroblanca = 0;
-
-		pasonegro = 0;
-		pasoblanco = 0;
-
-		miraryactuar = 1;
 }
